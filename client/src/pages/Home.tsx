@@ -6,7 +6,7 @@ import Insights from "@/components/Insights";
 import Newsletter from "@/components/Newsletter";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import profileImage from '@assets/generated_images/Professional_executive_headshot_portrait_0ce85843.png';
+import profileImage from '@assets/profile_1759318487930.jpg';
 import book1Cover from '@assets/book1_1759315863433.jpg';
 import book2Cover from '@assets/book2_1759315940962.jpg';
 
