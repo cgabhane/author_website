@@ -8,7 +8,7 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import profileImage from '@assets/generated_images/Professional_executive_headshot_portrait_0ce85843.png';
 import book1Cover from '@assets/book1_1759315863433.jpg';
-import book2Cover from '@assets/generated_images/VMware_strategy_book_cover_1194819c.png';
+import book2Cover from '@assets/book2_1759315940962.jpg';
 
 export default function Home() {
   const books = [
