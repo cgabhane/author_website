@@ -4,8 +4,8 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Download, Mail, Linkedin, Globe, FileText } from "lucide-react";
-import profileImage from '@assets/generated_images/Professional_executive_headshot_portrait_0ce85843.png';
-import profileImage2 from '@assets/generated_images/Casual_business_executive_portrait_0f809cc6.png';
+import profileImage from '@assets/profile_1759318487930.jpg';
+import profileImage2 from '@assets/profile2_1759318518565.jpg';
 import book1Cover from '@assets/book1_1759315863433.jpg';
 import book2Cover from '@assets/book2_1759315940962.jpg';
 
