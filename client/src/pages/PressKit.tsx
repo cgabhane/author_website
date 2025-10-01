@@ -119,13 +119,15 @@ export default function PressKit() {
                   img: book1Cover,
                   title: "Reverse Engineering with Terraform",
                   subtitle: "Practical automation, integration & scalability",
-                  testId: "terraform"
+                  testId: "terraform",
+                  buyUrl: "https://www.amazon.in/Reverse-Engineering-Terraform-Introduction-Infrastructure/dp/B0CKSDNNNX"
                 },
                 {
                   img: book2Cover,
                   title: "Navigating VMware Turmoil",
                   subtitle: "Strategic insights for cloud transitions",
-                  testId: "vmware"
+                  testId: "vmware",
+                  buyUrl: "#"
                 }
               ].map((book) => (
                 <Card key={book.testId} className="group hover-elevate transition-all border-2">
@@ -143,7 +145,11 @@ export default function PressKit() {
                           <h3 className="font-serif text-xl font-semibold text-foreground">{book.title}</h3>
                           <p className="text-sm text-muted-foreground mt-1">{book.subtitle}</p>
                         </div>
-                        <Button className="w-full" data-testid={`button-buy-${book.testId}`}>
+                        <Button 
+                          className="w-full" 
+                          onClick={() => window.open(book.buyUrl, '_blank')}
+                          data-testid={`button-buy-${book.testId}`}
+                        >
                           Purchase Book
                         </Button>
                       </div>

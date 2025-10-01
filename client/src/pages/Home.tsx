@@ -17,7 +17,7 @@ export default function Home() {
       title: "Reverse Engineering with Terraform",
       description: "A practical guide to automation, integration, and scalability with Terraform.",
       coverImage: book1Cover,
-      buyUrl: "#"
+      buyUrl: "https://www.amazon.in/Reverse-Engineering-Terraform-Introduction-Infrastructure/dp/B0CKSDNNNX"
     },
     {
       id: "vmware",
