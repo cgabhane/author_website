@@ -1,0 +1,239 @@
+/* Global Styles */
+body {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  margin: 0;
+  color: #222;
+  background: #fff;
+  line-height: 1.6;
+}
+
+h1, h2, h3 {
+  font-family: "Georgia", serif;
+  margin-bottom: 0.5em;
+  color: #1a1a1a;
+}
+
+.container {
+  width: 85%;
+  max-width: 1000px;
+  margin: auto;
+  padding: 3em 0;
+}
+
+/* Hero */
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3em 10%;
+  background: #f5f7fa;
+}
+
+.hero-text {
+  max-width: 50%;
+}
+
+.hero h1 {
+  font-size: 2.8em;
+  margin-bottom: 0.2em;
+}
+
+.hero p {
+  font-size: 1.2em;
+  margin-bottom: 1em;
+}
+
+.hero-img img {
+  max-width: 280px;
+  border-radius: 6px;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 0.7em 1.5em;
+  background: #002b5c;
+  color: white;
+  text-decoration: none;
+  margin: 0.3em 0.5em 0.3em 0;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.btn.secondary {
+  background: #666;
+}
+
+/* Books Section */
+.book-grid {
+  display: flex;
+  gap: 2em;
+}
+
+.book img {
+  max-width: 100%;
+  border-radius: 4px;
+}
+
+.book h3 {
+  margin-top: 0.5em;
+}
+
+/* Insights */
+.insight-list {
+  list-style: none;
+  padding: 0;
+}
+
+.insight-list li {
+  padding: 0.5em 0;
+  border-bottom: 1px solid #eee;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 1em;
+  background: #111;
+  color: #fff;
+  font-size: 0.9em;
+}
+
+/* Press Kit */
+.small-hero {
+  padding: 2em 10%;
+  text-align: center;
+  background: #e9eef5;
+}
+
+.press-assets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2em;
+}
+
+.press-assets div {
+  flex: 1 1 300px;
+  text-align: center;
+}
+
+.press-assets img {
+  max-width: 250px;
+  border-radius: 6px;
+  margin-bottom: 0.5em;
+}
+/* Navigation Bar */
+.navbar {
+  background: #002b5c;
+  color: #fff;
+  padding: 0.8em 10%;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  color: #fff;
+  font-size: 1.2em;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.nav-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 1.5em;
+}
+
+.nav-links a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.nav-links a:hover {
+  text-decoration: underline;
+}
+
+/* Blog */
+.blog-post {
+  margin-bottom: 3em;
+  padding-bottom: 1.5em;
+  border-bottom: 1px solid #eee;
+}
+
+.blog-post h2 {
+  margin-top: 0;
+}
+
+.blog-post p {
+  margin: 0.5em 0;
+}
+
+/* Blog Single Post */
+.blog-content h3 {
+  margin-top: 1.5em;
+  color: #002b5c;
+}
+
+.blog-content blockquote {
+  margin: 1.5em 0;
+  padding: 1em;
+  background: #f0f4f9;
+  border-left: 4px solid #002b5c;
+  font-style: italic;
+  color: #333;
+}
+
+/* Newsletter Section */
+.newsletter {
+  background: #f5f7fa;
+  padding: 3em 10%;
+  text-align: center;
+}
+
+.newsletter h2 {
+  margin-bottom: 0.5em;
+}
+
+.newsletter p {
+  margin-bottom: 1em;
+  color: #555;
+}
+
+.newsletter-form {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5em;
+  margin-bottom: 1em;
+}
+
+.newsletter-form input[type="email"] {
+  padding: 0.8em;
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1em;
+}
+
+.newsletter-form button {
+  padding: 0.8em 1.5em;
+  border: none;
+  border-radius: 4px;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+.note {
+  font-size: 0.85em;
+  color: #777;
+}
