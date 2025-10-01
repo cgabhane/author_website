@@ -1,5 +1,5 @@
 import Books from '../Books'
-import book1Cover from '@assets/generated_images/Terraform_book_cover_design_cd903b98.png'
+import book1Cover from '@assets/book1_1759315863433.jpg'
 import book2Cover from '@assets/generated_images/VMware_strategy_book_cover_1194819c.png'
 
 export default function BooksExample() {
