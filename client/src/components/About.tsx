@@ -48,7 +48,7 @@ export default function About() {
               <p className="text-lg text-foreground leading-relaxed">
                 As an author, I translate advanced concepts in cloud infrastructure, AI, and automation into
                 practical guidance for engineers and executives alike. My mission is to help organizations
-                embrace cloud confidently, securely, and intelligently — ensuring technology adoption delivers
+                embrace cloud confidently, securely, and intelligently, ensuring technology adoption delivers
                 measurable business value.
               </p>
             </div>
