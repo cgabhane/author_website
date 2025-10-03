@@ -15,12 +15,12 @@ export default function Insights({ insights }: InsightsProps) {
   const categories = ["Cloud Strategy", "AI Operations", "Compliance"];
   
   return (
-    <section id="insights" className="py-24 bg-muted/20 relative overflow-hidden">
+    <section id="insights" className="py-32 bg-muted/20 relative overflow-hidden">
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
       
       <div className="relative max-w-6xl mx-auto px-6 lg:px-12">
-        <div className="text-center mb-16">
-          <h2 className="font-serif text-5xl font-semibold text-foreground mb-4" data-testid="heading-insights">
+        <div className="text-center mb-20">
+          <h2 className="font-serif text-5xl lg:text-6xl font-semibold text-foreground mb-6" data-testid="heading-insights">
             Latest Insights
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">

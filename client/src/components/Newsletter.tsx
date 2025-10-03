@@ -19,19 +19,19 @@ export default function Newsletter() {
   };
 
   return (
-    <section id="newsletter" className="py-24 relative overflow-hidden">
+    <section id="newsletter" className="py-32 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-accent/5 to-primary/5"></div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(var(--primary-rgb,33,73,92),0.15),transparent_50%)]"></div>
       
       <div className="relative max-w-4xl mx-auto px-6 lg:px-12">
-        <div className="bg-card/80 backdrop-blur-sm rounded-2xl border-2 border-border p-12 shadow-xl">
-          <div className="text-center space-y-6">
+        <div className="bg-card/80 backdrop-blur-sm rounded-2xl border-2 border-border p-12 lg:p-16 shadow-xl">
+          <div className="text-center space-y-8">
             <div className="inline-block p-4 bg-primary/10 rounded-full">
               <Send className="w-8 h-8 text-primary" />
             </div>
             
-            <div className="space-y-3">
-              <h2 className="font-serif text-4xl font-semibold text-foreground" data-testid="heading-newsletter">
+            <div className="space-y-4">
+              <h2 className="font-serif text-5xl lg:text-6xl font-semibold text-foreground" data-testid="heading-newsletter">
                 Stay Connected
               </h2>
               <p className="text-lg text-muted-foreground max-w-xl mx-auto">

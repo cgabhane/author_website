@@ -25,13 +25,13 @@ export default function About() {
   ];
 
   return (
-    <section id="about" className="py-24 bg-background relative">
+    <section id="about" className="py-32 bg-background relative">
       <div className="max-w-6xl mx-auto px-6 lg:px-12">
-        <div className="grid lg:grid-cols-2 gap-16 items-start">
-          <div className="space-y-6">
+        <div className="grid lg:grid-cols-2 gap-20 items-start">
+          <div className="space-y-8">
             <div>
               <span className="text-sm font-semibold text-primary tracking-wider uppercase">About Me</span>
-              <h2 className="font-serif text-4xl font-semibold text-foreground mt-3 mb-6" data-testid="heading-about">
+              <h2 className="font-serif text-5xl lg:text-6xl font-semibold text-foreground mt-4 mb-6 leading-tight" data-testid="heading-about">
                 Empowering Enterprises Through Cloud Innovation
               </h2>
             </div>
