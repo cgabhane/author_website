@@ -120,10 +120,16 @@ export default function Hero({ profileImage }: HeroProps) {
             {[
               "Cloud Strategy",
               "Infrastructure as Code", 
-              "AI Leadership",
+              "AI Evangelist",
+              "Agentic AI",
               "Enterprise Architecture",
               "VMware to Cloud",
-              "Multicloud Solutions"
+              "Multicloud Solutions",
+              "AWS",
+              "Microsoft Azure",
+              "Google GCP",
+              "Terraform",
+              "Consulting"
             ].map((tag, index) => (
               <span 
                 key={index}
