@@ -21,7 +21,7 @@ export default function SpeakingMedia() {
     },
     {
       icon: Users,
-      title: "Workshop Facilitation",
+      title: "Mentoring Sessions",
       description: "Hands-on sessions for teams navigating infrastructure automation and multicloud adoption"
     },
     {
