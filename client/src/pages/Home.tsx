@@ -2,6 +2,7 @@ import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Books from "@/components/Books";
+import SpeakingMedia from "@/components/SpeakingMedia";
 import Insights from "@/components/Insights";
 import Newsletter from "@/components/Newsletter";
 import Contact from "@/components/Contact";
@@ -52,6 +53,7 @@ export default function Home() {
       <Hero profileImage={profileImage} />
       <About />
       <Books books={books} />
+      <SpeakingMedia />
       <Insights insights={insights} />
       <Newsletter />
       <Contact />
