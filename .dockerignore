@@ -1,0 +1,16 @@
+node_modules
+npm-debug.log
+.git
+.gitignore
+.env
+.env.local
+dist
+build
+.replit
+replit.nix
+.vscode
+*.md
+client/node_modules
+server/node_modules
+attached_assets
+design_references
