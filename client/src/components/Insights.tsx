@@ -5,6 +5,7 @@ interface Insight {
   id: string;
   title: string;
   category?: string;
+  url?: string;
 }
 
 interface InsightsProps {
@@ -13,6 +14,12 @@ interface InsightsProps {
 
 export default function Insights({ insights }: InsightsProps) {
   const categories = ["Cloud Strategy", "AI Operations", "Compliance"];
+  
+  const handleInsightClick = (url?: string) => {
+    if (url) {
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
+  };
   
   return (
     <section id="insights" className="py-32 bg-muted/20 relative overflow-hidden">
@@ -33,6 +40,7 @@ export default function Insights({ insights }: InsightsProps) {
             <Card 
               key={insight.id}
               className="group hover-elevate transition-all cursor-pointer border-l-4 border-l-primary/50 hover:border-l-primary"
+              onClick={() => handleInsightClick(insight.url)}
               data-testid={`insight-${insight.id}`}
             >
               <CardContent className="p-8">
