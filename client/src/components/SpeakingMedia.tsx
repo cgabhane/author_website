@@ -1,12 +1,11 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Mic2, Podcast, Users, Briefcase } from "lucide-react";
+import { BookingDialog } from "@/components/BookingDialog";
 
 export default function SpeakingMedia() {
-  const handleScroll = () => {
-    const element = document.getElementById("contact");
-    element?.scrollIntoView({ behavior: "smooth" });
-  };
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const opportunities = [
     {
@@ -68,13 +67,15 @@ export default function SpeakingMedia() {
         <div className="text-center">
           <Button
             className="rounded-full"
-            onClick={handleScroll}
-            data-testid="button-speaking-contact"
+            onClick={() => setIsDialogOpen(true)}
+            data-testid="button-schedule-exchange"
           >
-            Let's Connect
+            Schedule a Knowledge Exchange
           </Button>
         </div>
       </div>
+
+      <BookingDialog open={isDialogOpen} onOpenChange={setIsDialogOpen} />
     </section>
   );
 }
