@@ -20,7 +20,7 @@ export default function About() {
     {
       icon: Globe,
       title: "Global Impact",
-      description: "Cloud adoption across Europe, India, and beyond"
+      description: "Cloud adoption across US, Europe, India, and beyond"
     }
   ];
 
