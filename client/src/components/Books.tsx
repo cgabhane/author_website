@@ -16,12 +16,12 @@ interface BooksProps {
 
 export default function Books({ books }: BooksProps) {
   return (
-    <section id="books" className="py-24 bg-gradient-to-b from-background to-muted/20 relative overflow-hidden">
+    <section id="books" className="py-32 bg-gradient-to-b from-background to-muted/20 relative overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(var(--primary-rgb,33,73,92),0.03),transparent_70%)]"></div>
       
       <div className="relative max-w-7xl mx-auto px-6 lg:px-12">
-        <div className="text-center mb-16">
-          <h2 className="font-serif text-5xl font-semibold text-foreground mb-4" data-testid="heading-books">
+        <div className="text-center mb-20">
+          <h2 className="font-serif text-5xl lg:text-6xl font-semibold text-foreground mb-6" data-testid="heading-books">
             Published Works
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
