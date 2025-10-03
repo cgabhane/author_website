@@ -38,12 +38,12 @@ export default function Hero({ profileImage }: HeroProps) {
                 </span>
               </div>
               
-              {/* Massive Typography - The Star */}
+              {/* Name Typography */}
               <div className="space-y-2">
-                <h1 className="font-serif text-6xl sm:text-7xl lg:text-8xl xl:text-9xl font-bold text-foreground leading-none tracking-tight">
+                <h1 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-bold text-foreground leading-none tracking-tight">
                   Chetan
                 </h1>
-                <h1 className="font-serif text-6xl sm:text-7xl lg:text-8xl xl:text-9xl font-bold text-foreground leading-none tracking-tight">
+                <h1 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-bold text-foreground leading-none tracking-tight">
                   Gabhane
                 </h1>
               </div>
@@ -93,39 +93,19 @@ export default function Hero({ profileImage }: HeroProps) {
 
           {/* Right Column - Professional Photo with Modern Effects */}
           <div className="relative flex items-center justify-center lg:justify-end">
-            {/* Dark geometric background pattern */}
-            <div className="absolute inset-0 overflow-hidden rounded-3xl">
-              <div className="absolute inset-0 bg-gradient-to-br from-foreground/95 via-foreground/90 to-foreground/95"></div>
-              {/* Wavy lines pattern */}
-              <svg className="absolute inset-0 w-full h-full opacity-10" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                  <pattern id="hero-waves" x="0" y="0" width="80" height="80" patternUnits="userSpaceOnUse">
-                    <path 
-                      d="M0 40 Q 20 20, 40 40 T 80 40 M0 0 Q 20 -20, 40 0 T 80 0 M0 80 Q 20 60, 40 80 T 80 80" 
-                      stroke="currentColor" 
-                      fill="none" 
-                      strokeWidth="1" 
-                      className="text-background"
-                    />
-                  </pattern>
-                </defs>
-                <rect width="100%" height="100%" fill="url(#hero-waves)" />
-              </svg>
-            </div>
-
             {/* Photo Container with Effects */}
             <div className="relative group w-full max-w-lg">
               {/* Glow Effect */}
-              <div className="absolute -inset-4 bg-gradient-to-r from-primary/30 to-accent/30 rounded-3xl blur-3xl group-hover:blur-[80px] transition-all duration-500 opacity-50"></div>
+              <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 to-accent/20 rounded-3xl blur-3xl group-hover:blur-[80px] transition-all duration-500 opacity-40"></div>
               
               {/* Main Photo */}
               <div className="relative overflow-hidden rounded-3xl">
-                {/* Gradient overlay on photo */}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-accent/10 mix-blend-overlay z-10"></div>
+                {/* Subtle gradient overlay on photo */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/5 mix-blend-overlay z-10"></div>
                 <img
                   src={profileImage}
                   alt="Chetan Gabhane"
-                  className="relative w-full h-auto object-cover shadow-2xl group-hover:scale-105 transition-transform duration-700"
+                  className="relative w-full h-auto object-cover rounded-3xl shadow-2xl group-hover:scale-105 transition-transform duration-700"
                   data-testid="img-hero-profile"
                 />
               </div>
