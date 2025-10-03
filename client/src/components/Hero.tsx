@@ -75,15 +75,15 @@ export default function Hero({ profileImage }: HeroProps) {
             {/* Stats Row */}
             <div className="flex flex-wrap gap-8 lg:gap-12 pt-4">
               <div className="space-y-1">
-                <div className="text-4xl lg:text-5xl font-bold text-foreground">20+</div>
+                <div className="text-3xl lg:text-4xl font-bold text-foreground">20+</div>
                 <div className="text-sm text-muted-foreground uppercase tracking-wide">Years Experience</div>
               </div>
               <div className="space-y-1">
-                <div className="text-4xl lg:text-5xl font-bold text-foreground">2</div>
+                <div className="text-3xl lg:text-4xl font-bold text-foreground">2</div>
                 <div className="text-sm text-muted-foreground uppercase tracking-wide">Published Books</div>
               </div>
               <div className="space-y-1">
-                <div className="text-4xl lg:text-5xl font-bold text-foreground">100+</div>
+                <div className="text-3xl lg:text-4xl font-bold text-foreground">100+</div>
                 <div className="text-sm text-muted-foreground uppercase tracking-wide">Enterprise Projects</div>
               </div>
             </div>
