@@ -54,19 +54,17 @@ export default function Hero({ profileImage }: HeroProps) {
             </div>
 
             {/* CTA Buttons */}
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-3">
               <Button
-                size="lg"
-                className="text-base px-8 py-6 shadow-lg hover:shadow-2xl transition-all hover:scale-105"
+                className="text-sm sm:text-base px-5 sm:px-6 py-2.5 sm:py-3 rounded-full shadow-md hover:shadow-xl transition-all hover:scale-[1.02]"
                 onClick={() => handleScroll("books")}
                 data-testid="button-explore-books"
               >
                 Explore My Books
               </Button>
               <Button
-                size="lg"
                 variant="outline"
-                className="text-base px-8 py-6 border-2 backdrop-blur-sm hover:scale-105 transition-all"
+                className="text-sm sm:text-base px-5 sm:px-6 py-2.5 sm:py-3 rounded-full border-2 backdrop-blur-sm hover:scale-[1.02] transition-all"
                 onClick={() => handleScroll("contact")}
                 data-testid="button-connect"
               >
