@@ -22,7 +22,7 @@ export default function Hero({ profileImage }: HeroProps) {
             <div className="space-y-4">
               <div className="inline-block">
                 <span className="text-sm font-semibold text-primary tracking-wider uppercase border border-primary/30 rounded-full px-4 py-1.5 bg-primary/5">
-                  Cloud & AI Thought Leader
+                  Cloud & AI Evangelist
                 </span>
               </div>
               <h1 className="font-serif text-5xl lg:text-7xl font-bold text-foreground leading-tight">

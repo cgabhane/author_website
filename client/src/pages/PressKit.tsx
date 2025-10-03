@@ -36,7 +36,7 @@ export default function PressKit() {
                 <div className="bg-muted/30 border-l-4 border-l-primary rounded-lg p-6">
                   <p className="font-semibold text-sm text-primary mb-3 uppercase tracking-wide">Short Bio (100 words)</p>
                   <p className="text-foreground leading-relaxed text-sm">
-                    Chetan Gabhane is a Cloud Professional Leader, Author, and Strategic Advisor helping
+                    Chetan Gabhane is a Cloud Professional Evangelist, Author, and Strategic Advisor helping
                     enterprises accelerate their cloud and AI journeys. With nearly two decades of experience
                     across multicloud, private cloud, and automation, he has guided organizations through
                     VMware-to-cloud transitions, sovereign cloud strategies, and AI-driven infrastructure
