@@ -25,7 +25,7 @@ export default function Home() {
       title: "Navigating VMware Turmoil",
       description: "Strategic insights for enterprises transitioning from VMware to cloud alternatives.",
       coverImage: book2Cover,
-      buyUrl: "#"
+      buyUrl: "https://www.amazon.in/Navigating-VMware-Turmoil-Broadcom-Transitioning-ebook/dp/B0DZSNX7P1"
     }
   ];
 

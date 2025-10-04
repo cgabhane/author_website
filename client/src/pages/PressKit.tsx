@@ -127,7 +127,7 @@ export default function PressKit() {
                   title: "Navigating VMware Turmoil",
                   subtitle: "Strategic insights for cloud transitions",
                   testId: "vmware",
-                  buyUrl: "#"
+                  buyUrl: "https://www.amazon.in/Navigating-VMware-Turmoil-Broadcom-Transitioning-ebook/dp/B0DZSNX7P1"
                 }
               ].map((book) => (
                 <Card key={book.testId} className="group hover-elevate transition-all border-2">
