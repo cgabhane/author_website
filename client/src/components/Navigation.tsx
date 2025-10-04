@@ -72,12 +72,12 @@ export default function Navigation() {
           <ul className="px-6 py-4 space-y-2">
             {navLinks.map((link) => (
               <li key={link.href}>
-                <Link 
-                  href={link.href}
-                  onClick={() => handleNavClick(link.href)}
-                  data-testid={`link-mobile-${link.label.toLowerCase().replace(" ", "-")}`}
-                >
-                  <span className="block px-4 py-2 rounded-md hover-elevate active-elevate-2 text-sm font-medium cursor-pointer">
+                <Link href={link.href}>
+                  <span
+                    onClick={() => handleNavClick(link.href)}
+                    className="block px-4 py-2 rounded-md hover-elevate active-elevate-2 text-sm font-medium cursor-pointer"
+                    data-testid={`link-mobile-${link.label.toLowerCase().replace(" ", "-")}`}
+                  >
                     {link.label}
                   </span>
                 </Link>
