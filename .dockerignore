@@ -12,5 +12,4 @@ replit.nix
 *.md
 client/node_modules
 server/node_modules
-attached_assets
 design_references
