@@ -1,0 +1,842 @@
+Coolify
+v4.0.0-beta.434
+
+/
+9+
+Current Team
+
+Root Team
+Dashboard
+Projects
+Servers
+Sources
+Destinations
+S3 Storages
+Shared Variables
+Notifications
+Keys & Tokens
+Tags
+Terminal
+Profile
+Teams
+Settings
+Sponsor us
+Feedback
+Logout
+Deployment
+My first project
+production
+cgabhane/author_website:replit-agent-m0g4004wkwckookko4ww8o8w
+Exited
+Configuration
+Deployments
+Logs
+Terminal
+
+Links
+
+Advanced
+Deploy
+Deployment Log
+Hide Debug Logs
+Deployment is Failed.
+
+
+
+
+2025-Oct-05 05:17:10.251113
+Starting deployment of cgabhane/author_website:replit-agent to localhost.
+2025-Oct-05 05:17:11.036597
+Preparing container with helper image: ghcr.io/coollabsio/coolify-helper:1.0.11.
+2025-Oct-05 05:17:11.445721
+[CMD]: docker stop --time=30 sww8go8kc4w4o0w8w0g0c8k0
+2025-Oct-05 05:17:11.445721
+Flag --time has been deprecated, use --timeout instead
+2025-Oct-05 05:17:11.455957
+Error response from daemon: No such container: sww8go8kc4w4o0w8w0g0c8k0
+2025-Oct-05 05:17:11.981622
+[CMD]: docker rm -f sww8go8kc4w4o0w8w0g0c8k0
+2025-Oct-05 05:17:11.981622
+Error response from daemon: No such container: sww8go8kc4w4o0w8w0g0c8k0
+2025-Oct-05 05:17:12.386411
+[CMD]: docker run -d --network coolify --name sww8go8kc4w4o0w8w0g0c8k0  --rm -v /var/run/docker.sock:/var/run/docker.sock ghcr.io/coollabsio/coolify-helper:1.0.11
+2025-Oct-05 05:17:12.386411
+5620d70019bfd75426fac13c17c5d102f536e808882d9b88b3adb5ae6bb9ea1b
+2025-Oct-05 05:17:14.251106
+[CMD]: docker exec sww8go8kc4w4o0w8w0g0c8k0 bash -c 'GIT_SSH_COMMAND="ssh -o ConnectTimeout=30 -p 22 -o Port=22 -o LogLevel=ERROR -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" git ls-remote https://github.com/cgabhane/author_website refs/heads/replit-agent'
+2025-Oct-05 05:17:14.251106
+ea6127bff2ae147e198e78866e5ba02fe5828396	refs/heads/replit-agent
+2025-Oct-05 05:17:14.285347
+----------------------------------------
+2025-Oct-05 05:17:14.291802
+Importing cgabhane/author_website:replit-agent (commit sha HEAD) to /artifacts/sww8go8kc4w4o0w8w0g0c8k0.
+2025-Oct-05 05:17:14.703467
+[CMD]: docker exec sww8go8kc4w4o0w8w0g0c8k0 bash -c 'git clone --depth=1 --recurse-submodules --shallow-submodules -b 'replit-agent' 'https://github.com/cgabhane/author_website' '/artifacts/sww8go8kc4w4o0w8w0g0c8k0' && cd /artifacts/sww8go8kc4w4o0w8w0g0c8k0 && if [ -f .gitmodules ]; then sed -i "s#git@\(.*\):#https://\1/#g" /artifacts/sww8go8kc4w4o0w8w0g0c8k0/.gitmodules || true && git submodule sync && GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" git submodule update --init --recursive --depth=1; fi && cd /artifacts/sww8go8kc4w4o0w8w0g0c8k0 && GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" git lfs pull'
+2025-Oct-05 05:17:14.703467
+Cloning into '/artifacts/sww8go8kc4w4o0w8w0g0c8k0'...
+2025-Oct-05 05:17:18.452981
+[CMD]: docker exec sww8go8kc4w4o0w8w0g0c8k0 bash -c 'cd /artifacts/sww8go8kc4w4o0w8w0g0c8k0 && git log -1 ea6127bff2ae147e198e78866e5ba02fe5828396 --pretty=%B'
+2025-Oct-05 05:17:18.452981
+Update Dockerfile to improve build process and add health check
+2025-Oct-05 05:17:18.464561
+Modify Dockerfile to use `npm install` instead of `npm ci`, change `--production` flag to `--omit=dev`, add a health check endpoint, and update the copy commands for builder artifacts.
+2025-Oct-05 05:17:18.464561
+2025-Oct-05 05:17:18.464561
+Replit-Commit-Author: Agent
+2025-Oct-05 05:17:18.464561
+Replit-Commit-Session-Id: e3dd2a96-053b-4090-9ac1-84c2b3c5b4fe
+2025-Oct-05 05:17:18.464561
+Replit-Commit-Checkpoint-Type: full_checkpoint
+2025-Oct-05 05:17:18.839598
+Image not found (wos04ccw0sokcwwkk0oc80w8:ea6127bff2ae147e198e78866e5ba02fe5828396). Building new image.
+2025-Oct-05 05:17:21.526887
+[CMD]: docker exec sww8go8kc4w4o0w8w0g0c8k0 bash -c 'cat /artifacts/sww8go8kc4w4o0w8w0g0c8k0/Dockerfile'
+2025-Oct-05 05:17:21.526887
+# Multi-stage build for production
+2025-Oct-05 05:17:21.526887
+FROM node:20-alpine AS builder
+2025-Oct-05 05:17:21.526887
+2025-Oct-05 05:17:21.526887
+WORKDIR /app
+2025-Oct-05 05:17:21.526887
+2025-Oct-05 05:17:21.526887
+# Copy package files
+2025-Oct-05 05:17:21.526887
+COPY package*.json ./
+2025-Oct-05 05:17:21.526887
+2025-Oct-05 05:17:21.526887
+# Install all dependencies (needed for build)
+2025-Oct-05 05:17:21.526887
+RUN npm install
+2025-Oct-05 05:17:21.526887
+2025-Oct-05 05:17:21.526887
+# Copy all source code
+2025-Oct-05 05:17:21.526887
+COPY . .
+2025-Oct-05 05:17:21.526887
+2025-Oct-05 05:17:21.526887
+# Build the application (builds both client and server)
+2025-Oct-05 05:17:21.526887
+RUN npm run build
+2025-Oct-05 05:17:21.526887
+2025-Oct-05 05:17:21.526887
+# Production stage
+2025-Oct-05 05:17:21.526887
+FROM node:20-alpine
+2025-Oct-05 05:17:21.526887
+2025-Oct-05 05:17:21.526887
+WORKDIR /app
+2025-Oct-05 05:17:21.526887
+2025-Oct-05 05:17:21.526887
+# Copy package files
+2025-Oct-05 05:17:21.526887
+COPY package*.json ./
+2025-Oct-05 05:17:21.526887
+2025-Oct-05 05:17:21.526887
+# Install only production dependencies
+2025-Oct-05 05:17:21.526887
+RUN npm install --omit=dev
+2025-Oct-05 05:17:21.526887
+2025-Oct-05 05:17:21.526887
+# Copy the built application from builder stage
+2025-Oct-05 05:17:21.526887
+COPY --from=builder /app/dist ./dist
+2025-Oct-05 05:17:21.526887
+2025-Oct-05 05:17:21.526887
+# Set environment variables
+2025-Oct-05 05:17:21.526887
+ENV NODE_ENV=production
+2025-Oct-05 05:17:21.526887
+ENV PORT=5000
+2025-Oct-05 05:17:21.526887
+2025-Oct-05 05:17:21.526887
+# Expose port
+2025-Oct-05 05:17:21.526887
+EXPOSE 5000
+2025-Oct-05 05:17:21.526887
+2025-Oct-05 05:17:21.526887
+# Health check
+2025-Oct-05 05:17:21.526887
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+2025-Oct-05 05:17:21.526887
+CMD node -e "require('http').get('http://localhost:5000/api/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"
+2025-Oct-05 05:17:21.526887
+2025-Oct-05 05:17:21.526887
+# Start the application
+2025-Oct-05 05:17:21.526887
+CMD ["node", "dist/index.js"]
+2025-Oct-05 05:17:22.331614
+----------------------------------------
+2025-Oct-05 05:17:22.337338
+⚠️ Build-time environment variable warning: NODE_ENV='production'
+2025-Oct-05 05:17:22.343251
+Affects: Node.js/npm/yarn/bun/pnpm
+2025-Oct-05 05:17:22.348627
+Issue: Skips devDependencies installation which are often required for building (webpack, typescript, etc.)
+2025-Oct-05 05:17:22.354040
+Recommendation: Uncheck "Available at Buildtime" or use "development" during build
+2025-Oct-05 05:17:22.359437
+2025-Oct-05 05:17:22.364596
+💡 Tips to resolve build issues:
+2025-Oct-05 05:17:22.371509
+1. Set these variables as "Runtime only" in the environment variables settings
+2025-Oct-05 05:17:22.377607
+2. Use different values for build-time (e.g., NODE_ENV=development for build)
+2025-Oct-05 05:17:22.383657
+3. Consider using multi-stage Docker builds to separate build and runtime environments
+2025-Oct-05 05:17:22.798325
+[CMD]: docker exec sww8go8kc4w4o0w8w0g0c8k0 bash -c 'cat /artifacts/sww8go8kc4w4o0w8w0g0c8k0/Dockerfile'
+2025-Oct-05 05:17:22.798325
+# Multi-stage build for production
+2025-Oct-05 05:17:22.798325
+FROM node:20-alpine AS builder
+2025-Oct-05 05:17:22.798325
+2025-Oct-05 05:17:22.798325
+WORKDIR /app
+2025-Oct-05 05:17:22.798325
+2025-Oct-05 05:17:22.798325
+# Copy package files
+2025-Oct-05 05:17:22.798325
+COPY package*.json ./
+2025-Oct-05 05:17:22.798325
+2025-Oct-05 05:17:22.798325
+# Install all dependencies (needed for build)
+2025-Oct-05 05:17:22.798325
+RUN npm install
+2025-Oct-05 05:17:22.798325
+2025-Oct-05 05:17:22.798325
+# Copy all source code
+2025-Oct-05 05:17:22.798325
+COPY . .
+2025-Oct-05 05:17:22.798325
+2025-Oct-05 05:17:22.798325
+# Build the application (builds both client and server)
+2025-Oct-05 05:17:22.798325
+RUN npm run build
+2025-Oct-05 05:17:22.798325
+2025-Oct-05 05:17:22.798325
+# Production stage
+2025-Oct-05 05:17:22.798325
+FROM node:20-alpine
+2025-Oct-05 05:17:22.798325
+2025-Oct-05 05:17:22.798325
+WORKDIR /app
+2025-Oct-05 05:17:22.798325
+2025-Oct-05 05:17:22.798325
+# Copy package files
+2025-Oct-05 05:17:22.798325
+COPY package*.json ./
+2025-Oct-05 05:17:22.798325
+2025-Oct-05 05:17:22.798325
+# Install only production dependencies
+2025-Oct-05 05:17:22.798325
+RUN npm install --omit=dev
+2025-Oct-05 05:17:22.798325
+2025-Oct-05 05:17:22.798325
+# Copy the built application from builder stage
+2025-Oct-05 05:17:22.798325
+COPY --from=builder /app/dist ./dist
+2025-Oct-05 05:17:22.798325
+2025-Oct-05 05:17:22.798325
+# Set environment variables
+2025-Oct-05 05:17:22.798325
+ENV NODE_ENV=production
+2025-Oct-05 05:17:22.798325
+ENV PORT=5000
+2025-Oct-05 05:17:22.798325
+2025-Oct-05 05:17:22.798325
+# Expose port
+2025-Oct-05 05:17:22.798325
+EXPOSE 5000
+2025-Oct-05 05:17:22.798325
+2025-Oct-05 05:17:22.798325
+# Health check
+2025-Oct-05 05:17:22.798325
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+2025-Oct-05 05:17:22.798325
+CMD node -e "require('http').get('http://localhost:5000/api/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"
+2025-Oct-05 05:17:22.798325
+2025-Oct-05 05:17:22.798325
+# Start the application
+2025-Oct-05 05:17:22.798325
+CMD ["node", "dist/index.js"]
+2025-Oct-05 05:17:23.321488
+----------------------------------------
+2025-Oct-05 05:17:23.327556
+Building docker image started.
+2025-Oct-05 05:17:23.332891
+To check the current progress, click on Show Debug Logs.
+2025-Oct-05 05:17:24.278769
+[CMD]: docker exec sww8go8kc4w4o0w8w0g0c8k0 bash -c 'cat /artifacts/build.sh'
+2025-Oct-05 05:17:24.278769
+docker build  --add-host coolify:10.0.1.5 --add-host coolify-db:10.0.1.2 --add-host coolify-realtime:10.0.1.4 --add-host coolify-redis:10.0.1.3 --network host -f /artifacts/sww8go8kc4w4o0w8w0g0c8k0/Dockerfile --build-arg SOURCE_COMMIT='ea6127bff2ae147e198e78866e5ba02fe5828396' --build-arg NODE_ENV=''\''production'\''' --build-arg PORT='5000' --build-arg COOLIFY_URL='http://wos04ccw0sokcwwkk0oc80w8.72.60.202.209.sslip.io' --build-arg COOLIFY_FQDN='wos04ccw0sokcwwkk0oc80w8.72.60.202.209.sslip.io' --build-arg COOLIFY_BRANCH='replit-agent' --build-arg COOLIFY_RESOURCE_UUID='wos04ccw0sokcwwkk0oc80w8' --build-arg COOLIFY_CONTAINER_NAME='wos04ccw0sokcwwkk0oc80w8-051707150853' --build-arg COOLIFY_BUILD_SECRETS_HASH=cfe4b08e01936410327e4b0492a3a79489b3b300f5f629246336ec59c6e0da83 --build-arg 'COOLIFY_URL=http://wos04ccw0sokcwwkk0oc80w8.72.60.202.209.sslip.io' --build-arg 'COOLIFY_FQDN=wos04ccw0sokcwwkk0oc80w8.72.60.202.209.sslip.io' --build-arg 'COOLIFY_BRANCH=replit-agent' --build-arg 'COOLIFY_RESOURCE_UUID=wos04ccw0sokcwwkk0oc80w8' --build-arg 'COOLIFY_CONTAINER_NAME=wos04ccw0sokcwwkk0oc80w8-051707150853' --progress plain -t wos04ccw0sokcwwkk0oc80w8:ea6127bff2ae147e198e78866e5ba02fe5828396 /artifacts/sww8go8kc4w4o0w8w0g0c8k0
+2025-Oct-05 05:17:25.027429
+[CMD]: docker exec sww8go8kc4w4o0w8w0g0c8k0 bash -c 'bash /artifacts/build.sh'
+2025-Oct-05 05:17:25.027429
+#0 building with "default" instance using docker driver
+2025-Oct-05 05:17:25.027429
+2025-Oct-05 05:17:25.027429
+#1 [internal] load build definition from Dockerfile
+2025-Oct-05 05:17:25.027429
+#1 transferring dockerfile: 1.43kB done
+2025-Oct-05 05:17:25.027429
+#1 DONE 0.0s
+2025-Oct-05 05:17:25.027429
+2025-Oct-05 05:17:25.027429
+#2 [internal] load metadata for docker.io/library/node:20-alpine
+2025-Oct-05 05:17:27.538353
+#2 DONE 2.7s
+2025-Oct-05 05:17:27.690105
+#3 [internal] load .dockerignore
+2025-Oct-05 05:17:27.704202
+#3 transferring context: 218B done
+2025-Oct-05 05:17:27.704202
+#3 DONE 0.0s
+2025-Oct-05 05:17:27.704202
+2025-Oct-05 05:17:27.704202
+#4 [builder 1/6] FROM docker.io/library/node:20-alpine@sha256:eabac870db94f7342d6c33560d6613f188bbcf4bbe1f4eb47d5e2a08e1a37722
+2025-Oct-05 05:17:27.704202
+#4 resolve docker.io/library/node:20-alpine@sha256:eabac870db94f7342d6c33560d6613f188bbcf4bbe1f4eb47d5e2a08e1a37722 0.0s done
+2025-Oct-05 05:17:27.704202
+#4 sha256:c88300f8759af46375ccc157a0a0dbf7cdaeded52394b5ce2ce074e3b773fe82 0B / 42.75MB 0.1s
+2025-Oct-05 05:17:27.704202
+#4 sha256:fd345d7e43c58474c833bee593321ab1097dd720bebd8032e75fbf5b81b1e554 0B / 1.26MB 0.1s
+2025-Oct-05 05:17:27.704202
+#4 sha256:0de821d16564893ff12fae9499550711d92157ed1e6705a8c7f7e63eac0a2bb9 0B / 449B 0.1s
+2025-Oct-05 05:17:27.704202
+#4 sha256:eabac870db94f7342d6c33560d6613f188bbcf4bbe1f4eb47d5e2a08e1a37722 7.67kB / 7.67kB done
+2025-Oct-05 05:17:27.704202
+#4 sha256:6a91081a440be0b57336fbc4ee87f3dab1a2fd6f80cdb355dcf960e13bda3b59 1.72kB / 1.72kB done
+2025-Oct-05 05:17:27.704202
+#4 sha256:6c47bbfd232eca9b18296c2b2f3fbf6154c19117ed02a992f7bd6814377df62d 6.42kB / 6.42kB done
+2025-Oct-05 05:17:27.887658
+#4 ...
+2025-Oct-05 05:17:27.887658
+2025-Oct-05 05:17:27.887658
+#5 [internal] load build context
+2025-Oct-05 05:17:27.887658
+#5 transferring context: 566.21kB 0.1s done
+2025-Oct-05 05:17:27.887658
+#5 DONE 0.1s
+2025-Oct-05 05:17:27.887658
+2025-Oct-05 05:17:27.887658
+#4 [builder 1/6] FROM docker.io/library/node:20-alpine@sha256:eabac870db94f7342d6c33560d6613f188bbcf4bbe1f4eb47d5e2a08e1a37722
+2025-Oct-05 05:17:28.199193
+#4 sha256:c88300f8759af46375ccc157a0a0dbf7cdaeded52394b5ce2ce074e3b773fe82 7.34MB / 42.75MB 0.6s
+2025-Oct-05 05:17:28.390631
+#4 sha256:c88300f8759af46375ccc157a0a0dbf7cdaeded52394b5ce2ce074e3b773fe82 23.15MB / 42.75MB 0.8s
+2025-Oct-05 05:17:28.390631
+#4 sha256:fd345d7e43c58474c833bee593321ab1097dd720bebd8032e75fbf5b81b1e554 1.26MB / 1.26MB 0.6s done
+2025-Oct-05 05:17:28.495487
+#4 sha256:c88300f8759af46375ccc157a0a0dbf7cdaeded52394b5ce2ce074e3b773fe82 35.65MB / 42.75MB 0.9s
+2025-Oct-05 05:17:28.644178
+#4 sha256:c88300f8759af46375ccc157a0a0dbf7cdaeded52394b5ce2ce074e3b773fe82 42.75MB / 42.75MB 1.0s
+2025-Oct-05 05:17:28.644178
+#4 extracting sha256:c88300f8759af46375ccc157a0a0dbf7cdaeded52394b5ce2ce074e3b773fe82
+2025-Oct-05 05:17:28.783286
+#4 sha256:c88300f8759af46375ccc157a0a0dbf7cdaeded52394b5ce2ce074e3b773fe82 42.75MB / 42.75MB 1.0s done
+2025-Oct-05 05:17:28.783286
+#4 sha256:0de821d16564893ff12fae9499550711d92157ed1e6705a8c7f7e63eac0a2bb9 449B / 449B 1.0s done
+2025-Oct-05 05:17:32.005806
+#4 extracting sha256:c88300f8759af46375ccc157a0a0dbf7cdaeded52394b5ce2ce074e3b773fe82 3.2s done
+2025-Oct-05 05:17:32.079498
+#4 extracting sha256:fd345d7e43c58474c833bee593321ab1097dd720bebd8032e75fbf5b81b1e554
+2025-Oct-05 05:17:32.457282
+#4 extracting sha256:fd345d7e43c58474c833bee593321ab1097dd720bebd8032e75fbf5b81b1e554 0.1s done
+2025-Oct-05 05:17:32.457282
+#4 extracting sha256:0de821d16564893ff12fae9499550711d92157ed1e6705a8c7f7e63eac0a2bb9 done
+2025-Oct-05 05:17:32.457282
+#4 DONE 4.7s
+2025-Oct-05 05:17:32.457282
+2025-Oct-05 05:17:32.457282
+#6 [builder 2/6] WORKDIR /app
+2025-Oct-05 05:17:32.546713
+#6 DONE 0.2s
+2025-Oct-05 05:17:32.747167
+#7 [builder 3/6] COPY package*.json ./
+2025-Oct-05 05:17:32.747167
+#7 DONE 0.0s
+2025-Oct-05 05:17:32.747167
+2025-Oct-05 05:17:32.747167
+#8 [stage-1 4/5] RUN npm install --omit=dev
+2025-Oct-05 05:17:42.648736
+#8 ...
+2025-Oct-05 05:17:42.648736
+2025-Oct-05 05:17:42.648736
+#9 [builder 4/6] RUN npm install
+2025-Oct-05 05:17:57.035061
+#9 24.44 npm warn deprecated @esbuild-kit/esm-loader@2.6.5: Merged into tsx: https://tsx.is
+2025-Oct-05 05:17:57.204174
+#9 24.61 npm warn deprecated @esbuild-kit/core-utils@3.3.2: Merged into tsx: https://tsx.is
+2025-Oct-05 05:18:23.974058
+#9 ...
+2025-Oct-05 05:18:23.974058
+2025-Oct-05 05:18:23.974058
+#8 [stage-1 4/5] RUN npm install --omit=dev
+2025-Oct-05 05:18:23.974058
+#8 51.37
+2025-Oct-05 05:18:23.974058
+#8 51.37 added 372 packages, and audited 373 packages in 51s
+2025-Oct-05 05:18:24.145640
+#8 51.38
+2025-Oct-05 05:18:24.145640
+#8 51.38 52 packages are looking for funding
+2025-Oct-05 05:18:24.145640
+#8 51.38   run `npm fund` for details
+2025-Oct-05 05:18:24.145640
+#8 51.38
+2025-Oct-05 05:18:24.145640
+#8 51.38 3 low severity vulnerabilities
+2025-Oct-05 05:18:24.145640
+#8 51.38
+2025-Oct-05 05:18:24.145640
+#8 51.38 To address all issues, run:
+2025-Oct-05 05:18:24.145640
+#8 51.38   npm audit fix
+2025-Oct-05 05:18:24.145640
+#8 51.38
+2025-Oct-05 05:18:24.145640
+#8 51.38 Run `npm audit` for details.
+2025-Oct-05 05:18:24.145640
+#8 51.39 npm notice
+2025-Oct-05 05:18:24.145640
+#8 51.39 npm notice New major version of npm available! 10.8.2 -> 11.6.1
+2025-Oct-05 05:18:24.145640
+#8 51.39 npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.6.1
+2025-Oct-05 05:18:24.145640
+#8 51.39 npm notice To update run: npm install -g npm@11.6.1
+2025-Oct-05 05:18:24.145640
+#8 51.39 npm notice
+2025-Oct-05 05:18:24.677215
+#8 DONE 52.1s
+2025-Oct-05 05:18:24.684694
+#9 [builder 4/6] RUN npm install
+2025-Oct-05 05:18:30.483893
+#9 57.89
+2025-Oct-05 05:18:30.483893
+#9 57.89 added 479 packages, and audited 480 packages in 58s
+2025-Oct-05 05:18:30.702854
+#9 57.89
+2025-Oct-05 05:18:30.702854
+#9 57.89 64 packages are looking for funding
+2025-Oct-05 05:18:30.702854
+#9 57.89   run `npm fund` for details
+2025-Oct-05 05:18:30.702854
+#9 57.95
+2025-Oct-05 05:18:30.702854
+#9 57.95 8 vulnerabilities (3 low, 5 moderate)
+2025-Oct-05 05:18:30.702854
+#9 57.95
+2025-Oct-05 05:18:30.702854
+#9 57.95 To address issues that do not require attention, run:
+2025-Oct-05 05:18:30.702854
+#9 57.95   npm audit fix
+2025-Oct-05 05:18:30.702854
+#9 57.95
+2025-Oct-05 05:18:30.702854
+#9 57.95 To address all issues (including breaking changes), run:
+2025-Oct-05 05:18:30.709175
+#9 57.95   npm audit fix --force
+2025-Oct-05 05:18:30.709175
+#9 57.95
+2025-Oct-05 05:18:30.709175
+#9 57.95 Run `npm audit` for details.
+2025-Oct-05 05:18:30.709175
+#9 57.95 npm notice
+2025-Oct-05 05:18:30.709175
+#9 57.95 npm notice New major version of npm available! 10.8.2 -> 11.6.1
+2025-Oct-05 05:18:30.709175
+#9 57.95 npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.6.1
+2025-Oct-05 05:18:30.709175
+#9 57.95 npm notice To update run: npm install -g npm@11.6.1
+2025-Oct-05 05:18:30.709175
+#9 57.95 npm notice
+2025-Oct-05 05:18:30.931980
+#9 DONE 58.3s
+2025-Oct-05 05:18:31.051550
+2025-Oct-05 05:18:31.056681
+#10 [builder 5/6] COPY . .
+2025-Oct-05 05:18:31.056681
+#10 DONE 0.1s
+2025-Oct-05 05:18:31.205709
+#11 [builder 6/6] RUN npm run build
+2025-Oct-05 05:18:31.328235
+#11 0.274
+2025-Oct-05 05:18:31.333742
+#11 0.274 > rest-express@1.0.0 build
+2025-Oct-05 05:18:31.333742
+#11 0.274 > vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+2025-Oct-05 05:18:31.333742
+#11 0.274
+2025-Oct-05 05:18:32.003416
+#11 0.948 vite v5.4.20 building for production...
+2025-Oct-05 05:18:32.148651
+#11 1.093 transforming...
+2025-Oct-05 05:18:35.816044
+#11 4.761
+2025-Oct-05 05:18:35.816044
+#11 4.761 A PostCSS plugin did not pass the `from` option to `postcss.parse`. This may cause imported assets to be incorrectly transformed. If you've recently added a PostCSS plugin that raised this warning, please contact the package author to fix the issue.
+2025-Oct-05 05:18:37.298545
+#11 6.243 ✓ 77 modules transformed.
+2025-Oct-05 05:18:37.411767
+#11 6.258 x Build failed in 5.26s
+2025-Oct-05 05:18:37.411767
+#11 6.259 error during build:
+2025-Oct-05 05:18:37.411767
+#11 6.259 [vite:asset] Could not load /app/attached_assets/profile_1759318487930.jpg (imported by client/src/pages/Home.tsx): ENOENT: no such file or directory, open '/app/attached_assets/profile_1759318487930.jpg'
+2025-Oct-05 05:18:37.411767
+#11 6.259     at async open (node:internal/fs/promises:639:25)
+2025-Oct-05 05:18:37.411767
+#11 6.259     at async Object.readFile (node:internal/fs/promises:1246:14)
+2025-Oct-05 05:18:37.411767
+#11 6.259     at async fileToBuiltUrl (file:///app/node_modules/vite/dist/node/chunks/dep-D_zLpgQd.js:20428:19)
+2025-Oct-05 05:18:37.411767
+#11 6.259     at async Object.load (file:///app/node_modules/vite/dist/node/chunks/dep-D_zLpgQd.js:20328:17)
+2025-Oct-05 05:18:37.411767
+#11 6.259     at async PluginDriver.hookFirstAndGetPlugin (file:///app/node_modules/rollup/dist/es/shared/node-entry.js:20689:28)
+2025-Oct-05 05:18:37.411767
+#11 6.259     at async file:///app/node_modules/rollup/dist/es/shared/node-entry.js:19809:33
+2025-Oct-05 05:18:37.411767
+#11 6.259     at async Queue.work (file:///app/node_modules/rollup/dist/es/shared/node-entry.js:20899:32)
+2025-Oct-05 05:18:37.411767
+#11 ERROR: process "/bin/sh -c npm run build" did not complete successfully: exit code: 1
+2025-Oct-05 05:18:37.444745
+------
+2025-Oct-05 05:18:37.444745
+> [builder 6/6] RUN npm run build:
+2025-Oct-05 05:18:37.444745
+6.258 x Build failed in 5.26s
+2025-Oct-05 05:18:37.444745
+6.259 error during build:
+2025-Oct-05 05:18:37.444745
+6.259 [vite:asset] Could not load /app/attached_assets/profile_1759318487930.jpg (imported by client/src/pages/Home.tsx): ENOENT: no such file or directory, open '/app/attached_assets/profile_1759318487930.jpg'
+2025-Oct-05 05:18:37.444745
+6.259     at async open (node:internal/fs/promises:639:25)
+2025-Oct-05 05:18:37.444745
+6.259     at async Object.readFile (node:internal/fs/promises:1246:14)
+2025-Oct-05 05:18:37.444745
+6.259     at async fileToBuiltUrl (file:///app/node_modules/vite/dist/node/chunks/dep-D_zLpgQd.js:20428:19)
+2025-Oct-05 05:18:37.444745
+6.259     at async Object.load (file:///app/node_modules/vite/dist/node/chunks/dep-D_zLpgQd.js:20328:17)
+2025-Oct-05 05:18:37.444745
+6.259     at async PluginDriver.hookFirstAndGetPlugin (file:///app/node_modules/rollup/dist/es/shared/node-entry.js:20689:28)
+2025-Oct-05 05:18:37.444745
+6.259     at async file:///app/node_modules/rollup/dist/es/shared/node-entry.js:19809:33
+2025-Oct-05 05:18:37.444745
+6.259     at async Queue.work (file:///app/node_modules/rollup/dist/es/shared/node-entry.js:20899:32)
+2025-Oct-05 05:18:37.444745
+------
+2025-Oct-05 05:18:37.455250
+Dockerfile:25
+2025-Oct-05 05:18:37.455250
+--------------------
+2025-Oct-05 05:18:37.455250
+23 |
+2025-Oct-05 05:18:37.455250
+24 |     # Build the application (builds both client and server)
+2025-Oct-05 05:18:37.455250
+25 | >>> RUN npm run build
+2025-Oct-05 05:18:37.455250
+26 |
+2025-Oct-05 05:18:37.455250
+27 |     # Production stage
+2025-Oct-05 05:18:37.455250
+--------------------
+2025-Oct-05 05:18:37.455250
+ERROR: failed to build: failed to solve: process "/bin/sh -c npm run build" did not complete successfully: exit code: 1
+2025-Oct-05 05:18:37.464290
+exit status 1
+2025-Oct-05 05:18:37.522287
+Oops something is not okay, are you okay? 😢
+2025-Oct-05 05:18:37.538329
+#0 building with "default" instance using docker driver
+2025-Oct-05 05:18:37.538329
+2025-Oct-05 05:18:37.538329
+#1 [internal] load build definition from Dockerfile
+2025-Oct-05 05:18:37.538329
+#1 transferring dockerfile: 1.43kB done
+2025-Oct-05 05:18:37.538329
+#1 DONE 0.0s
+2025-Oct-05 05:18:37.538329
+2025-Oct-05 05:18:37.538329
+#2 [internal] load metadata for docker.io/library/node:20-alpine
+2025-Oct-05 05:18:37.538329
+#2 DONE 2.7s
+2025-Oct-05 05:18:37.538329
+2025-Oct-05 05:18:37.538329
+#3 [internal] load .dockerignore
+2025-Oct-05 05:18:37.538329
+#3 transferring context: 218B done
+2025-Oct-05 05:18:37.538329
+#3 DONE 0.0s
+2025-Oct-05 05:18:37.538329
+2025-Oct-05 05:18:37.538329
+#4 [builder 1/6] FROM docker.io/library/node:20-alpine@sha256:eabac870db94f7342d6c33560d6613f188bbcf4bbe1f4eb47d5e2a08e1a37722
+2025-Oct-05 05:18:37.538329
+#4 resolve docker.io/library/node:20-alpine@sha256:eabac870db94f7342d6c33560d6613f188bbcf4bbe1f4eb47d5e2a08e1a37722 0.0s done
+2025-Oct-05 05:18:37.538329
+#4 sha256:c88300f8759af46375ccc157a0a0dbf7cdaeded52394b5ce2ce074e3b773fe82 0B / 42.75MB 0.1s
+2025-Oct-05 05:18:37.538329
+#4 sha256:fd345d7e43c58474c833bee593321ab1097dd720bebd8032e75fbf5b81b1e554 0B / 1.26MB 0.1s
+2025-Oct-05 05:18:37.538329
+#4 sha256:0de821d16564893ff12fae9499550711d92157ed1e6705a8c7f7e63eac0a2bb9 0B / 449B 0.1s
+2025-Oct-05 05:18:37.538329
+#4 sha256:eabac870db94f7342d6c33560d6613f188bbcf4bbe1f4eb47d5e2a08e1a37722 7.67kB / 7.67kB done
+2025-Oct-05 05:18:37.538329
+#4 sha256:6a91081a440be0b57336fbc4ee87f3dab1a2fd6f80cdb355dcf960e13bda3b59 1.72kB / 1.72kB done
+2025-Oct-05 05:18:37.538329
+#4 sha256:6c47bbfd232eca9b18296c2b2f3fbf6154c19117ed02a992f7bd6814377df62d 6.42kB / 6.42kB done
+2025-Oct-05 05:18:37.538329
+#4 ...
+2025-Oct-05 05:18:37.538329
+2025-Oct-05 05:18:37.538329
+#5 [internal] load build context
+2025-Oct-05 05:18:37.538329
+#5 transferring context: 566.21kB 0.1s done
+2025-Oct-05 05:18:37.538329
+#5 DONE 0.1s
+2025-Oct-05 05:18:37.538329
+2025-Oct-05 05:18:37.538329
+#4 [builder 1/6] FROM docker.io/library/node:20-alpine@sha256:eabac870db94f7342d6c33560d6613f188bbcf4bbe1f4eb47d5e2a08e1a37722
+2025-Oct-05 05:18:37.538329
+#4 sha256:c88300f8759af46375ccc157a0a0dbf7cdaeded52394b5ce2ce074e3b773fe82 7.34MB / 42.75MB 0.6s
+2025-Oct-05 05:18:37.538329
+#4 sha256:c88300f8759af46375ccc157a0a0dbf7cdaeded52394b5ce2ce074e3b773fe82 23.15MB / 42.75MB 0.8s
+2025-Oct-05 05:18:37.538329
+#4 sha256:fd345d7e43c58474c833bee593321ab1097dd720bebd8032e75fbf5b81b1e554 1.26MB / 1.26MB 0.6s done
+2025-Oct-05 05:18:37.538329
+#4 sha256:c88300f8759af46375ccc157a0a0dbf7cdaeded52394b5ce2ce074e3b773fe82 35.65MB / 42.75MB 0.9s
+2025-Oct-05 05:18:37.538329
+#4 sha256:c88300f8759af46375ccc157a0a0dbf7cdaeded52394b5ce2ce074e3b773fe82 42.75MB / 42.75MB 1.0s
+2025-Oct-05 05:18:37.538329
+#4 extracting sha256:c88300f8759af46375ccc157a0a0dbf7cdaeded52394b5ce2ce074e3b773fe82
+2025-Oct-05 05:18:37.538329
+#4 sha256:c88300f8759af46375ccc157a0a0dbf7cdaeded52394b5ce2ce074e3b773fe82 42.75MB / 42.75MB 1.0s done
+2025-Oct-05 05:18:37.538329
+#4 sha256:0de821d16564893ff12fae9499550711d92157ed1e6705a8c7f7e63eac0a2bb9 449B / 449B 1.0s done
+2025-Oct-05 05:18:37.538329
+#4 extracting sha256:c88300f8759af46375ccc157a0a0dbf7cdaeded52394b5ce2ce074e3b773fe82 3.2s done
+2025-Oct-05 05:18:37.538329
+#4 extracting sha256:fd345d7e43c58474c833bee593321ab1097dd720bebd8032e75fbf5b81b1e554
+2025-Oct-05 05:18:37.538329
+#4 extracting sha256:fd345d7e43c58474c833bee593321ab1097dd720bebd8032e75fbf5b81b1e554 0.1s done
+2025-Oct-05 05:18:37.538329
+#4 extracting sha256:0de821d16564893ff12fae9499550711d92157ed1e6705a8c7f7e63eac0a2bb9 done
+2025-Oct-05 05:18:37.538329
+#4 DONE 4.7s
+2025-Oct-05 05:18:37.538329
+2025-Oct-05 05:18:37.538329
+#6 [builder 2/6] WORKDIR /app
+2025-Oct-05 05:18:37.538329
+#6 DONE 0.2s
+2025-Oct-05 05:18:37.538329
+2025-Oct-05 05:18:37.538329
+#7 [builder 3/6] COPY package*.json ./
+2025-Oct-05 05:18:37.538329
+#7 DONE 0.0s
+2025-Oct-05 05:18:37.538329
+2025-Oct-05 05:18:37.538329
+#8 [stage-1 4/5] RUN npm install --omit=dev
+2025-Oct-05 05:18:37.538329
+#8 ...
+2025-Oct-05 05:18:37.538329
+2025-Oct-05 05:18:37.538329
+#9 [builder 4/6] RUN npm install
+2025-Oct-05 05:18:37.538329
+#9 24.44 npm warn deprecated @esbuild-kit/esm-loader@2.6.5: Merged into tsx: https://tsx.is
+2025-Oct-05 05:18:37.538329
+#9 24.61 npm warn deprecated @esbuild-kit/core-utils@3.3.2: Merged into tsx: https://tsx.is
+2025-Oct-05 05:18:37.538329
+#9 ...
+2025-Oct-05 05:18:37.538329
+2025-Oct-05 05:18:37.538329
+#8 [stage-1 4/5] RUN npm install --omit=dev
+2025-Oct-05 05:18:37.538329
+#8 51.37
+2025-Oct-05 05:18:37.538329
+#8 51.37 added 372 packages, and audited 373 packages in 51s
+2025-Oct-05 05:18:37.538329
+#8 51.38
+2025-Oct-05 05:18:37.538329
+#8 51.38 52 packages are looking for funding
+2025-Oct-05 05:18:37.538329
+#8 51.38   run `npm fund` for details
+2025-Oct-05 05:18:37.538329
+#8 51.38
+2025-Oct-05 05:18:37.538329
+#8 51.38 3 low severity vulnerabilities
+2025-Oct-05 05:18:37.538329
+#8 51.38
+2025-Oct-05 05:18:37.538329
+#8 51.38 To address all issues, run:
+2025-Oct-05 05:18:37.538329
+#8 51.38   npm audit fix
+2025-Oct-05 05:18:37.538329
+#8 51.38
+2025-Oct-05 05:18:37.538329
+#8 51.38 Run `npm audit` for details.
+2025-Oct-05 05:18:37.538329
+#8 51.39 npm notice
+2025-Oct-05 05:18:37.538329
+#8 51.39 npm notice New major version of npm available! 10.8.2 -> 11.6.1
+2025-Oct-05 05:18:37.538329
+#8 51.39 npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.6.1
+2025-Oct-05 05:18:37.538329
+#8 51.39 npm notice To update run: npm install -g npm@11.6.1
+2025-Oct-05 05:18:37.538329
+#8 51.39 npm notice
+2025-Oct-05 05:18:37.538329
+#8 DONE 52.1s
+2025-Oct-05 05:18:37.538329
+2025-Oct-05 05:18:37.538329
+#9 [builder 4/6] RUN npm install
+2025-Oct-05 05:18:37.538329
+#9 57.89
+2025-Oct-05 05:18:37.538329
+#9 57.89 added 479 packages, and audited 480 packages in 58s
+2025-Oct-05 05:18:37.538329
+#9 57.89
+2025-Oct-05 05:18:37.538329
+#9 57.89 64 packages are looking for funding
+2025-Oct-05 05:18:37.538329
+#9 57.89   run `npm fund` for details
+2025-Oct-05 05:18:37.538329
+#9 57.95
+2025-Oct-05 05:18:37.538329
+#9 57.95 8 vulnerabilities (3 low, 5 moderate)
+2025-Oct-05 05:18:37.538329
+#9 57.95
+2025-Oct-05 05:18:37.538329
+#9 57.95 To address issues that do not require attention, run:
+2025-Oct-05 05:18:37.538329
+#9 57.95   npm audit fix
+2025-Oct-05 05:18:37.538329
+#9 57.95
+2025-Oct-05 05:18:37.538329
+#9 57.95 To address all issues (including breaking changes), run:
+2025-Oct-05 05:18:37.538329
+#9 57.95   npm audit fix --force
+2025-Oct-05 05:18:37.538329
+#9 57.95
+2025-Oct-05 05:18:37.538329
+#9 57.95 Run `npm audit` for details.
+2025-Oct-05 05:18:37.538329
+#9 57.95 npm notice
+2025-Oct-05 05:18:37.538329
+#9 57.95 npm notice New major version of npm available! 10.8.2 -> 11.6.1
+2025-Oct-05 05:18:37.538329
+#9 57.95 npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.6.1
+2025-Oct-05 05:18:37.538329
+#9 57.95 npm notice To update run: npm install -g npm@11.6.1
+2025-Oct-05 05:18:37.538329
+#9 57.95 npm notice
+2025-Oct-05 05:18:37.538329
+#9 DONE 58.3s
+2025-Oct-05 05:18:37.538329
+2025-Oct-05 05:18:37.538329
+#10 [builder 5/6] COPY . .
+2025-Oct-05 05:18:37.538329
+#10 DONE 0.1s
+2025-Oct-05 05:18:37.538329
+2025-Oct-05 05:18:37.538329
+#11 [builder 6/6] RUN npm run build
+2025-Oct-05 05:18:37.538329
+#11 0.274
+2025-Oct-05 05:18:37.538329
+#11 0.274 > rest-express@1.0.0 build
+2025-Oct-05 05:18:37.538329
+#11 0.274 > vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+2025-Oct-05 05:18:37.538329
+#11 0.274
+2025-Oct-05 05:18:37.538329
+#11 0.948 vite v5.4.20 building for production...
+2025-Oct-05 05:18:37.538329
+#11 1.093 transforming...
+2025-Oct-05 05:18:37.538329
+#11 4.761
+2025-Oct-05 05:18:37.538329
+#11 4.761 A PostCSS plugin did not pass the `from` option to `postcss.parse`. This may cause imported assets to be incorrectly transformed. If you've recently added a PostCSS plugin that raised this warning, please contact the package author to fix the issue.
+2025-Oct-05 05:18:37.538329
+#11 6.243 ✓ 77 modules transformed.
+2025-Oct-05 05:18:37.538329
+#11 6.258 x Build failed in 5.26s
+2025-Oct-05 05:18:37.538329
+#11 6.259 error during build:
+2025-Oct-05 05:18:37.538329
+#11 6.259 [vite:asset] Could not load /app/attached_assets/profile_1759318487930.jpg (imported by client/src/pages/Home.tsx): ENOENT: no such file or directory, open '/app/attached_assets/profile_1759318487930.jpg'
+2025-Oct-05 05:18:37.538329
+#11 6.259     at async open (node:internal/fs/promises:639:25)
+2025-Oct-05 05:18:37.538329
+#11 6.259     at async Object.readFile (node:internal/fs/promises:1246:14)
+2025-Oct-05 05:18:37.538329
+#11 6.259     at async fileToBuiltUrl (file:///app/node_modules/vite/dist/node/chunks/dep-D_zLpgQd.js:20428:19)
+2025-Oct-05 05:18:37.538329
+#11 6.259     at async Object.load (file:///app/node_modules/vite/dist/node/chunks/dep-D_zLpgQd.js:20328:17)
+2025-Oct-05 05:18:37.538329
+#11 6.259     at async PluginDriver.hookFirstAndGetPlugin (file:///app/node_modules/rollup/dist/es/shared/node-entry.js:20689:28)
+2025-Oct-05 05:18:37.538329
+#11 6.259     at async file:///app/node_modules/rollup/dist/es/shared/node-entry.js:19809:33
+2025-Oct-05 05:18:37.538329
+#11 6.259     at async Queue.work (file:///app/node_modules/rollup/dist/es/shared/node-entry.js:20899:32)
+2025-Oct-05 05:18:37.538329
+#11 ERROR: process "/bin/sh -c npm run build" did not complete successfully: exit code: 1
+2025-Oct-05 05:18:37.538329
+------
+2025-Oct-05 05:18:37.538329
+> [builder 6/6] RUN npm run build:
+2025-Oct-05 05:18:37.538329
+6.258 x Build failed in 5.26s
+2025-Oct-05 05:18:37.538329
+6.259 error during build:
+2025-Oct-05 05:18:37.538329
+6.259 [vite:asset] Could not load /app/attached_assets/profile_1759318487930.jpg (imported by client/src/pages/Home.tsx): ENOENT: no such file or directory, open '/app/attached_assets/profile_1759318487930.jpg'
+2025-Oct-05 05:18:37.538329
+6.259     at async open (node:internal/fs/promises:639:25)
+2025-Oct-05 05:18:37.538329
+6.259     at async Object.readFile (node:internal/fs/promises:1246:14)
+2025-Oct-05 05:18:37.538329
+6.259     at async fileToBuiltUrl (file:///app/node_modules/vite/dist/node/chunks/dep-D_zLpgQd.js:20428:19)
+2025-Oct-05 05:18:37.538329
+6.259     at async Object.load (file:///app/node_modules/vite/dist/node/chunks/dep-D_zLpgQd.js:20328:17)
+2025-Oct-05 05:18:37.538329
+6.259     at async PluginDriver.hookFirstAndGetPlugin (file:///app/node_modules/rollup/dist/es/shared/node-entry.js:20689:28)
+2025-Oct-05 05:18:37.538329
+6.259     at async file:///app/node_modules/rollup/dist/es/shared/node-entry.js:19809:33
+2025-Oct-05 05:18:37.538329
+6.259     at async Queue.work (file:///app/node_modules/rollup/dist/es/shared/node-entry.js:20899:32)
+2025-Oct-05 05:18:37.538329
+------
+2025-Oct-05 05:18:37.538329
+Dockerfile:25
+2025-Oct-05 05:18:37.538329
+--------------------
+2025-Oct-05 05:18:37.538329
+23 |
+2025-Oct-05 05:18:37.538329
+24 |     # Build the application (builds both client and server)
+2025-Oct-05 05:18:37.538329
+25 | >>> RUN npm run build
+2025-Oct-05 05:18:37.538329
+26 |
+2025-Oct-05 05:18:37.538329
+27 |     # Production stage
+2025-Oct-05 05:18:37.538329
+--------------------
+2025-Oct-05 05:18:37.538329
+ERROR: failed to build: failed to solve: process "/bin/sh -c npm run build" did not complete successfully: exit code: 1
+2025-Oct-05 05:18:37.538329
+exit status 1
+2025-Oct-05 05:18:37.556610
+Deployment failed. Removing the new version of your application.
+2025-Oct-05 05:18:40.419872
+Gracefully shutting down build container: sww8go8kc4w4o0w8w0g0c8k0
+2025-Oct-05 05:18:40.863165
+[CMD]: docker stop --time=30 sww8go8kc4w4o0w8w0g0c8k0
+2025-Oct-05 05:18:40.863165
+Flag --time has been deprecated, use --timeout instead
+2025-Oct-05 05:18:41.039940
+sww8go8kc4w4o0w8w0g0c8k0
+2025-Oct-05 05:18:41.455233
+[CMD]: docker rm -f sww8go8kc4w4o0w8w0g0c8k0
+2025-Oct-05 05:18:41.455233
+Error response from daemon: No such container: sww8go8kc4w4o0w8w0g0c8k0
