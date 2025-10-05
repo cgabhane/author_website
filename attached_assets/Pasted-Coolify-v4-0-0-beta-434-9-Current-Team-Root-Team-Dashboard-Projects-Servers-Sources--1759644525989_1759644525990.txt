@@ -1,0 +1,449 @@
+Coolify
+v4.0.0-beta.434
+
+/
+9+
+Current Team
+
+Root Team
+Dashboard
+Projects
+Servers
+Sources
+Destinations
+S3 Storages
+Shared Variables
+Notifications
+Keys & Tokens
+Tags
+Terminal
+Profile
+Teams
+Settings
+Sponsor us
+Feedback
+Logout
+Deployment
+My first project
+production
+cgabhane/author_website:replit-agent-m0g4004wkwckookko4ww8o8w
+Degraded
+(unhealthy)
+
+Configuration
+Deployments
+Logs
+Terminal
+
+Links
+
+Advanced
+Redeploy
+Restart
+Stop
+Deployment Log
+Hide Debug Logs
+Deployment is Finished.
+
+
+
+
+2025-Oct-05 06:06:05.359453
+Starting deployment of cgabhane/author_website:replit-agent to localhost.
+2025-Oct-05 06:06:06.052207
+Preparing container with helper image: ghcr.io/coollabsio/coolify-helper:1.0.11.
+2025-Oct-05 06:06:06.369847
+[CMD]: docker stop --time=30 kgccc8cs8s0s0k4ocgks08k0
+2025-Oct-05 06:06:06.369847
+Flag --time has been deprecated, use --timeout instead
+2025-Oct-05 06:06:06.374883
+Error response from daemon: No such container: kgccc8cs8s0s0k4ocgks08k0
+2025-Oct-05 06:06:06.556858
+[CMD]: docker rm -f kgccc8cs8s0s0k4ocgks08k0
+2025-Oct-05 06:06:06.556858
+Error response from daemon: No such container: kgccc8cs8s0s0k4ocgks08k0
+2025-Oct-05 06:06:06.859301
+[CMD]: docker run -d --network coolify --name kgccc8cs8s0s0k4ocgks08k0  --rm -v /var/run/docker.sock:/var/run/docker.sock ghcr.io/coollabsio/coolify-helper:1.0.11
+2025-Oct-05 06:06:06.859301
+654c4f554dcc9de58870465ef860924ab6833288166b1dcf2b33dc8bc86808a3
+2025-Oct-05 06:06:08.452605
+[CMD]: docker exec kgccc8cs8s0s0k4ocgks08k0 bash -c 'GIT_SSH_COMMAND="ssh -o ConnectTimeout=30 -p 22 -o Port=22 -o LogLevel=ERROR -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" git ls-remote https://github.com/cgabhane/author_website refs/heads/replit-agent'
+2025-Oct-05 06:06:08.452605
+985d1d6454ef450a607594942b71ad151c9611cf	refs/heads/replit-agent
+2025-Oct-05 06:06:08.471672
+----------------------------------------
+2025-Oct-05 06:06:08.476866
+Importing cgabhane/author_website:replit-agent (commit sha HEAD) to /artifacts/kgccc8cs8s0s0k4ocgks08k0.
+2025-Oct-05 06:06:08.652000
+[CMD]: docker exec kgccc8cs8s0s0k4ocgks08k0 bash -c 'git clone --depth=1 --recurse-submodules --shallow-submodules -b 'replit-agent' 'https://github.com/cgabhane/author_website' '/artifacts/kgccc8cs8s0s0k4ocgks08k0' && cd /artifacts/kgccc8cs8s0s0k4ocgks08k0 && if [ -f .gitmodules ]; then sed -i "s#git@\(.*\):#https://\1/#g" /artifacts/kgccc8cs8s0s0k4ocgks08k0/.gitmodules || true && git submodule sync && GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" git submodule update --init --recursive --depth=1; fi && cd /artifacts/kgccc8cs8s0s0k4ocgks08k0 && GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" git lfs pull'
+2025-Oct-05 06:06:08.652000
+Cloning into '/artifacts/kgccc8cs8s0s0k4ocgks08k0'...
+2025-Oct-05 06:06:10.689430
+[CMD]: docker exec kgccc8cs8s0s0k4ocgks08k0 bash -c 'cd /artifacts/kgccc8cs8s0s0k4ocgks08k0 && git log -1 985d1d6454ef450a607594942b71ad151c9611cf --pretty=%B'
+2025-Oct-05 06:06:10.689430
+Improve responsiveness and navigation across all devices
+2025-Oct-05 06:06:10.694690
+Update CSS to enhance user experience on various screen sizes and refine navigation elements.
+2025-Oct-05 06:06:10.694690
+2025-Oct-05 06:06:10.694690
+Replit-Commit-Author: Agent
+2025-Oct-05 06:06:10.694690
+Replit-Commit-Session-Id: e3dd2a96-053b-4090-9ac1-84c2b3c5b4fe
+2025-Oct-05 06:06:10.694690
+Replit-Commit-Checkpoint-Type: full_checkpoint
+2025-Oct-05 06:06:10.823634
+Image not found (wos04ccw0sokcwwkk0oc80w8:985d1d6454ef450a607594942b71ad151c9611cf). Building new image.
+2025-Oct-05 06:06:11.850704
+[CMD]: docker exec kgccc8cs8s0s0k4ocgks08k0 bash -c 'cat /artifacts/kgccc8cs8s0s0k4ocgks08k0/Dockerfile'
+2025-Oct-05 06:06:11.850704
+# Multi-stage build for production
+2025-Oct-05 06:06:11.850704
+FROM node:20-alpine AS builder
+2025-Oct-05 06:06:11.850704
+2025-Oct-05 06:06:11.850704
+WORKDIR /app
+2025-Oct-05 06:06:11.850704
+2025-Oct-05 06:06:11.850704
+# Copy package files
+2025-Oct-05 06:06:11.850704
+COPY package*.json ./
+2025-Oct-05 06:06:11.850704
+2025-Oct-05 06:06:11.850704
+# Install all dependencies (needed for build)
+2025-Oct-05 06:06:11.850704
+RUN npm install
+2025-Oct-05 06:06:11.850704
+2025-Oct-05 06:06:11.850704
+# Copy all source code
+2025-Oct-05 06:06:11.850704
+COPY . .
+2025-Oct-05 06:06:11.850704
+2025-Oct-05 06:06:11.850704
+# Build the application (builds both client and server)
+2025-Oct-05 06:06:11.850704
+RUN npm run build
+2025-Oct-05 06:06:11.850704
+2025-Oct-05 06:06:11.850704
+# Production stage
+2025-Oct-05 06:06:11.850704
+FROM node:20-alpine
+2025-Oct-05 06:06:11.850704
+2025-Oct-05 06:06:11.850704
+WORKDIR /app
+2025-Oct-05 06:06:11.850704
+2025-Oct-05 06:06:11.850704
+# Copy package files
+2025-Oct-05 06:06:11.850704
+COPY package*.json ./
+2025-Oct-05 06:06:11.850704
+2025-Oct-05 06:06:11.850704
+# Install only production dependencies
+2025-Oct-05 06:06:11.850704
+RUN npm install --omit=dev
+2025-Oct-05 06:06:11.850704
+2025-Oct-05 06:06:11.850704
+# Copy the built application from builder stage
+2025-Oct-05 06:06:11.850704
+COPY --from=builder /app/dist ./dist
+2025-Oct-05 06:06:11.850704
+2025-Oct-05 06:06:11.850704
+# Set environment variables
+2025-Oct-05 06:06:11.850704
+ENV NODE_ENV=production
+2025-Oct-05 06:06:11.850704
+ENV PORT=5000
+2025-Oct-05 06:06:11.850704
+2025-Oct-05 06:06:11.850704
+# Expose port
+2025-Oct-05 06:06:11.850704
+EXPOSE 5000
+2025-Oct-05 06:06:11.850704
+2025-Oct-05 06:06:11.850704
+# Health check
+2025-Oct-05 06:06:11.850704
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+2025-Oct-05 06:06:11.850704
+CMD node -e "require('http').get('http://localhost:5000/api/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"
+2025-Oct-05 06:06:11.850704
+2025-Oct-05 06:06:11.850704
+# Start the application
+2025-Oct-05 06:06:11.850704
+CMD ["node", "dist/index.js"]
+2025-Oct-05 06:06:12.114581
+----------------------------------------
+2025-Oct-05 06:06:12.120563
+⚠️ Build-time environment variable warning: NODE_ENV='production'
+2025-Oct-05 06:06:12.126617
+Affects: Node.js/npm/yarn/bun/pnpm
+2025-Oct-05 06:06:12.132414
+Issue: Skips devDependencies installation which are often required for building (webpack, typescript, etc.)
+2025-Oct-05 06:06:12.138063
+Recommendation: Uncheck "Available at Buildtime" or use "development" during build
+2025-Oct-05 06:06:12.143180
+2025-Oct-05 06:06:12.148302
+💡 Tips to resolve build issues:
+2025-Oct-05 06:06:12.153622
+1. Set these variables as "Runtime only" in the environment variables settings
+2025-Oct-05 06:06:12.158842
+2. Use different values for build-time (e.g., NODE_ENV=development for build)
+2025-Oct-05 06:06:12.164311
+3. Consider using multi-stage Docker builds to separate build and runtime environments
+2025-Oct-05 06:06:12.417687
+[CMD]: docker exec kgccc8cs8s0s0k4ocgks08k0 bash -c 'cat /artifacts/kgccc8cs8s0s0k4ocgks08k0/Dockerfile'
+2025-Oct-05 06:06:12.417687
+# Multi-stage build for production
+2025-Oct-05 06:06:12.417687
+FROM node:20-alpine AS builder
+2025-Oct-05 06:06:12.417687
+2025-Oct-05 06:06:12.417687
+WORKDIR /app
+2025-Oct-05 06:06:12.417687
+2025-Oct-05 06:06:12.417687
+# Copy package files
+2025-Oct-05 06:06:12.417687
+COPY package*.json ./
+2025-Oct-05 06:06:12.417687
+2025-Oct-05 06:06:12.417687
+# Install all dependencies (needed for build)
+2025-Oct-05 06:06:12.417687
+RUN npm install
+2025-Oct-05 06:06:12.417687
+2025-Oct-05 06:06:12.417687
+# Copy all source code
+2025-Oct-05 06:06:12.417687
+COPY . .
+2025-Oct-05 06:06:12.417687
+2025-Oct-05 06:06:12.417687
+# Build the application (builds both client and server)
+2025-Oct-05 06:06:12.417687
+RUN npm run build
+2025-Oct-05 06:06:12.417687
+2025-Oct-05 06:06:12.417687
+# Production stage
+2025-Oct-05 06:06:12.417687
+FROM node:20-alpine
+2025-Oct-05 06:06:12.417687
+2025-Oct-05 06:06:12.417687
+WORKDIR /app
+2025-Oct-05 06:06:12.417687
+2025-Oct-05 06:06:12.417687
+# Copy package files
+2025-Oct-05 06:06:12.417687
+COPY package*.json ./
+2025-Oct-05 06:06:12.417687
+2025-Oct-05 06:06:12.417687
+# Install only production dependencies
+2025-Oct-05 06:06:12.417687
+RUN npm install --omit=dev
+2025-Oct-05 06:06:12.417687
+2025-Oct-05 06:06:12.417687
+# Copy the built application from builder stage
+2025-Oct-05 06:06:12.417687
+COPY --from=builder /app/dist ./dist
+2025-Oct-05 06:06:12.417687
+2025-Oct-05 06:06:12.417687
+# Set environment variables
+2025-Oct-05 06:06:12.417687
+ENV NODE_ENV=production
+2025-Oct-05 06:06:12.417687
+ENV PORT=5000
+2025-Oct-05 06:06:12.417687
+2025-Oct-05 06:06:12.417687
+# Expose port
+2025-Oct-05 06:06:12.417687
+EXPOSE 5000
+2025-Oct-05 06:06:12.417687
+2025-Oct-05 06:06:12.417687
+# Health check
+2025-Oct-05 06:06:12.417687
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+2025-Oct-05 06:06:12.417687
+CMD node -e "require('http').get('http://localhost:5000/api/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"
+2025-Oct-05 06:06:12.417687
+2025-Oct-05 06:06:12.417687
+# Start the application
+2025-Oct-05 06:06:12.417687
+CMD ["node", "dist/index.js"]
+2025-Oct-05 06:06:12.755255
+----------------------------------------
+2025-Oct-05 06:06:12.761342
+Building docker image started.
+2025-Oct-05 06:06:12.774640
+To check the current progress, click on Show Debug Logs.
+2025-Oct-05 06:06:13.178707
+[CMD]: docker exec kgccc8cs8s0s0k4ocgks08k0 bash -c 'cat /artifacts/build.sh'
+2025-Oct-05 06:06:13.178707
+docker build  --add-host coolify:10.0.1.5 --add-host coolify-db:10.0.1.2 --add-host coolify-realtime:10.0.1.4 --add-host coolify-redis:10.0.1.3 --network host -f /artifacts/kgccc8cs8s0s0k4ocgks08k0/Dockerfile --build-arg SOURCE_COMMIT='985d1d6454ef450a607594942b71ad151c9611cf' --build-arg NODE_ENV=''\''production'\''' --build-arg PORT='5000' --build-arg COOLIFY_URL='http://wos04ccw0sokcwwkk0oc80w8.72.60.202.209.sslip.io' --build-arg COOLIFY_FQDN='wos04ccw0sokcwwkk0oc80w8.72.60.202.209.sslip.io' --build-arg COOLIFY_BRANCH='replit-agent' --build-arg COOLIFY_RESOURCE_UUID='wos04ccw0sokcwwkk0oc80w8' --build-arg COOLIFY_CONTAINER_NAME='wos04ccw0sokcwwkk0oc80w8-060602572779' --build-arg COOLIFY_BUILD_SECRETS_HASH=d5ae2bc9b66c6fe55c460947dea713520b92057a06af1ab85767373a8e02764b --build-arg 'COOLIFY_URL=http://wos04ccw0sokcwwkk0oc80w8.72.60.202.209.sslip.io' --build-arg 'COOLIFY_FQDN=wos04ccw0sokcwwkk0oc80w8.72.60.202.209.sslip.io' --build-arg 'COOLIFY_BRANCH=replit-agent' --build-arg 'COOLIFY_RESOURCE_UUID=wos04ccw0sokcwwkk0oc80w8' --build-arg 'COOLIFY_CONTAINER_NAME=wos04ccw0sokcwwkk0oc80w8-060602572779' --progress plain -t wos04ccw0sokcwwkk0oc80w8:985d1d6454ef450a607594942b71ad151c9611cf /artifacts/kgccc8cs8s0s0k4ocgks08k0
+2025-Oct-05 06:06:14.279815
+[CMD]: docker exec kgccc8cs8s0s0k4ocgks08k0 bash -c 'bash /artifacts/build.sh'
+2025-Oct-05 06:06:14.279815
+#0 building with "default" instance using docker driver
+2025-Oct-05 06:06:14.279815
+2025-Oct-05 06:06:14.279815
+#1 [internal] load build definition from Dockerfile
+2025-Oct-05 06:06:14.279815
+#1 transferring dockerfile: 1.43kB done
+2025-Oct-05 06:06:14.279815
+#1 DONE 0.0s
+2025-Oct-05 06:06:14.279815
+2025-Oct-05 06:06:14.279815
+#2 [internal] load metadata for docker.io/library/node:20-alpine
+2025-Oct-05 06:06:15.854785
+#2 DONE 1.7s
+2025-Oct-05 06:06:16.018919
+#3 [internal] load .dockerignore
+2025-Oct-05 06:06:16.018919
+#3 transferring context: 202B done
+2025-Oct-05 06:06:16.018919
+#3 DONE 0.0s
+2025-Oct-05 06:06:16.018919
+2025-Oct-05 06:06:16.018919
+#4 [builder 1/6] FROM docker.io/library/node:20-alpine@sha256:eabac870db94f7342d6c33560d6613f188bbcf4bbe1f4eb47d5e2a08e1a37722
+2025-Oct-05 06:06:16.018919
+#4 DONE 0.0s
+2025-Oct-05 06:06:16.018919
+2025-Oct-05 06:06:16.018919
+#5 [internal] load build context
+2025-Oct-05 06:06:16.134293
+#5 transferring context: 6.99MB 0.2s done
+2025-Oct-05 06:06:16.134293
+#5 DONE 0.2s
+2025-Oct-05 06:06:16.134293
+2025-Oct-05 06:06:16.134293
+#6 [builder 2/6] WORKDIR /app
+2025-Oct-05 06:06:16.134293
+#6 CACHED
+2025-Oct-05 06:06:16.134293
+2025-Oct-05 06:06:16.134293
+#7 [builder 3/6] COPY package*.json ./
+2025-Oct-05 06:06:16.134293
+#7 CACHED
+2025-Oct-05 06:06:16.134293
+2025-Oct-05 06:06:16.134293
+#8 [stage-1 4/5] RUN npm install --omit=dev
+2025-Oct-05 06:06:16.134293
+#8 CACHED
+2025-Oct-05 06:06:16.134293
+2025-Oct-05 06:06:16.134293
+#9 [builder 4/6] RUN npm install
+2025-Oct-05 06:06:16.134293
+#9 CACHED
+2025-Oct-05 06:06:16.134293
+2025-Oct-05 06:06:16.134293
+#10 [builder 5/6] COPY . .
+2025-Oct-05 06:06:16.253271
+#10 DONE 0.1s
+2025-Oct-05 06:06:16.415584
+#11 [builder 6/6] RUN npm run build
+2025-Oct-05 06:06:16.849015
+#11 0.590
+2025-Oct-05 06:06:16.849015
+#11 0.590 > rest-express@1.0.0 build
+2025-Oct-05 06:06:16.849015
+#11 0.590 > vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+2025-Oct-05 06:06:16.849015
+#11 0.590
+2025-Oct-05 06:06:17.354399
+#11 1.097 vite v5.4.20 building for production...
+2025-Oct-05 06:06:17.359172
+2025-Oct-05 06:06:17.494787
+#11 1.236 transforming...
+2025-Oct-05 06:06:21.059998
+#11 4.803
+2025-Oct-05 06:06:21.066106
+#11 4.803 A PostCSS plugin did not pass the `from` option to `postcss.parse`. This may cause imported assets to be incorrectly transformed. If you've recently added a PostCSS plugin that raised this warning, please contact the package author to fix the issue.
+2025-Oct-05 06:06:31.118309
+#11 14.86 ✓ 2666 modules transformed.
+2025-Oct-05 06:06:31.890728
+#11 15.63 rendering chunks...
+2025-Oct-05 06:06:32.112123
+#11 15.67 computing gzip size...
+2025-Oct-05 06:06:32.112123
+#11 15.72 ../dist/public/index.html                                    2.22 kB │ gzip:   0.89 kB
+2025-Oct-05 06:06:32.112123
+#11 15.72 ../dist/public/assets/book2_1759315940962-BGfuyUu9.jpg      54.36 kB
+2025-Oct-05 06:06:32.112123
+#11 15.72 ../dist/public/assets/profile2_1759318518565-BplPyTn0.jpg  142.36 kB
+2025-Oct-05 06:06:32.112123
+#11 15.72 ../dist/public/assets/profile_1759318487930-Cf_na7Bg.jpg   160.93 kB
+2025-Oct-05 06:06:32.112123
+#11 15.72 ../dist/public/assets/book1_1759315863433-ByldWVKz.jpg     202.22 kB
+2025-Oct-05 06:06:32.112123
+#11 15.72 ../dist/public/assets/index-B7IDfT8r.css                    99.53 kB │ gzip:  15.03 kB
+2025-Oct-05 06:06:32.112123
+#11 15.72 ../dist/public/assets/index-DQfkIwG0.js                    542.29 kB │ gzip: 165.32 kB
+2025-Oct-05 06:06:32.112123
+#11 15.72
+2025-Oct-05 06:06:32.112123
+#11 15.72 (!) Some chunks are larger than 500 kB after minification. Consider:
+2025-Oct-05 06:06:32.112123
+#11 15.72 - Using dynamic import() to code-split the application
+2025-Oct-05 06:06:32.112123
+#11 15.72 - Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+2025-Oct-05 06:06:32.112123
+#11 15.72 - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+2025-Oct-05 06:06:32.112123
+#11 15.72 ✓ built in 14.59s
+2025-Oct-05 06:06:32.112123
+#11 15.86
+2025-Oct-05 06:06:32.112123
+#11 15.86   dist/index.js  10.4kb
+2025-Oct-05 06:06:32.112123
+#11 15.86
+2025-Oct-05 06:06:32.112123
+#11 15.86 ⚡ Done in 8ms
+2025-Oct-05 06:06:32.233069
+#11 DONE 16.0s
+2025-Oct-05 06:06:33.259704
+#12 [stage-1 5/5] COPY --from=builder /app/dist ./dist
+2025-Oct-05 06:06:33.474237
+#12 DONE 0.1s
+2025-Oct-05 06:06:33.474237
+2025-Oct-05 06:06:33.474237
+#13 exporting to image
+2025-Oct-05 06:06:33.474237
+#13 exporting layers
+2025-Oct-05 06:06:39.726284
+#13 exporting layers 6.4s done
+2025-Oct-05 06:06:39.726284
+#13 writing image sha256:60e9c4c43a029a2091b255935f45d0555b86f71691255ee2e51b2fb1b980d39a
+2025-Oct-05 06:06:39.776102
+#13 writing image sha256:60e9c4c43a029a2091b255935f45d0555b86f71691255ee2e51b2fb1b980d39a done
+2025-Oct-05 06:06:39.776102
+#13 naming to docker.io/library/wos04ccw0sokcwwkk0oc80w8:985d1d6454ef450a607594942b71ad151c9611cf done
+2025-Oct-05 06:06:39.776102
+#13 DONE 6.4s
+2025-Oct-05 06:06:39.817979
+Building docker image completed.
+2025-Oct-05 06:06:39.833930
+----------------------------------------
+2025-Oct-05 06:06:39.843562
+Application has ports mapped to the host system, rolling update is not supported.
+2025-Oct-05 06:06:39.855804
+Removing old containers.
+2025-Oct-05 06:06:40.460079
+[CMD]: docker exec kgccc8cs8s0s0k4ocgks08k0 bash -c 'SOURCE_COMMIT=985d1d6454ef450a607594942b71ad151c9611cf COOLIFY_URL=http://wos04ccw0sokcwwkk0oc80w8.72.60.202.209.sslip.io COOLIFY_FQDN=wos04ccw0sokcwwkk0oc80w8.72.60.202.209.sslip.io COOLIFY_BRANCH=replit-agent COOLIFY_RESOURCE_UUID=wos04ccw0sokcwwkk0oc80w8 COOLIFY_CONTAINER_NAME=wos04ccw0sokcwwkk0oc80w8-060602572779  docker compose --project-name wos04ccw0sokcwwkk0oc80w8 --project-directory /artifacts/kgccc8cs8s0s0k4ocgks08k0 -f /artifacts/kgccc8cs8s0s0k4ocgks08k0/docker-compose.yaml up --build -d'
+2025-Oct-05 06:06:40.460079
+Container wos04ccw0sokcwwkk0oc80w8-060602572779  Creating
+2025-Oct-05 06:06:40.563917
+wos04ccw0sokcwwkk0oc80w8-060602572779 Your kernel does not support memory swappiness capabilities or the cgroup is not mounted. Memory swappiness discarded.
+2025-Oct-05 06:06:40.581059
+Container wos04ccw0sokcwwkk0oc80w8-060602572779  Created
+2025-Oct-05 06:06:40.581059
+Container wos04ccw0sokcwwkk0oc80w8-060602572779  Starting
+2025-Oct-05 06:06:40.786493
+Container wos04ccw0sokcwwkk0oc80w8-060602572779  Started
+2025-Oct-05 06:06:40.832672
+New container started.
+2025-Oct-05 06:06:41.940216
+Gracefully shutting down build container: kgccc8cs8s0s0k4ocgks08k0
+2025-Oct-05 06:06:42.449974
+[CMD]: docker stop --time=30 kgccc8cs8s0s0k4ocgks08k0
+2025-Oct-05 06:06:42.449974
+Flag --time has been deprecated, use --timeout instead
+2025-Oct-05 06:06:43.149148
+kgccc8cs8s0s0k4ocgks08k0
+2025-Oct-05 06:06:43.825929
+[CMD]: docker rm -f kgccc8cs8s0s0k4ocgks08k0
+2025-Oct-05 06:06:43.825929
+Error response from daemon: No such container: kgccc8cs8s0s0k4ocgks08k0
