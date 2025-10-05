@@ -1,29 +1,43 @@
 # Multi-stage build for production
+FROM node:20-alpine AS builder
 
-# Stage 1: Build the client
-FROM node:18-alpine AS client-build
-WORKDIR /app/client
-COPY client/package*.json ./
-RUN npm ci
-COPY client/ ./
-RUN npm run build
-
-# Stage 2: Setup server with built client
-FROM node:18-alpine
 WORKDIR /app
 
-# Copy server files
-COPY server/package*.json ./
+# Copy package files
+COPY package*.json ./
+
+# Install all dependencies (including devDependencies for build)
+RUN npm ci
+
+# Copy source files
+COPY . .
+
+# Build the application
+RUN npm run build
+
+# Production stage
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
+# Install only production dependencies
 RUN npm ci --production
-COPY server/ ./
 
-# Copy built client files
-COPY --from=client-build /app/client/dist ./dist/public
+# Copy built files from builder
+COPY --from=builder /app/dist ./dist
 
-# Copy shared schema
-COPY shared/ ./shared/
+# Copy shared schema (if needed at runtime)
+COPY shared ./shared
 
+# Set environment
 ENV NODE_ENV=production
+ENV PORT=5000
+
+# Expose port
 EXPOSE 5000
 
-CMD ["node", "index.js"]
+# Start the application
+CMD ["node", "dist/index.js"]
