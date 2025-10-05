@@ -1,0 +1,220 @@
+Coolify
+v4.0.0-beta.434
+
+/
+
+Current Team
+
+Root Team
+Dashboard
+Projects
+Servers
+Sources
+Destinations
+S3 Storages
+Shared Variables
+Notifications
+Keys & Tokens
+Tags
+Terminal
+Profile
+Teams
+Settings
+Sponsor us
+Feedback
+Logout
+Deployment
+My first project
+production
+cgabhane/author_website:replit-agent-m0g4004wkwckookko4ww8o8w
+Degraded
+(unhealthy)
+
+Configuration
+Deployments
+Logs
+Terminal
+
+Links
+
+Advanced
+Redeploy
+Restart
+Stop
+Deployment Log
+Hide Debug Logs
+Deployment is Finished.
+
+
+
+
+2025-Oct-05 06:54:11.695977
+Starting deployment of cgabhane/author_website:replit-agent to localhost.
+2025-Oct-05 06:54:12.424755
+Preparing container with helper image: ghcr.io/coollabsio/coolify-helper:1.0.11.
+2025-Oct-05 06:54:12.789847
+[CMD]: docker stop --time=30 m4kgw8g44ws80sccwwkgkwcg
+2025-Oct-05 06:54:12.789847
+Flag --time has been deprecated, use --timeout instead
+2025-Oct-05 06:54:12.793136
+Error response from daemon: No such container: m4kgw8g44ws80sccwwkgkwcg
+2025-Oct-05 06:54:13.165525
+[CMD]: docker rm -f m4kgw8g44ws80sccwwkgkwcg
+2025-Oct-05 06:54:13.165525
+Error response from daemon: No such container: m4kgw8g44ws80sccwwkgkwcg
+2025-Oct-05 06:54:13.789128
+[CMD]: docker run -d --network coolify --name m4kgw8g44ws80sccwwkgkwcg  --rm -v /var/run/docker.sock:/var/run/docker.sock ghcr.io/coollabsio/coolify-helper:1.0.11
+2025-Oct-05 06:54:13.789128
+4ef91ba7fb4de66c9d46c20edb69387a32c6cc45a7c463cfea9fefa1414e23b0
+2025-Oct-05 06:54:15.767171
+[CMD]: docker exec m4kgw8g44ws80sccwwkgkwcg bash -c 'GIT_SSH_COMMAND="ssh -o ConnectTimeout=30 -p 22 -o Port=22 -o LogLevel=ERROR -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" git ls-remote https://github.com/cgabhane/author_website refs/heads/replit-agent'
+2025-Oct-05 06:54:15.767171
+cbbe6c245d9849b6226f7113dbbd32153a45493c	refs/heads/replit-agent
+2025-Oct-05 06:54:15.809849
+----------------------------------------
+2025-Oct-05 06:54:15.823011
+Importing cgabhane/author_website:replit-agent (commit sha HEAD) to /artifacts/m4kgw8g44ws80sccwwkgkwcg.
+2025-Oct-05 06:54:16.267585
+[CMD]: docker exec m4kgw8g44ws80sccwwkgkwcg bash -c 'git clone --depth=1 --recurse-submodules --shallow-submodules -b 'replit-agent' 'https://github.com/cgabhane/author_website' '/artifacts/m4kgw8g44ws80sccwwkgkwcg' && cd /artifacts/m4kgw8g44ws80sccwwkgkwcg && if [ -f .gitmodules ]; then sed -i "s#git@\(.*\):#https://\1/#g" /artifacts/m4kgw8g44ws80sccwwkgkwcg/.gitmodules || true && git submodule sync && GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" git submodule update --init --recursive --depth=1; fi && cd /artifacts/m4kgw8g44ws80sccwwkgkwcg && GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" git lfs pull'
+2025-Oct-05 06:54:16.267585
+Cloning into '/artifacts/m4kgw8g44ws80sccwwkgkwcg'...
+2025-Oct-05 06:54:20.193224
+[CMD]: docker exec m4kgw8g44ws80sccwwkgkwcg bash -c 'cd /artifacts/m4kgw8g44ws80sccwwkgkwcg && git log -1 cbbe6c245d9849b6226f7113dbbd32153a45493c --pretty=%B'
+2025-Oct-05 06:54:20.193224
+Fix issues preventing pages from loading correctly
+2025-Oct-05 06:54:20.193224
+2025-Oct-05 06:54:20.193224
+Address 404 errors and improve page load stability across the application.
+2025-Oct-05 06:54:20.193224
+2025-Oct-05 06:54:20.193224
+Replit-Commit-Author: Agent
+2025-Oct-05 06:54:20.193224
+Replit-Commit-Session-Id: e3dd2a96-053b-4090-9ac1-84c2b3c5b4fe
+2025-Oct-05 06:54:20.193224
+Replit-Commit-Checkpoint-Type: full_checkpoint
+2025-Oct-05 06:54:20.193224
+Replit-Commit-Screenshot-Url: https://storage.googleapis.com/screenshot-production-us-central1/acbed424-eb26-4c77-a75f-2c5768fff5db/e3dd2a96-053b-4090-9ac1-84c2b3c5b4fe/DT55cHl
+2025-Oct-05 06:54:20.631002
+[CMD]: docker images -q wos04ccw0sokcwwkk0oc80w8:cbbe6c245d9849b6226f7113dbbd32153a45493c 2>/dev/null
+2025-Oct-05 06:54:20.631002
+f7326a148518
+2025-Oct-05 06:54:20.650151
+No configuration changed & image found (wos04ccw0sokcwwkk0oc80w8:cbbe6c245d9849b6226f7113dbbd32153a45493c) with the same Git Commit SHA. Build step skipped.
+2025-Oct-05 06:54:22.897760
+[CMD]: docker exec m4kgw8g44ws80sccwwkgkwcg bash -c 'cat /artifacts/m4kgw8g44ws80sccwwkgkwcg/Dockerfile'
+2025-Oct-05 06:54:22.897760
+# Multi-stage build for production
+2025-Oct-05 06:54:22.897760
+FROM node:20-alpine AS builder
+2025-Oct-05 06:54:22.897760
+2025-Oct-05 06:54:22.897760
+WORKDIR /app
+2025-Oct-05 06:54:22.897760
+2025-Oct-05 06:54:22.897760
+# Copy package files
+2025-Oct-05 06:54:22.897760
+COPY package*.json ./
+2025-Oct-05 06:54:22.897760
+2025-Oct-05 06:54:22.897760
+# Install all dependencies (needed for build)
+2025-Oct-05 06:54:22.897760
+RUN npm install
+2025-Oct-05 06:54:22.897760
+2025-Oct-05 06:54:22.897760
+# Copy all source code
+2025-Oct-05 06:54:22.897760
+COPY . .
+2025-Oct-05 06:54:22.897760
+2025-Oct-05 06:54:22.897760
+# Build the application (builds both client and server)
+2025-Oct-05 06:54:22.897760
+RUN npm run build
+2025-Oct-05 06:54:22.897760
+2025-Oct-05 06:54:22.897760
+# Production stage
+2025-Oct-05 06:54:22.897760
+FROM node:20-alpine
+2025-Oct-05 06:54:22.897760
+2025-Oct-05 06:54:22.897760
+WORKDIR /app
+2025-Oct-05 06:54:22.897760
+2025-Oct-05 06:54:22.897760
+# Copy package files
+2025-Oct-05 06:54:22.897760
+COPY package*.json ./
+2025-Oct-05 06:54:22.897760
+2025-Oct-05 06:54:22.897760
+# Install only production dependencies
+2025-Oct-05 06:54:22.897760
+RUN npm install --omit=dev
+2025-Oct-05 06:54:22.897760
+2025-Oct-05 06:54:22.897760
+# Copy the built application from builder stage
+2025-Oct-05 06:54:22.897760
+COPY --from=builder /app/dist ./dist
+2025-Oct-05 06:54:22.897760
+2025-Oct-05 06:54:22.897760
+# Set environment variables
+2025-Oct-05 06:54:22.897760
+ENV NODE_ENV=production
+2025-Oct-05 06:54:22.897760
+ENV PORT=5000
+2025-Oct-05 06:54:22.897760
+2025-Oct-05 06:54:22.897760
+# Expose port
+2025-Oct-05 06:54:22.897760
+EXPOSE 5000
+2025-Oct-05 06:54:22.897760
+2025-Oct-05 06:54:22.897760
+# Health check
+2025-Oct-05 06:54:22.897760
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+2025-Oct-05 06:54:22.897760
+CMD node -e "require('http').get('http://localhost:5000/api/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"
+2025-Oct-05 06:54:22.897760
+2025-Oct-05 06:54:22.897760
+# Start the application
+2025-Oct-05 06:54:22.897760
+CMD ["node", "dist/index.js"]
+2025-Oct-05 06:54:23.544355
+----------------------------------------
+2025-Oct-05 06:54:23.569770
+Application has ports mapped to the host system, rolling update is not supported.
+2025-Oct-05 06:54:23.596463
+Removing old containers.
+2025-Oct-05 06:54:24.441939
+[CMD]: docker stop --time=30 wos04ccw0sokcwwkk0oc80w8-064121893491
+2025-Oct-05 06:54:24.441939
+Flag --time has been deprecated, use --timeout instead
+2025-Oct-05 06:54:24.457700
+wos04ccw0sokcwwkk0oc80w8-064121893491
+2025-Oct-05 06:54:24.830110
+[CMD]: docker rm -f wos04ccw0sokcwwkk0oc80w8-064121893491
+2025-Oct-05 06:54:24.830110
+wos04ccw0sokcwwkk0oc80w8-064121893491
+2025-Oct-05 06:54:25.474759
+[CMD]: docker exec m4kgw8g44ws80sccwwkgkwcg bash -c 'SOURCE_COMMIT=cbbe6c245d9849b6226f7113dbbd32153a45493c COOLIFY_URL=http://wos04ccw0sokcwwkk0oc80w8.72.60.202.209.sslip.io COOLIFY_FQDN=wos04ccw0sokcwwkk0oc80w8.72.60.202.209.sslip.io COOLIFY_BRANCH=replit-agent COOLIFY_RESOURCE_UUID=wos04ccw0sokcwwkk0oc80w8 COOLIFY_CONTAINER_NAME=wos04ccw0sokcwwkk0oc80w8-065410809525  docker compose --project-name wos04ccw0sokcwwkk0oc80w8 --project-directory /artifacts/m4kgw8g44ws80sccwwkgkwcg -f /artifacts/m4kgw8g44ws80sccwwkgkwcg/docker-compose.yaml up --build -d'
+2025-Oct-05 06:54:25.474759
+Container wos04ccw0sokcwwkk0oc80w8-065410809525  Creating
+2025-Oct-05 06:54:25.571014
+wos04ccw0sokcwwkk0oc80w8-065410809525 Your kernel does not support memory swappiness capabilities or the cgroup is not mounted. Memory swappiness discarded.
+2025-Oct-05 06:54:25.583941
+Container wos04ccw0sokcwwkk0oc80w8-065410809525  Created
+2025-Oct-05 06:54:25.583941
+Container wos04ccw0sokcwwkk0oc80w8-065410809525  Starting
+2025-Oct-05 06:54:25.838712
+Container wos04ccw0sokcwwkk0oc80w8-065410809525  Started
+2025-Oct-05 06:54:25.874636
+New container started.
+2025-Oct-05 06:54:29.148664
+Gracefully shutting down build container: m4kgw8g44ws80sccwwkgkwcg
+2025-Oct-05 06:54:30.303121
+[CMD]: docker stop --time=30 m4kgw8g44ws80sccwwkgkwcg
+2025-Oct-05 06:54:30.303121
+Flag --time has been deprecated, use --timeout instead
+2025-Oct-05 06:54:30.619720
+m4kgw8g44ws80sccwwkgkwcg
+2025-Oct-05 06:54:31.751629
+[CMD]: docker rm -f m4kgw8g44ws80sccwwkgkwcg
+2025-Oct-05 06:54:31.751629
+Error response from daemon: No such container: m4kgw8g44ws80sccwwkgkwcg
