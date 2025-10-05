@@ -7,6 +7,11 @@ import { Resend } from "resend";
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // GET /api/health - Health check endpoint for Docker/Coolify
+  app.get("/api/health", (_req, res) => {
+    res.status(200).json({ status: "ok", timestamp: new Date().toISOString() });
+  });
+
   // POST /api/appointments - Create new appointment and send email notifications
   app.post("/api/appointments", async (req, res) => {
     try {
