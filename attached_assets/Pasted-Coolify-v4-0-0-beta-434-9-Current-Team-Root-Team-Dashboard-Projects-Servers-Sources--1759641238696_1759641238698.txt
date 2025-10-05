@@ -1,0 +1,815 @@
+Coolify
+v4.0.0-beta.434
+
+/
+9+
+Current Team
+
+Root Team
+Dashboard
+Projects
+Servers
+Sources
+Destinations
+S3 Storages
+Shared Variables
+Notifications
+Keys & Tokens
+Tags
+Terminal
+Profile
+Teams
+Settings
+Sponsor us
+Feedback
+Logout
+Deployment
+My first project
+production
+cgabhane/author_website:replit-agent-m0g4004wkwckookko4ww8o8w
+Exited
+Configuration
+Deployments
+Logs
+Terminal
+
+Links
+
+Advanced
+Deploy
+Deployment Log
+Hide Debug Logs
+Deployment is Failed.
+
+
+
+
+2025-Oct-05 05:12:10.869249
+Starting deployment of cgabhane/author_website:replit-agent to localhost.
+2025-Oct-05 05:12:11.267046
+Preparing container with helper image: ghcr.io/coollabsio/coolify-helper:1.0.11.
+2025-Oct-05 05:12:11.407764
+[CMD]: docker stop --time=30 tw40gwow4o088scwcw8g4c08
+2025-Oct-05 05:12:11.407764
+Flag --time has been deprecated, use --timeout instead
+2025-Oct-05 05:12:11.410300
+Error response from daemon: No such container: tw40gwow4o088scwcw8g4c08
+2025-Oct-05 05:12:11.525296
+[CMD]: docker rm -f tw40gwow4o088scwcw8g4c08
+2025-Oct-05 05:12:11.525296
+Error response from daemon: No such container: tw40gwow4o088scwcw8g4c08
+2025-Oct-05 05:12:11.720100
+[CMD]: docker run -d --network coolify --name tw40gwow4o088scwcw8g4c08  --rm -v /var/run/docker.sock:/var/run/docker.sock ghcr.io/coollabsio/coolify-helper:1.0.11
+2025-Oct-05 05:12:11.720100
+77fd9d4de2090511904a4ed21d54152dbe57bb421da26fe9a590bf98be497f9d
+2025-Oct-05 05:12:13.119321
+[CMD]: docker exec tw40gwow4o088scwcw8g4c08 bash -c 'GIT_SSH_COMMAND="ssh -o ConnectTimeout=30 -p 22 -o Port=22 -o LogLevel=ERROR -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" git ls-remote https://github.com/cgabhane/author_website refs/heads/replit-agent'
+2025-Oct-05 05:12:13.119321
+b4b1a1d307473ab97ef041021e3a67edc253c151	refs/heads/replit-agent
+2025-Oct-05 05:12:13.141531
+----------------------------------------
+2025-Oct-05 05:12:13.146303
+Importing cgabhane/author_website:replit-agent (commit sha HEAD) to /artifacts/tw40gwow4o088scwcw8g4c08.
+2025-Oct-05 05:12:13.315295
+[CMD]: docker exec tw40gwow4o088scwcw8g4c08 bash -c 'git clone --depth=1 --recurse-submodules --shallow-submodules -b 'replit-agent' 'https://github.com/cgabhane/author_website' '/artifacts/tw40gwow4o088scwcw8g4c08' && cd /artifacts/tw40gwow4o088scwcw8g4c08 && if [ -f .gitmodules ]; then sed -i "s#git@\(.*\):#https://\1/#g" /artifacts/tw40gwow4o088scwcw8g4c08/.gitmodules || true && git submodule sync && GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" git submodule update --init --recursive --depth=1; fi && cd /artifacts/tw40gwow4o088scwcw8g4c08 && GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" git lfs pull'
+2025-Oct-05 05:12:13.315295
+Cloning into '/artifacts/tw40gwow4o088scwcw8g4c08'...
+2025-Oct-05 05:12:15.419920
+[CMD]: docker exec tw40gwow4o088scwcw8g4c08 bash -c 'cd /artifacts/tw40gwow4o088scwcw8g4c08 && git log -1 b4b1a1d307473ab97ef041021e3a67edc253c151 --pretty=%B'
+2025-Oct-05 05:12:15.419920
+Improve overall user experience and visual appeal of the website
+2025-Oct-05 05:12:15.425996
+No changes to commit
+2025-Oct-05 05:12:15.425996
+2025-Oct-05 05:12:15.425996
+Replit-Commit-Author: Agent
+2025-Oct-05 05:12:15.425996
+Replit-Commit-Session-Id: e3dd2a96-053b-4090-9ac1-84c2b3c5b4fe
+2025-Oct-05 05:12:15.425996
+Replit-Commit-Checkpoint-Type: full_checkpoint
+2025-Oct-05 05:12:15.425996
+Replit-Commit-Screenshot-Url: https://storage.googleapis.com/screenshot-production-us-central1/acbed424-eb26-4c77-a75f-2c5768fff5db/e3dd2a96-053b-4090-9ac1-84c2b3c5b4fe/OazWl2S
+2025-Oct-05 05:12:15.571331
+Image not found (wos04ccw0sokcwwkk0oc80w8:b4b1a1d307473ab97ef041021e3a67edc253c151). Building new image.
+2025-Oct-05 05:12:16.548319
+[CMD]: docker exec tw40gwow4o088scwcw8g4c08 bash -c 'cat /artifacts/tw40gwow4o088scwcw8g4c08/Dockerfile'
+2025-Oct-05 05:12:16.548319
+# Multi-stage build for production
+2025-Oct-05 05:12:16.548319
+2025-Oct-05 05:12:16.548319
+# Stage 1: Build the client
+2025-Oct-05 05:12:16.548319
+FROM node:18-alpine AS client-build
+2025-Oct-05 05:12:16.548319
+WORKDIR /app/client
+2025-Oct-05 05:12:16.548319
+COPY client/package*.json ./
+2025-Oct-05 05:12:16.548319
+RUN npm ci
+2025-Oct-05 05:12:16.548319
+COPY client/ ./
+2025-Oct-05 05:12:16.548319
+RUN npm run build
+2025-Oct-05 05:12:16.548319
+2025-Oct-05 05:12:16.548319
+# Stage 2: Setup server with built client
+2025-Oct-05 05:12:16.548319
+FROM node:18-alpine
+2025-Oct-05 05:12:16.548319
+WORKDIR /app
+2025-Oct-05 05:12:16.548319
+2025-Oct-05 05:12:16.548319
+# Copy server files
+2025-Oct-05 05:12:16.548319
+COPY server/package*.json ./
+2025-Oct-05 05:12:16.548319
+RUN npm ci --production
+2025-Oct-05 05:12:16.548319
+COPY server/ ./
+2025-Oct-05 05:12:16.548319
+2025-Oct-05 05:12:16.548319
+# Copy built client files
+2025-Oct-05 05:12:16.548319
+COPY --from=client-build /app/client/dist ./dist/public
+2025-Oct-05 05:12:16.548319
+2025-Oct-05 05:12:16.548319
+# Copy shared schema
+2025-Oct-05 05:12:16.548319
+COPY shared/ ./shared/
+2025-Oct-05 05:12:16.548319
+2025-Oct-05 05:12:16.548319
+ENV NODE_ENV=production
+2025-Oct-05 05:12:16.548319
+EXPOSE 5000
+2025-Oct-05 05:12:16.548319
+2025-Oct-05 05:12:16.548319
+CMD ["node", "index.js"]
+2025-Oct-05 05:12:16.975300
+----------------------------------------
+2025-Oct-05 05:12:16.990703
+⚠️ Build-time environment variable warning: NODE_ENV='production'
+2025-Oct-05 05:12:17.001716
+Affects: Node.js/npm/yarn/bun/pnpm
+2025-Oct-05 05:12:17.013776
+Issue: Skips devDependencies installation which are often required for building (webpack, typescript, etc.)
+2025-Oct-05 05:12:17.019352
+Recommendation: Uncheck "Available at Buildtime" or use "development" during build
+2025-Oct-05 05:12:17.031844
+2025-Oct-05 05:12:17.044740
+💡 Tips to resolve build issues:
+2025-Oct-05 05:12:17.056661
+1. Set these variables as "Runtime only" in the environment variables settings
+2025-Oct-05 05:12:17.068529
+2. Use different values for build-time (e.g., NODE_ENV=development for build)
+2025-Oct-05 05:12:17.079617
+3. Consider using multi-stage Docker builds to separate build and runtime environments
+2025-Oct-05 05:12:17.330806
+[CMD]: docker exec tw40gwow4o088scwcw8g4c08 bash -c 'cat /artifacts/tw40gwow4o088scwcw8g4c08/Dockerfile'
+2025-Oct-05 05:12:17.330806
+# Multi-stage build for production
+2025-Oct-05 05:12:17.330806
+2025-Oct-05 05:12:17.330806
+# Stage 1: Build the client
+2025-Oct-05 05:12:17.330806
+FROM node:18-alpine AS client-build
+2025-Oct-05 05:12:17.330806
+WORKDIR /app/client
+2025-Oct-05 05:12:17.330806
+COPY client/package*.json ./
+2025-Oct-05 05:12:17.330806
+RUN npm ci
+2025-Oct-05 05:12:17.330806
+COPY client/ ./
+2025-Oct-05 05:12:17.330806
+RUN npm run build
+2025-Oct-05 05:12:17.330806
+2025-Oct-05 05:12:17.330806
+# Stage 2: Setup server with built client
+2025-Oct-05 05:12:17.330806
+FROM node:18-alpine
+2025-Oct-05 05:12:17.330806
+WORKDIR /app
+2025-Oct-05 05:12:17.330806
+2025-Oct-05 05:12:17.330806
+# Copy server files
+2025-Oct-05 05:12:17.330806
+COPY server/package*.json ./
+2025-Oct-05 05:12:17.330806
+RUN npm ci --production
+2025-Oct-05 05:12:17.330806
+COPY server/ ./
+2025-Oct-05 05:12:17.330806
+2025-Oct-05 05:12:17.330806
+# Copy built client files
+2025-Oct-05 05:12:17.330806
+COPY --from=client-build /app/client/dist ./dist/public
+2025-Oct-05 05:12:17.330806
+2025-Oct-05 05:12:17.330806
+# Copy shared schema
+2025-Oct-05 05:12:17.330806
+COPY shared/ ./shared/
+2025-Oct-05 05:12:17.330806
+2025-Oct-05 05:12:17.330806
+ENV NODE_ENV=production
+2025-Oct-05 05:12:17.330806
+EXPOSE 5000
+2025-Oct-05 05:12:17.330806
+2025-Oct-05 05:12:17.330806
+CMD ["node", "index.js"]
+2025-Oct-05 05:12:17.597859
+----------------------------------------
+2025-Oct-05 05:12:17.603466
+Building docker image started.
+2025-Oct-05 05:12:17.608661
+To check the current progress, click on Show Debug Logs.
+2025-Oct-05 05:12:17.961048
+[CMD]: docker exec tw40gwow4o088scwcw8g4c08 bash -c 'cat /artifacts/build.sh'
+2025-Oct-05 05:12:17.961048
+docker build  --add-host coolify:10.0.1.5 --add-host coolify-db:10.0.1.2 --add-host coolify-realtime:10.0.1.4 --add-host coolify-redis:10.0.1.3 --network host -f /artifacts/tw40gwow4o088scwcw8g4c08/Dockerfile --build-arg SOURCE_COMMIT='b4b1a1d307473ab97ef041021e3a67edc253c151' --build-arg NODE_ENV=''\''production'\''' --build-arg PORT='5000' --build-arg COOLIFY_URL='http://wos04ccw0sokcwwkk0oc80w8.72.60.202.209.sslip.io' --build-arg COOLIFY_FQDN='wos04ccw0sokcwwkk0oc80w8.72.60.202.209.sslip.io' --build-arg COOLIFY_BRANCH='replit-agent' --build-arg COOLIFY_RESOURCE_UUID='wos04ccw0sokcwwkk0oc80w8' --build-arg COOLIFY_CONTAINER_NAME='wos04ccw0sokcwwkk0oc80w8-051209693775' --build-arg COOLIFY_BUILD_SECRETS_HASH=3f50a3631b1278c560a501271304a6c22b88ea1ed60c84c8485410e84143f951 --build-arg 'COOLIFY_URL=http://wos04ccw0sokcwwkk0oc80w8.72.60.202.209.sslip.io' --build-arg 'COOLIFY_FQDN=wos04ccw0sokcwwkk0oc80w8.72.60.202.209.sslip.io' --build-arg 'COOLIFY_BRANCH=replit-agent' --build-arg 'COOLIFY_RESOURCE_UUID=wos04ccw0sokcwwkk0oc80w8' --build-arg 'COOLIFY_CONTAINER_NAME=wos04ccw0sokcwwkk0oc80w8-051209693775' --progress plain -t wos04ccw0sokcwwkk0oc80w8:b4b1a1d307473ab97ef041021e3a67edc253c151 /artifacts/tw40gwow4o088scwcw8g4c08
+2025-Oct-05 05:12:18.468086
+[CMD]: docker exec tw40gwow4o088scwcw8g4c08 bash -c 'bash /artifacts/build.sh'
+2025-Oct-05 05:12:18.468086
+#0 building with "default" instance using docker driver
+2025-Oct-05 05:12:18.468086
+2025-Oct-05 05:12:18.468086
+#1 [internal] load build definition from Dockerfile
+2025-Oct-05 05:12:18.468086
+#1 transferring dockerfile: 1.07kB done
+2025-Oct-05 05:12:18.468086
+#1 DONE 0.0s
+2025-Oct-05 05:12:18.468086
+2025-Oct-05 05:12:18.468086
+#2 [internal] load metadata for docker.io/library/node:18-alpine
+2025-Oct-05 05:12:21.033069
+#2 DONE 2.7s
+2025-Oct-05 05:12:21.197347
+2025-Oct-05 05:12:21.206131
+#3 [internal] load .dockerignore
+2025-Oct-05 05:12:21.206131
+#3 transferring context: 218B done
+2025-Oct-05 05:12:21.206131
+#3 DONE 0.0s
+2025-Oct-05 05:12:21.206131
+2025-Oct-05 05:12:21.206131
+#4 [client-build 1/6] FROM docker.io/library/node:18-alpine@sha256:8d6421d663b4c28fd3ebc498332f249011d118945588d0a35cb9bc4b8ca09d9e
+2025-Oct-05 05:12:21.206131
+#4 resolve docker.io/library/node:18-alpine@sha256:8d6421d663b4c28fd3ebc498332f249011d118945588d0a35cb9bc4b8ca09d9e 0.0s done
+2025-Oct-05 05:12:21.323189
+#4 ...
+2025-Oct-05 05:12:21.323189
+2025-Oct-05 05:12:21.323189
+#5 [internal] load build context
+2025-Oct-05 05:12:21.323189
+#5 transferring context: 250.90kB 0.1s done
+2025-Oct-05 05:12:21.323189
+#5 DONE 0.1s
+2025-Oct-05 05:12:21.323189
+2025-Oct-05 05:12:21.323189
+#4 [client-build 1/6] FROM docker.io/library/node:18-alpine@sha256:8d6421d663b4c28fd3ebc498332f249011d118945588d0a35cb9bc4b8ca09d9e
+2025-Oct-05 05:12:21.323189
+#4 sha256:f18232174bc91741fdf3da96d85011092101a032a93a388b79e99e69c2d5c870 0B / 3.64MB 0.2s
+2025-Oct-05 05:12:21.323189
+#4 sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 0B / 40.01MB 0.2s
+2025-Oct-05 05:12:21.323189
+#4 sha256:1e5a4c89cee5c0826c540ab06d4b6b491c96eda01837f430bd47f0d26702d6e3 0B / 1.26MB 0.2s
+2025-Oct-05 05:12:21.323189
+#4 sha256:8d6421d663b4c28fd3ebc498332f249011d118945588d0a35cb9bc4b8ca09d9e 7.67kB / 7.67kB done
+2025-Oct-05 05:12:21.323189
+#4 sha256:929b04d7c782f04f615cf785488fed452b6569f87c73ff666ad553a7554f0006 1.72kB / 1.72kB done
+2025-Oct-05 05:12:21.323189
+#4 sha256:ee77c6cd7c1886ecc802ad6cedef3a8ec1ea27d1fb96162bf03dd3710839b8da 6.18kB / 6.18kB done
+2025-Oct-05 05:12:21.699896
+#4 extracting sha256:f18232174bc91741fdf3da96d85011092101a032a93a388b79e99e69c2d5c870
+2025-Oct-05 05:12:21.800199
+#4 sha256:f18232174bc91741fdf3da96d85011092101a032a93a388b79e99e69c2d5c870 3.64MB / 3.64MB 0.6s done
+2025-Oct-05 05:12:21.800199
+#4 sha256:25ff2da83641908f65c3a74d80409d6b1b62ccfaab220b9ea70b80df5a2e0549 0B / 446B 0.6s
+2025-Oct-05 05:12:21.922654
+#4 extracting sha256:f18232174bc91741fdf3da96d85011092101a032a93a388b79e99e69c2d5c870 0.1s done
+2025-Oct-05 05:12:22.024746
+#4 sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 11.53MB / 40.01MB 0.9s
+2025-Oct-05 05:12:22.123926
+#4 sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 18.87MB / 40.01MB 1.0s
+2025-Oct-05 05:12:22.323465
+#4 sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 37.75MB / 40.01MB 1.2s
+2025-Oct-05 05:12:22.323465
+#4 sha256:1e5a4c89cee5c0826c540ab06d4b6b491c96eda01837f430bd47f0d26702d6e3 1.26MB / 1.26MB 1.0s done
+2025-Oct-05 05:12:22.323465
+#4 sha256:25ff2da83641908f65c3a74d80409d6b1b62ccfaab220b9ea70b80df5a2e0549 446B / 446B 1.1s done
+2025-Oct-05 05:12:22.515288
+#4 sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 40.01MB / 40.01MB 1.2s done
+2025-Oct-05 05:12:22.515288
+#4 extracting sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 0.1s
+2025-Oct-05 05:12:24.858126
+#4 extracting sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 2.4s done
+2025-Oct-05 05:12:24.953818
+#4 extracting sha256:1e5a4c89cee5c0826c540ab06d4b6b491c96eda01837f430bd47f0d26702d6e3 0.0s done
+2025-Oct-05 05:12:25.196712
+#4 extracting sha256:25ff2da83641908f65c3a74d80409d6b1b62ccfaab220b9ea70b80df5a2e0549 done
+2025-Oct-05 05:12:25.196712
+#4 DONE 4.0s
+2025-Oct-05 05:12:25.196712
+2025-Oct-05 05:12:25.196712
+#6 [stage-1 2/7] WORKDIR /app
+2025-Oct-05 05:12:25.295837
+#6 ...
+2025-Oct-05 05:12:25.295837
+2025-Oct-05 05:12:25.295837
+#7 [client-build 2/6] WORKDIR /app/client
+2025-Oct-05 05:12:25.295837
+#7 DONE 0.3s
+2025-Oct-05 05:12:25.526937
+#6 [stage-1 2/7] WORKDIR /app
+2025-Oct-05 05:12:25.526937
+#6 DONE 0.3s
+2025-Oct-05 05:12:25.526937
+2025-Oct-05 05:12:25.526937
+#8 [client-build 3/6] COPY client/package*.json ./
+2025-Oct-05 05:12:25.526937
+#8 DONE 0.1s
+2025-Oct-05 05:12:25.526937
+2025-Oct-05 05:12:25.526937
+#9 [stage-1 3/7] COPY server/package*.json ./
+2025-Oct-05 05:12:25.526937
+#9 DONE 0.1s
+2025-Oct-05 05:12:25.526937
+2025-Oct-05 05:12:25.526937
+#10 [stage-1 4/7] RUN npm ci --production
+2025-Oct-05 05:12:26.008655
+#10 0.630 npm warn config production Use `--omit=dev` instead.
+2025-Oct-05 05:12:27.278699
+#10 1.838 npm error code EUSAGE
+2025-Oct-05 05:12:27.283221
+#10 1.839 npm error
+2025-Oct-05 05:12:27.283221
+#10 1.839 npm error The `npm ci` command can only install with an existing package-lock.json or
+2025-Oct-05 05:12:27.283221
+#10 1.839 npm error npm-shrinkwrap.json with lockfileVersion >= 1. Run an install with npm@5 or
+2025-Oct-05 05:12:27.283221
+#10 1.839 npm error later to generate a package-lock.json file, then try again.
+2025-Oct-05 05:12:27.283221
+#10 1.839 npm error
+2025-Oct-05 05:12:27.283221
+#10 1.839 npm error Clean install a project
+2025-Oct-05 05:12:27.283221
+#10 1.839 npm error
+2025-Oct-05 05:12:27.283221
+#10 1.839 npm error Usage:
+2025-Oct-05 05:12:27.283221
+#10 1.839 npm error npm ci
+2025-Oct-05 05:12:27.283221
+#10 1.839 npm error
+2025-Oct-05 05:12:27.283221
+#10 1.839 npm error Options:
+2025-Oct-05 05:12:27.283221
+#10 1.839 npm error [--install-strategy <hoisted|nested|shallow|linked>] [--legacy-bundling]
+2025-Oct-05 05:12:27.283221
+#10 1.839 npm error [--global-style] [--omit <dev|optional|peer> [--omit <dev|optional|peer> ...]]
+2025-Oct-05 05:12:27.283221
+#10 1.839 npm error [--include <prod|dev|optional|peer> [--include <prod|dev|optional|peer> ...]]
+2025-Oct-05 05:12:27.283221
+#10 1.839 npm error [--strict-peer-deps] [--foreground-scripts] [--ignore-scripts] [--no-audit]
+2025-Oct-05 05:12:27.283221
+#10 1.839 npm error [--no-bin-links] [--no-fund] [--dry-run]
+2025-Oct-05 05:12:27.283221
+#10 1.839 npm error [-w|--workspace <workspace-name> [-w|--workspace <workspace-name> ...]]
+2025-Oct-05 05:12:27.283221
+#10 1.839 npm error [-ws|--workspaces] [--include-workspace-root] [--install-links]
+2025-Oct-05 05:12:27.283221
+#10 1.839 npm error
+2025-Oct-05 05:12:27.283221
+#10 1.839 npm error aliases: clean-install, ic, install-clean, isntall-clean
+2025-Oct-05 05:12:27.283221
+#10 1.839 npm error
+2025-Oct-05 05:12:27.283221
+#10 1.839 npm error Run "npm help ci" for more info
+2025-Oct-05 05:12:27.283221
+#10 1.843 npm error A complete log of this run can be found in: /root/.npm/_logs/2025-10-05T05_12_25_856Z-debug-0.log
+2025-Oct-05 05:12:27.283221
+#10 ERROR: process "/bin/sh -c npm ci --production" did not complete successfully: exit code: 1
+2025-Oct-05 05:12:27.283221
+2025-Oct-05 05:12:27.283221
+#11 [client-build 4/6] RUN npm ci
+2025-Oct-05 05:12:27.283221
+#11 1.794 npm error code EUSAGE
+2025-Oct-05 05:12:27.283221
+#11 1.797 npm error
+2025-Oct-05 05:12:27.283221
+#11 1.797 npm error The `npm ci` command can only install with an existing package-lock.json or
+2025-Oct-05 05:12:27.283221
+#11 1.797 npm error npm-shrinkwrap.json with lockfileVersion >= 1. Run an install with npm@5 or
+2025-Oct-05 05:12:27.283221
+#11 1.797 npm error later to generate a package-lock.json file, then try again.
+2025-Oct-05 05:12:27.283221
+#11 1.797 npm error
+2025-Oct-05 05:12:27.283221
+#11 1.797 npm error Clean install a project
+2025-Oct-05 05:12:27.283221
+#11 1.797 npm error
+2025-Oct-05 05:12:27.283221
+#11 1.797 npm error Usage:
+2025-Oct-05 05:12:27.283221
+#11 1.797 npm error npm ci
+2025-Oct-05 05:12:27.283221
+#11 1.797 npm error
+2025-Oct-05 05:12:27.283221
+#11 1.797 npm error Options:
+2025-Oct-05 05:12:27.283221
+#11 1.797 npm error [--install-strategy <hoisted|nested|shallow|linked>] [--legacy-bundling]
+2025-Oct-05 05:12:27.283221
+#11 1.797 npm error [--global-style] [--omit <dev|optional|peer> [--omit <dev|optional|peer> ...]]
+2025-Oct-05 05:12:27.283221
+#11 1.797 npm error [--include <prod|dev|optional|peer> [--include <prod|dev|optional|peer> ...]]
+2025-Oct-05 05:12:27.283221
+#11 1.797 npm error [--strict-peer-deps] [--foreground-scripts] [--ignore-scripts] [--no-audit]
+2025-Oct-05 05:12:27.283221
+#11 1.797 npm error [--no-bin-links] [--no-fund] [--dry-run]
+2025-Oct-05 05:12:27.283221
+#11 1.797 npm error [-w|--workspace <workspace-name> [-w|--workspace <workspace-name> ...]]
+2025-Oct-05 05:12:27.283221
+#11 1.797 npm error [-ws|--workspaces] [--include-workspace-root] [--install-links]
+2025-Oct-05 05:12:27.283221
+#11 1.797 npm error
+2025-Oct-05 05:12:27.283221
+#11 1.797 npm error aliases: clean-install, ic, install-clean, isntall-clean
+2025-Oct-05 05:12:27.283221
+#11 1.797 npm error
+2025-Oct-05 05:12:27.283221
+#11 1.797 npm error Run "npm help ci" for more info
+2025-Oct-05 05:12:27.283221
+#11 1.805 npm error A complete log of this run can be found in: /root/.npm/_logs/2025-10-05T05_12_25_855Z-debug-0.log
+2025-Oct-05 05:12:27.283221
+#11 ERROR: process "/bin/sh -c npm ci" did not complete successfully: exit code: 1
+2025-Oct-05 05:12:27.310823
+------
+2025-Oct-05 05:12:27.310823
+> [client-build 4/6] RUN npm ci:
+2025-Oct-05 05:12:27.319863
+1.797 npm error [--include <prod|dev|optional|peer> [--include <prod|dev|optional|peer> ...]]
+2025-Oct-05 05:12:27.319863
+1.797 npm error [--strict-peer-deps] [--foreground-scripts] [--ignore-scripts] [--no-audit]
+2025-Oct-05 05:12:27.319863
+1.797 npm error [--no-bin-links] [--no-fund] [--dry-run]
+2025-Oct-05 05:12:27.319863
+1.797 npm error [-w|--workspace <workspace-name> [-w|--workspace <workspace-name> ...]]
+2025-Oct-05 05:12:27.319863
+1.797 npm error [-ws|--workspaces] [--include-workspace-root] [--install-links]
+2025-Oct-05 05:12:27.319863
+1.797 npm error
+2025-Oct-05 05:12:27.319863
+1.797 npm error aliases: clean-install, ic, install-clean, isntall-clean
+2025-Oct-05 05:12:27.319863
+1.797 npm error
+2025-Oct-05 05:12:27.319863
+1.797 npm error Run "npm help ci" for more info
+2025-Oct-05 05:12:27.319863
+1.805 npm error A complete log of this run can be found in: /root/.npm/_logs/2025-10-05T05_12_25_855Z-debug-0.log
+2025-Oct-05 05:12:27.319863
+------
+2025-Oct-05 05:12:27.319863
+------
+2025-Oct-05 05:12:27.319863
+> [stage-1 4/7] RUN npm ci --production:
+2025-Oct-05 05:12:27.319863
+1.839 npm error [--include <prod|dev|optional|peer> [--include <prod|dev|optional|peer> ...]]
+2025-Oct-05 05:12:27.319863
+1.839 npm error [--strict-peer-deps] [--foreground-scripts] [--ignore-scripts] [--no-audit]
+2025-Oct-05 05:12:27.319863
+1.839 npm error [--no-bin-links] [--no-fund] [--dry-run]
+2025-Oct-05 05:12:27.319863
+1.839 npm error [-w|--workspace <workspace-name> [-w|--workspace <workspace-name> ...]]
+2025-Oct-05 05:12:27.319863
+1.839 npm error [-ws|--workspaces] [--include-workspace-root] [--install-links]
+2025-Oct-05 05:12:27.319863
+1.839 npm error
+2025-Oct-05 05:12:27.319863
+1.839 npm error aliases: clean-install, ic, install-clean, isntall-clean
+2025-Oct-05 05:12:27.319863
+1.839 npm error
+2025-Oct-05 05:12:27.319863
+1.839 npm error Run "npm help ci" for more info
+2025-Oct-05 05:12:27.319863
+1.843 npm error A complete log of this run can be found in: /root/.npm/_logs/2025-10-05T05_12_25_856Z-debug-0.log
+2025-Oct-05 05:12:27.319863
+------
+2025-Oct-05 05:12:27.319863
+Dockerfile:16
+2025-Oct-05 05:12:27.319863
+--------------------
+2025-Oct-05 05:12:27.319863
+14 |     WORKDIR /app/client
+2025-Oct-05 05:12:27.319863
+15 |     COPY client/package*.json ./
+2025-Oct-05 05:12:27.319863
+16 | >>> RUN npm ci
+2025-Oct-05 05:12:27.319863
+17 |     COPY client/ ./
+2025-Oct-05 05:12:27.319863
+18 |     RUN npm run build
+2025-Oct-05 05:12:27.319863
+--------------------
+2025-Oct-05 05:12:27.319863
+ERROR: failed to build: failed to solve: process "/bin/sh -c npm ci" did not complete successfully: exit code: 1
+2025-Oct-05 05:12:27.328975
+exit status 1
+2025-Oct-05 05:12:27.373106
+Oops something is not okay, are you okay? 😢
+2025-Oct-05 05:12:27.379104
+#0 building with "default" instance using docker driver
+2025-Oct-05 05:12:27.379104
+2025-Oct-05 05:12:27.379104
+#1 [internal] load build definition from Dockerfile
+2025-Oct-05 05:12:27.379104
+#1 transferring dockerfile: 1.07kB done
+2025-Oct-05 05:12:27.379104
+#1 DONE 0.0s
+2025-Oct-05 05:12:27.379104
+2025-Oct-05 05:12:27.379104
+#2 [internal] load metadata for docker.io/library/node:18-alpine
+2025-Oct-05 05:12:27.379104
+#2 DONE 2.7s
+2025-Oct-05 05:12:27.379104
+2025-Oct-05 05:12:27.379104
+#3 [internal] load .dockerignore
+2025-Oct-05 05:12:27.379104
+#3 transferring context: 218B done
+2025-Oct-05 05:12:27.379104
+#3 DONE 0.0s
+2025-Oct-05 05:12:27.379104
+2025-Oct-05 05:12:27.379104
+#4 [client-build 1/6] FROM docker.io/library/node:18-alpine@sha256:8d6421d663b4c28fd3ebc498332f249011d118945588d0a35cb9bc4b8ca09d9e
+2025-Oct-05 05:12:27.379104
+#4 resolve docker.io/library/node:18-alpine@sha256:8d6421d663b4c28fd3ebc498332f249011d118945588d0a35cb9bc4b8ca09d9e 0.0s done
+2025-Oct-05 05:12:27.379104
+#4 ...
+2025-Oct-05 05:12:27.379104
+2025-Oct-05 05:12:27.379104
+#5 [internal] load build context
+2025-Oct-05 05:12:27.379104
+#5 transferring context: 250.90kB 0.1s done
+2025-Oct-05 05:12:27.379104
+#5 DONE 0.1s
+2025-Oct-05 05:12:27.379104
+2025-Oct-05 05:12:27.379104
+#4 [client-build 1/6] FROM docker.io/library/node:18-alpine@sha256:8d6421d663b4c28fd3ebc498332f249011d118945588d0a35cb9bc4b8ca09d9e
+2025-Oct-05 05:12:27.379104
+#4 sha256:f18232174bc91741fdf3da96d85011092101a032a93a388b79e99e69c2d5c870 0B / 3.64MB 0.2s
+2025-Oct-05 05:12:27.379104
+#4 sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 0B / 40.01MB 0.2s
+2025-Oct-05 05:12:27.379104
+#4 sha256:1e5a4c89cee5c0826c540ab06d4b6b491c96eda01837f430bd47f0d26702d6e3 0B / 1.26MB 0.2s
+2025-Oct-05 05:12:27.379104
+#4 sha256:8d6421d663b4c28fd3ebc498332f249011d118945588d0a35cb9bc4b8ca09d9e 7.67kB / 7.67kB done
+2025-Oct-05 05:12:27.379104
+#4 sha256:929b04d7c782f04f615cf785488fed452b6569f87c73ff666ad553a7554f0006 1.72kB / 1.72kB done
+2025-Oct-05 05:12:27.379104
+#4 sha256:ee77c6cd7c1886ecc802ad6cedef3a8ec1ea27d1fb96162bf03dd3710839b8da 6.18kB / 6.18kB done
+2025-Oct-05 05:12:27.379104
+#4 extracting sha256:f18232174bc91741fdf3da96d85011092101a032a93a388b79e99e69c2d5c870
+2025-Oct-05 05:12:27.379104
+#4 sha256:f18232174bc91741fdf3da96d85011092101a032a93a388b79e99e69c2d5c870 3.64MB / 3.64MB 0.6s done
+2025-Oct-05 05:12:27.379104
+#4 sha256:25ff2da83641908f65c3a74d80409d6b1b62ccfaab220b9ea70b80df5a2e0549 0B / 446B 0.6s
+2025-Oct-05 05:12:27.379104
+#4 extracting sha256:f18232174bc91741fdf3da96d85011092101a032a93a388b79e99e69c2d5c870 0.1s done
+2025-Oct-05 05:12:27.379104
+#4 sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 11.53MB / 40.01MB 0.9s
+2025-Oct-05 05:12:27.379104
+#4 sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 18.87MB / 40.01MB 1.0s
+2025-Oct-05 05:12:27.379104
+#4 sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 37.75MB / 40.01MB 1.2s
+2025-Oct-05 05:12:27.379104
+#4 sha256:1e5a4c89cee5c0826c540ab06d4b6b491c96eda01837f430bd47f0d26702d6e3 1.26MB / 1.26MB 1.0s done
+2025-Oct-05 05:12:27.379104
+#4 sha256:25ff2da83641908f65c3a74d80409d6b1b62ccfaab220b9ea70b80df5a2e0549 446B / 446B 1.1s done
+2025-Oct-05 05:12:27.379104
+#4 sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 40.01MB / 40.01MB 1.2s done
+2025-Oct-05 05:12:27.379104
+#4 extracting sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 0.1s
+2025-Oct-05 05:12:27.379104
+#4 extracting sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 2.4s done
+2025-Oct-05 05:12:27.379104
+#4 extracting sha256:1e5a4c89cee5c0826c540ab06d4b6b491c96eda01837f430bd47f0d26702d6e3 0.0s done
+2025-Oct-05 05:12:27.379104
+#4 extracting sha256:25ff2da83641908f65c3a74d80409d6b1b62ccfaab220b9ea70b80df5a2e0549 done
+2025-Oct-05 05:12:27.379104
+#4 DONE 4.0s
+2025-Oct-05 05:12:27.379104
+2025-Oct-05 05:12:27.379104
+#6 [stage-1 2/7] WORKDIR /app
+2025-Oct-05 05:12:27.379104
+#6 ...
+2025-Oct-05 05:12:27.379104
+2025-Oct-05 05:12:27.379104
+#7 [client-build 2/6] WORKDIR /app/client
+2025-Oct-05 05:12:27.379104
+#7 DONE 0.3s
+2025-Oct-05 05:12:27.379104
+2025-Oct-05 05:12:27.379104
+#6 [stage-1 2/7] WORKDIR /app
+2025-Oct-05 05:12:27.379104
+#6 DONE 0.3s
+2025-Oct-05 05:12:27.379104
+2025-Oct-05 05:12:27.379104
+#8 [client-build 3/6] COPY client/package*.json ./
+2025-Oct-05 05:12:27.379104
+#8 DONE 0.1s
+2025-Oct-05 05:12:27.379104
+2025-Oct-05 05:12:27.379104
+#9 [stage-1 3/7] COPY server/package*.json ./
+2025-Oct-05 05:12:27.379104
+#9 DONE 0.1s
+2025-Oct-05 05:12:27.379104
+2025-Oct-05 05:12:27.379104
+#10 [stage-1 4/7] RUN npm ci --production
+2025-Oct-05 05:12:27.379104
+#10 0.630 npm warn config production Use `--omit=dev` instead.
+2025-Oct-05 05:12:27.379104
+#10 1.838 npm error code EUSAGE
+2025-Oct-05 05:12:27.379104
+#10 1.839 npm error
+2025-Oct-05 05:12:27.379104
+#10 1.839 npm error The `npm ci` command can only install with an existing package-lock.json or
+2025-Oct-05 05:12:27.379104
+#10 1.839 npm error npm-shrinkwrap.json with lockfileVersion >= 1. Run an install with npm@5 or
+2025-Oct-05 05:12:27.379104
+#10 1.839 npm error later to generate a package-lock.json file, then try again.
+2025-Oct-05 05:12:27.379104
+#10 1.839 npm error
+2025-Oct-05 05:12:27.379104
+#10 1.839 npm error Clean install a project
+2025-Oct-05 05:12:27.379104
+#10 1.839 npm error
+2025-Oct-05 05:12:27.379104
+#10 1.839 npm error Usage:
+2025-Oct-05 05:12:27.379104
+#10 1.839 npm error npm ci
+2025-Oct-05 05:12:27.379104
+#10 1.839 npm error
+2025-Oct-05 05:12:27.379104
+#10 1.839 npm error Options:
+2025-Oct-05 05:12:27.379104
+#10 1.839 npm error [--install-strategy <hoisted|nested|shallow|linked>] [--legacy-bundling]
+2025-Oct-05 05:12:27.379104
+#10 1.839 npm error [--global-style] [--omit <dev|optional|peer> [--omit <dev|optional|peer> ...]]
+2025-Oct-05 05:12:27.379104
+#10 1.839 npm error [--include <prod|dev|optional|peer> [--include <prod|dev|optional|peer> ...]]
+2025-Oct-05 05:12:27.379104
+#10 1.839 npm error [--strict-peer-deps] [--foreground-scripts] [--ignore-scripts] [--no-audit]
+2025-Oct-05 05:12:27.379104
+#10 1.839 npm error [--no-bin-links] [--no-fund] [--dry-run]
+2025-Oct-05 05:12:27.379104
+#10 1.839 npm error [-w|--workspace <workspace-name> [-w|--workspace <workspace-name> ...]]
+2025-Oct-05 05:12:27.379104
+#10 1.839 npm error [-ws|--workspaces] [--include-workspace-root] [--install-links]
+2025-Oct-05 05:12:27.379104
+#10 1.839 npm error
+2025-Oct-05 05:12:27.379104
+#10 1.839 npm error aliases: clean-install, ic, install-clean, isntall-clean
+2025-Oct-05 05:12:27.379104
+#10 1.839 npm error
+2025-Oct-05 05:12:27.379104
+#10 1.839 npm error Run "npm help ci" for more info
+2025-Oct-05 05:12:27.379104
+#10 1.843 npm error A complete log of this run can be found in: /root/.npm/_logs/2025-10-05T05_12_25_856Z-debug-0.log
+2025-Oct-05 05:12:27.379104
+#10 ERROR: process "/bin/sh -c npm ci --production" did not complete successfully: exit code: 1
+2025-Oct-05 05:12:27.379104
+2025-Oct-05 05:12:27.379104
+#11 [client-build 4/6] RUN npm ci
+2025-Oct-05 05:12:27.379104
+#11 1.794 npm error code EUSAGE
+2025-Oct-05 05:12:27.379104
+#11 1.797 npm error
+2025-Oct-05 05:12:27.379104
+#11 1.797 npm error The `npm ci` command can only install with an existing package-lock.json or
+2025-Oct-05 05:12:27.379104
+#11 1.797 npm error npm-shrinkwrap.json with lockfileVersion >= 1. Run an install with npm@5 or
+2025-Oct-05 05:12:27.379104
+#11 1.797 npm error later to generate a package-lock.json file, then try again.
+2025-Oct-05 05:12:27.379104
+#11 1.797 npm error
+2025-Oct-05 05:12:27.379104
+#11 1.797 npm error Clean install a project
+2025-Oct-05 05:12:27.379104
+#11 1.797 npm error
+2025-Oct-05 05:12:27.379104
+#11 1.797 npm error Usage:
+2025-Oct-05 05:12:27.379104
+#11 1.797 npm error npm ci
+2025-Oct-05 05:12:27.379104
+#11 1.797 npm error
+2025-Oct-05 05:12:27.379104
+#11 1.797 npm error Options:
+2025-Oct-05 05:12:27.379104
+#11 1.797 npm error [--install-strategy <hoisted|nested|shallow|linked>] [--legacy-bundling]
+2025-Oct-05 05:12:27.379104
+#11 1.797 npm error [--global-style] [--omit <dev|optional|peer> [--omit <dev|optional|peer> ...]]
+2025-Oct-05 05:12:27.379104
+#11 1.797 npm error [--include <prod|dev|optional|peer> [--include <prod|dev|optional|peer> ...]]
+2025-Oct-05 05:12:27.379104
+#11 1.797 npm error [--strict-peer-deps] [--foreground-scripts] [--ignore-scripts] [--no-audit]
+2025-Oct-05 05:12:27.379104
+#11 1.797 npm error [--no-bin-links] [--no-fund] [--dry-run]
+2025-Oct-05 05:12:27.379104
+#11 1.797 npm error [-w|--workspace <workspace-name> [-w|--workspace <workspace-name> ...]]
+2025-Oct-05 05:12:27.379104
+#11 1.797 npm error [-ws|--workspaces] [--include-workspace-root] [--install-links]
+2025-Oct-05 05:12:27.379104
+#11 1.797 npm error
+2025-Oct-05 05:12:27.379104
+#11 1.797 npm error aliases: clean-install, ic, install-clean, isntall-clean
+2025-Oct-05 05:12:27.379104
+#11 1.797 npm error
+2025-Oct-05 05:12:27.379104
+#11 1.797 npm error Run "npm help ci" for more info
+2025-Oct-05 05:12:27.379104
+#11 1.805 npm error A complete log of this run can be found in: /root/.npm/_logs/2025-10-05T05_12_25_855Z-debug-0.log
+2025-Oct-05 05:12:27.379104
+#11 ERROR: process "/bin/sh -c npm ci" did not complete successfully: exit code: 1
+2025-Oct-05 05:12:27.379104
+------
+2025-Oct-05 05:12:27.379104
+> [client-build 4/6] RUN npm ci:
+2025-Oct-05 05:12:27.379104
+1.797 npm error [--include <prod|dev|optional|peer> [--include <prod|dev|optional|peer> ...]]
+2025-Oct-05 05:12:27.379104
+1.797 npm error [--strict-peer-deps] [--foreground-scripts] [--ignore-scripts] [--no-audit]
+2025-Oct-05 05:12:27.379104
+1.797 npm error [--no-bin-links] [--no-fund] [--dry-run]
+2025-Oct-05 05:12:27.379104
+1.797 npm error [-w|--workspace <workspace-name> [-w|--workspace <workspace-name> ...]]
+2025-Oct-05 05:12:27.379104
+1.797 npm error [-ws|--workspaces] [--include-workspace-root] [--install-links]
+2025-Oct-05 05:12:27.379104
+1.797 npm error
+2025-Oct-05 05:12:27.379104
+1.797 npm error aliases: clean-install, ic, install-clean, isntall-clean
+2025-Oct-05 05:12:27.379104
+1.797 npm error
+2025-Oct-05 05:12:27.379104
+1.797 npm error Run "npm help ci" for more info
+2025-Oct-05 05:12:27.379104
+1.805 npm error A complete log of this run can be found in: /root/.npm/_logs/2025-10-05T05_12_25_855Z-debug-0.log
+2025-Oct-05 05:12:27.379104
+------
+2025-Oct-05 05:12:27.379104
+------
+2025-Oct-05 05:12:27.379104
+> [stage-1 4/7] RUN npm ci --production:
+2025-Oct-05 05:12:27.379104
+1.839 npm error [--include <prod|dev|optional|peer> [--include <prod|dev|optional|peer> ...]]
+2025-Oct-05 05:12:27.379104
+1.839 npm error [--strict-peer-deps] [--foreground-scripts] [--ignore-scripts] [--no-audit]
+2025-Oct-05 05:12:27.379104
+1.839 npm error [--no-bin-links] [--no-fund] [--dry-run]
+2025-Oct-05 05:12:27.379104
+1.839 npm error [-w|--workspace <workspace-name> [-w|--workspace <workspace-name> ...]]
+2025-Oct-05 05:12:27.379104
+1.839 npm error [-ws|--workspaces] [--include-workspace-root] [--install-links]
+2025-Oct-05 05:12:27.379104
+1.839 npm error
+2025-Oct-05 05:12:27.379104
+1.839 npm error aliases: clean-install, ic, install-clean, isntall-clean
+2025-Oct-05 05:12:27.379104
+1.839 npm error
+2025-Oct-05 05:12:27.379104
+1.839 npm error Run "npm help ci" for more info
+2025-Oct-05 05:12:27.379104
+1.843 npm error A complete log of this run can be found in: /root/.npm/_logs/2025-10-05T05_12_25_856Z-debug-0.log
+2025-Oct-05 05:12:27.379104
+------
+2025-Oct-05 05:12:27.379104
+Dockerfile:16
+2025-Oct-05 05:12:27.379104
+--------------------
+2025-Oct-05 05:12:27.379104
+14 |     WORKDIR /app/client
+2025-Oct-05 05:12:27.379104
+15 |     COPY client/package*.json ./
+2025-Oct-05 05:12:27.379104
+16 | >>> RUN npm ci
+2025-Oct-05 05:12:27.379104
+17 |     COPY client/ ./
+2025-Oct-05 05:12:27.379104
+18 |     RUN npm run build
+2025-Oct-05 05:12:27.379104
+--------------------
+2025-Oct-05 05:12:27.379104
+ERROR: failed to build: failed to solve: process "/bin/sh -c npm ci" did not complete successfully: exit code: 1
+2025-Oct-05 05:12:27.379104
+exit status 1
+2025-Oct-05 05:12:27.385100
+Deployment failed. Removing the new version of your application.
+2025-Oct-05 05:12:27.886303
+Gracefully shutting down build container: tw40gwow4o088scwcw8g4c08
+2025-Oct-05 05:12:28.000167
+[CMD]: docker stop --time=30 tw40gwow4o088scwcw8g4c08
+2025-Oct-05 05:12:28.000167
+Flag --time has been deprecated, use --timeout instead
+2025-Oct-05 05:12:28.151001
+tw40gwow4o088scwcw8g4c08
+2025-Oct-05 05:12:28.282650
+[CMD]: docker rm -f tw40gwow4o088scwcw8g4c08
+2025-Oct-05 05:12:28.282650
+Error response from daemon: No such container: tw40gwow4o088scwcw8g4c08
