@@ -109,6 +109,42 @@ Preferred communication style: Simple, everyday language.
 - Images imported via Vite's asset handling
 
 **Third-Party Services**
+- **Resend** - Email notifications for appointment bookings (optional, app works without it)
 - Newsletter signup (toast notification placeholder, ready for email service integration)
 - External book purchase links (Amazon, etc.)
 - Social media links (LinkedIn, email contact)
+
+## Deployment Configuration
+
+### Coolify Deployment (Hostinger VPS)
+- **Platform**: Coolify v4.0.0-beta.434
+- **Server**: Hostinger VPS (72.60.202.209)
+- **Domain**: chetangabhane.in (custom domain configured)
+- **Deployment URL**: wo0woocog8cscoo8kkwo888w.72.60.202.209.sslip.io
+- **Auto-deploy**: Webhook configured for `main` branch pushes
+- **GitHub Repository**: cgabhane/author_website
+
+### Docker Configuration
+- **Multi-stage build**: Builder stage + production stage
+- **Base Image**: node:20-alpine
+- **Port**: 5000 (bound to 0.0.0.0)
+- **Health Check**: GET /api/health endpoint
+- **Environment**: NODE_ENV=production
+
+### Build Process
+1. **Client Build**: `npx vite build` → outputs to `dist/public`
+2. **Server Build**: 
+   - `esbuild server/index.ts` with `--external:./vite.js --external:./static.js`
+   - `esbuild server/static.ts` → outputs to `dist/static.js`
+3. **Production**: Node ESM with explicit `.js` extensions in dynamic imports
+
+### Environment Variables
+- `PORT` - Server port (default: 5000)
+- `NODE_ENV` - Environment mode (development/production)
+- `RESEND_API_KEY` - Optional email service API key (app works without it)
+
+### Key Technical Decisions
+- **esbuild external flags**: Prevents bundling local modules (`./vite.js`, `./static.js`)
+- **ESM compatibility**: Explicit `.js` extensions required for dynamic imports in Node ESM
+- **Graceful degradation**: Resend email client is optional - app starts and works without API key
+- **Static file serving**: Production uses Express static middleware instead of Vite

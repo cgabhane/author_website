@@ -4,7 +4,8 @@ import { storage } from "./storage";
 import { insertAppointmentSchema } from "@shared/schema";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Initialize Resend only if API key is available
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // GET /api/health - Health check endpoint for Docker/Coolify
@@ -29,7 +30,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }[validatedData.sessionType];
 
       // Try to send email notifications (non-blocking)
-      if (process.env.RESEND_API_KEY) {
+      if (resend) {
         try {
           // Send notification email to Chetan
           await resend.emails.send({
