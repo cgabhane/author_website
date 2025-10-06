@@ -1,0 +1,282 @@
+Coolify
+v4.0.0-beta.434
+
+/
+9+
+Current Team
+
+Root Team
+Dashboard
+Projects
+Servers
+Sources
+Destinations
+S3 Storages
+Shared Variables
+Notifications
+Keys & Tokens
+Tags
+Terminal
+Profile
+Teams
+Settings
+Sponsor us
+Feedback
+Logout
+Deployment
+My first project
+production
+cgabhane/author_website:main-bcw84o0c080cwssg4oc8ksks
+Degraded
+(unhealthy)
+
+Configuration
+Deployments
+Logs
+Terminal
+
+Links
+
+Advanced
+Redeploy
+Restart
+Stop
+Deployment Log
+Hide Debug Logs
+Deployment is Failed.
+
+
+
+
+2025-Oct-06 06:54:54.044621
+No suitable build server found. Using the deployment server.
+2025-Oct-06 06:54:54.050923
+Starting deployment of cgabhane/author_website:main to localhost.
+2025-Oct-06 06:54:54.843789
+Preparing container with helper image: ghcr.io/coollabsio/coolify-helper:1.0.11.
+2025-Oct-06 06:54:55.288998
+[CMD]: docker stop --time=30 xgksso8w8swkosg00gc8so04
+2025-Oct-06 06:54:55.288998
+Error response from daemon: No such container: xgksso8w8swkosg00gc8so04
+2025-Oct-06 06:54:55.655778
+[CMD]: docker rm -f xgksso8w8swkosg00gc8so04
+2025-Oct-06 06:54:55.655778
+Error response from daemon: No such container: xgksso8w8swkosg00gc8so04
+2025-Oct-06 06:54:56.177326
+[CMD]: docker run -d --network coolify --name xgksso8w8swkosg00gc8so04  --rm -v /var/run/docker.sock:/var/run/docker.sock ghcr.io/coollabsio/coolify-helper:1.0.11
+2025-Oct-06 06:54:56.177326
+c99e445f28bc5c287e8606959a192af1b25806c468725898369747e7a65c4c0b
+2025-Oct-06 06:54:57.966503
+[CMD]: docker exec xgksso8w8swkosg00gc8so04 bash -c 'GIT_SSH_COMMAND="ssh -o ConnectTimeout=30 -p 22 -o Port=22 -o LogLevel=ERROR -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" git ls-remote https://github.com/cgabhane/author_website refs/heads/main'
+2025-Oct-06 06:54:57.966503
+44e7f00edf8289cfea0b2e65ec552283e06f5eb1	refs/heads/main
+2025-Oct-06 06:54:57.998200
+----------------------------------------
+2025-Oct-06 06:54:58.003653
+Importing cgabhane/author_website:main (commit sha HEAD) to /artifacts/xgksso8w8swkosg00gc8so04.
+2025-Oct-06 06:54:58.482932
+[CMD]: docker exec xgksso8w8swkosg00gc8so04 bash -c 'git clone --depth=1 --recurse-submodules --shallow-submodules -b 'main' 'https://github.com/cgabhane/author_website' '/artifacts/xgksso8w8swkosg00gc8so04' && cd /artifacts/xgksso8w8swkosg00gc8so04 && if [ -f .gitmodules ]; then sed -i "s#git@\(.*\):#https://\1/#g" /artifacts/xgksso8w8swkosg00gc8so04/.gitmodules || true && git submodule sync && GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" git submodule update --init --recursive --depth=1; fi && cd /artifacts/xgksso8w8swkosg00gc8so04 && GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" git lfs pull'
+2025-Oct-06 06:54:58.482932
+Cloning into '/artifacts/xgksso8w8swkosg00gc8so04'...
+2025-Oct-06 06:55:05.525866
+[CMD]: docker exec xgksso8w8swkosg00gc8so04 bash -c 'cd /artifacts/xgksso8w8swkosg00gc8so04 && git log -1 44e7f00edf8289cfea0b2e65ec552283e06f5eb1 --pretty=%B'
+2025-Oct-06 06:55:05.525866
+Improve production build by serving static files and fixing Vite import issues
+2025-Oct-06 06:55:05.525866
+2025-Oct-06 06:55:05.525866
+Refactors server setup to conditionally import Vite for development and serve static files for production, while also defining a local log function to resolve 'ERR_MODULE_NOT_FOUND' errors.
+2025-Oct-06 06:55:05.525866
+2025-Oct-06 06:55:05.525866
+Replit-Commit-Author: Agent
+2025-Oct-06 06:55:05.525866
+Replit-Commit-Session-Id: e3dd2a96-053b-4090-9ac1-84c2b3c5b4fe
+2025-Oct-06 06:55:05.525866
+Replit-Commit-Checkpoint-Type: full_checkpoint
+2025-Oct-06 06:55:05.525866
+Replit-Commit-Screenshot-Url: https://storage.googleapis.com/screenshot-production-us-central1/acbed424-eb26-4c77-a75f-2c5768fff5db/e3dd2a96-053b-4090-9ac1-84c2b3c5b4fe/DT55cHl
+2025-Oct-06 06:55:09.911730
+[CMD]: docker exec xgksso8w8swkosg00gc8so04 bash -c 'cat /artifacts/xgksso8w8swkosg00gc8so04/Dockerfile'
+2025-Oct-06 06:55:09.911730
+# Multi-stage build for production
+2025-Oct-06 06:55:09.911730
+FROM node:20-alpine AS builder
+2025-Oct-06 06:55:09.911730
+2025-Oct-06 06:55:09.911730
+WORKDIR /app
+2025-Oct-06 06:55:09.911730
+2025-Oct-06 06:55:09.911730
+# Copy package files
+2025-Oct-06 06:55:09.911730
+COPY package*.json ./
+2025-Oct-06 06:55:09.911730
+2025-Oct-06 06:55:09.911730
+# Install all dependencies (needed for build)
+2025-Oct-06 06:55:09.911730
+RUN npm install
+2025-Oct-06 06:55:09.911730
+2025-Oct-06 06:55:09.911730
+# Copy all source code
+2025-Oct-06 06:55:09.911730
+COPY . .
+2025-Oct-06 06:55:09.911730
+2025-Oct-06 06:55:09.911730
+# Build the application (builds both client and server)
+2025-Oct-06 06:55:09.911730
+RUN npm run build
+2025-Oct-06 06:55:09.911730
+2025-Oct-06 06:55:09.911730
+# Production stage
+2025-Oct-06 06:55:09.911730
+FROM node:20-alpine
+2025-Oct-06 06:55:09.911730
+2025-Oct-06 06:55:09.911730
+WORKDIR /app
+2025-Oct-06 06:55:09.911730
+2025-Oct-06 06:55:09.911730
+# Copy package files
+2025-Oct-06 06:55:09.911730
+COPY package*.json ./
+2025-Oct-06 06:55:09.911730
+2025-Oct-06 06:55:09.911730
+# Install only production dependencies
+2025-Oct-06 06:55:09.911730
+RUN npm install --omit=dev
+2025-Oct-06 06:55:09.911730
+2025-Oct-06 06:55:09.911730
+# Copy the built application from builder stage
+2025-Oct-06 06:55:09.911730
+COPY --from=builder /app/dist ./dist
+2025-Oct-06 06:55:09.911730
+2025-Oct-06 06:55:09.911730
+# Set environment variables
+2025-Oct-06 06:55:09.911730
+ENV NODE_ENV=production
+2025-Oct-06 06:55:09.911730
+ENV PORT=5000
+2025-Oct-06 06:55:09.911730
+2025-Oct-06 06:55:09.911730
+# Expose port
+2025-Oct-06 06:55:09.911730
+EXPOSE 5000
+2025-Oct-06 06:55:09.911730
+2025-Oct-06 06:55:09.911730
+# Health check
+2025-Oct-06 06:55:09.911730
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+2025-Oct-06 06:55:09.911730
+CMD node -e "require('http').get('http://localhost:5000/api/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"
+2025-Oct-06 06:55:09.911730
+2025-Oct-06 06:55:09.911730
+# Start the application
+2025-Oct-06 06:55:09.911730
+CMD ["node", "dist/index.js"]
+2025-Oct-06 06:55:11.112198
+[CMD]: docker exec xgksso8w8swkosg00gc8so04 bash -c 'cat /artifacts/xgksso8w8swkosg00gc8so04/Dockerfile'
+2025-Oct-06 06:55:11.112198
+# Multi-stage build for production
+2025-Oct-06 06:55:11.112198
+FROM node:20-alpine AS builder
+2025-Oct-06 06:55:11.112198
+2025-Oct-06 06:55:11.112198
+WORKDIR /app
+2025-Oct-06 06:55:11.112198
+2025-Oct-06 06:55:11.112198
+# Copy package files
+2025-Oct-06 06:55:11.112198
+COPY package*.json ./
+2025-Oct-06 06:55:11.112198
+2025-Oct-06 06:55:11.112198
+# Install all dependencies (needed for build)
+2025-Oct-06 06:55:11.112198
+RUN npm install
+2025-Oct-06 06:55:11.112198
+2025-Oct-06 06:55:11.112198
+# Copy all source code
+2025-Oct-06 06:55:11.112198
+COPY . .
+2025-Oct-06 06:55:11.112198
+2025-Oct-06 06:55:11.112198
+# Build the application (builds both client and server)
+2025-Oct-06 06:55:11.112198
+RUN npm run build
+2025-Oct-06 06:55:11.112198
+2025-Oct-06 06:55:11.112198
+# Production stage
+2025-Oct-06 06:55:11.112198
+FROM node:20-alpine
+2025-Oct-06 06:55:11.112198
+2025-Oct-06 06:55:11.112198
+WORKDIR /app
+2025-Oct-06 06:55:11.112198
+2025-Oct-06 06:55:11.112198
+# Copy package files
+2025-Oct-06 06:55:11.112198
+COPY package*.json ./
+2025-Oct-06 06:55:11.112198
+2025-Oct-06 06:55:11.112198
+# Install only production dependencies
+2025-Oct-06 06:55:11.112198
+RUN npm install --omit=dev
+2025-Oct-06 06:55:11.112198
+2025-Oct-06 06:55:11.112198
+# Copy the built application from builder stage
+2025-Oct-06 06:55:11.112198
+COPY --from=builder /app/dist ./dist
+2025-Oct-06 06:55:11.112198
+2025-Oct-06 06:55:11.112198
+# Set environment variables
+2025-Oct-06 06:55:11.112198
+ENV NODE_ENV=production
+2025-Oct-06 06:55:11.112198
+ENV PORT=5000
+2025-Oct-06 06:55:11.112198
+2025-Oct-06 06:55:11.112198
+# Expose port
+2025-Oct-06 06:55:11.112198
+EXPOSE 5000
+2025-Oct-06 06:55:11.112198
+2025-Oct-06 06:55:11.112198
+# Health check
+2025-Oct-06 06:55:11.112198
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+2025-Oct-06 06:55:11.112198
+CMD node -e "require('http').get('http://localhost:5000/api/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"
+2025-Oct-06 06:55:11.112198
+2025-Oct-06 06:55:11.112198
+# Start the application
+2025-Oct-06 06:55:11.112198
+CMD ["node", "dist/index.js"]
+2025-Oct-06 06:55:11.615111
+----------------------------------------
+2025-Oct-06 06:55:11.629145
+Building docker image started.
+2025-Oct-06 06:55:11.642417
+To check the current progress, click on Show Debug Logs.
+2025-Oct-06 06:55:12.878750
+[CMD]: docker exec xgksso8w8swkosg00gc8so04 bash -c 'cat /artifacts/build.sh'
+2025-Oct-06 06:55:12.878750
+docker build --no-cache  --add-host coolify:10.0.1.5 --add-host coolify-db:10.0.1.2 --add-host coolify-realtime:10.0.1.4 --add-host coolify-redis:10.0.1.3 --network host -f /artifacts/xgksso8w8swkosg00gc8so04/Dockerfile --build-arg SOURCE_COMMIT='44e7f00edf8289cfea0b2e65ec552283e06f5eb1' --build-arg COOLIFY_URL='http://wo0woocog8cscoo8kkwo888w.72.60.202.209.sslip.io' --build-arg COOLIFY_FQDN='wo0woocog8cscoo8kkwo888w.72.60.202.209.sslip.io' --build-arg COOLIFY_BRANCH='main' --build-arg COOLIFY_RESOURCE_UUID='wo0woocog8cscoo8kkwo888w' --build-arg COOLIFY_CONTAINER_NAME='wo0woocog8cscoo8kkwo888w-065451401459' --build-arg COOLIFY_BUILD_SECRETS_HASH=5cdfb4020dc6b221f4ec3cceeb992b79716b67b62763ae6fe6ab3b5eec7ddc97 --build-arg 'COOLIFY_URL=http://wo0woocog8cscoo8kkwo888w.72.60.202.209.sslip.io' --build-arg 'COOLIFY_FQDN=wo0woocog8cscoo8kkwo888w.72.60.202.209.sslip.io' --build-arg 'COOLIFY_BRANCH=main' --build-arg 'COOLIFY_RESOURCE_UUID=wo0woocog8cscoo8kkwo888w' --build-arg 'COOLIFY_CONTAINER_NAME=wo0woocog8cscoo8kkwo888w-065451401459' --progress plain -t Dockerfile:44e7f00edf8289cfea0b2e65ec552283e06f5eb1 /artifacts/xgksso8w8swkosg00gc8so04
+2025-Oct-06 06:55:13.531634
+[CMD]: docker exec xgksso8w8swkosg00gc8so04 bash -c 'bash /artifacts/build.sh'
+2025-Oct-06 06:55:13.531634
+ERROR: failed to build: invalid tag "Dockerfile:44e7f00edf8289cfea0b2e65ec552283e06f5eb1": repository name must be lowercase
+2025-Oct-06 06:55:13.540947
+exit status 1
+2025-Oct-06 06:55:13.609465
+Oops something is not okay, are you okay? 😢
+2025-Oct-06 06:55:13.624535
+ERROR: failed to build: invalid tag "Dockerfile:44e7f00edf8289cfea0b2e65ec552283e06f5eb1": repository name must be lowercase
+2025-Oct-06 06:55:13.624535
+exit status 1
+2025-Oct-06 06:55:13.640024
+Deployment failed. Removing the new version of your application.
+2025-Oct-06 06:55:15.895032
+Gracefully shutting down build container: xgksso8w8swkosg00gc8so04
+2025-Oct-06 06:55:16.759666
+[CMD]: docker stop --time=30 xgksso8w8swkosg00gc8so04
+2025-Oct-06 06:55:16.759666
+xgksso8w8swkosg00gc8so04
+2025-Oct-06 06:55:17.259769
+[CMD]: docker rm -f xgksso8w8swkosg00gc8so04
+2025-Oct-06 06:55:17.259769
+Error response from daemon: No such container: xgksso8w8swkosg00gc8so04

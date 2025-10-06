@@ -1,0 +1,215 @@
+Coolify
+v4.0.0-beta.434
+
+/
+9+
+Current Team
+
+Root Team
+Dashboard
+Projects
+Servers
+Sources
+Destinations
+S3 Storages
+Shared Variables
+Notifications
+Keys & Tokens
+Tags
+Terminal
+Profile
+Teams
+Settings
+Sponsor us
+Feedback
+Logout
+Deployment
+My first project
+production
+cgabhane/author_website:main-bcw84o0c080cwssg4oc8ksks
+Degraded
+(unhealthy)
+
+Configuration
+Deployments
+Logs
+Terminal
+
+Links
+
+Advanced
+Redeploy
+Restart
+Stop
+Deployment Log
+Hide Debug Logs
+Deployment is Finished.
+
+
+
+
+2025-Oct-06 06:30:47.920706
+No suitable build server found. Using the deployment server.
+2025-Oct-06 06:30:47.935466
+Starting deployment of cgabhane/author_website:main to localhost.
+2025-Oct-06 06:30:48.392701
+Preparing container with helper image: ghcr.io/coollabsio/coolify-helper:1.0.11.
+2025-Oct-06 06:30:48.632503
+[CMD]: docker stop --time=30 foocc80c408g4c0occs0gww8
+2025-Oct-06 06:30:48.632503
+Error response from daemon: No such container: foocc80c408g4c0occs0gww8
+2025-Oct-06 06:30:48.804655
+[CMD]: docker rm -f foocc80c408g4c0occs0gww8
+2025-Oct-06 06:30:48.804655
+Error response from daemon: No such container: foocc80c408g4c0occs0gww8
+2025-Oct-06 06:30:48.982424
+[CMD]: docker run -d --network coolify --name foocc80c408g4c0occs0gww8  --rm -v /var/run/docker.sock:/var/run/docker.sock ghcr.io/coollabsio/coolify-helper:1.0.11
+2025-Oct-06 06:30:48.982424
+366f0bcfcb5195c1c40ae263ea3464394fa2078b2a222da0172479f4de99ae2a
+2025-Oct-06 06:30:50.573102
+[CMD]: docker exec foocc80c408g4c0occs0gww8 bash -c 'GIT_SSH_COMMAND="ssh -o ConnectTimeout=30 -p 22 -o Port=22 -o LogLevel=ERROR -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" git ls-remote https://github.com/cgabhane/author_website refs/heads/main'
+2025-Oct-06 06:30:50.573102
+44e7f00edf8289cfea0b2e65ec552283e06f5eb1	refs/heads/main
+2025-Oct-06 06:30:50.606039
+----------------------------------------
+2025-Oct-06 06:30:50.613300
+Importing cgabhane/author_website:main (commit sha HEAD) to /artifacts/foocc80c408g4c0occs0gww8.
+2025-Oct-06 06:30:50.772305
+[CMD]: docker exec foocc80c408g4c0occs0gww8 bash -c 'git clone --depth=1 --recurse-submodules --shallow-submodules -b 'main' 'https://github.com/cgabhane/author_website' '/artifacts/foocc80c408g4c0occs0gww8' && cd /artifacts/foocc80c408g4c0occs0gww8 && if [ -f .gitmodules ]; then sed -i "s#git@\(.*\):#https://\1/#g" /artifacts/foocc80c408g4c0occs0gww8/.gitmodules || true && git submodule sync && GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" git submodule update --init --recursive --depth=1; fi && cd /artifacts/foocc80c408g4c0occs0gww8 && GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" git lfs pull'
+2025-Oct-06 06:30:50.772305
+Cloning into '/artifacts/foocc80c408g4c0occs0gww8'...
+2025-Oct-06 06:30:52.678484
+[CMD]: docker exec foocc80c408g4c0occs0gww8 bash -c 'cd /artifacts/foocc80c408g4c0occs0gww8 && git log -1 44e7f00edf8289cfea0b2e65ec552283e06f5eb1 --pretty=%B'
+2025-Oct-06 06:30:52.678484
+Improve production build by serving static files and fixing Vite import issues
+2025-Oct-06 06:30:52.686582
+Refactors server setup to conditionally import Vite for development and serve static files for production, while also defining a local log function to resolve 'ERR_MODULE_NOT_FOUND' errors.
+2025-Oct-06 06:30:52.686582
+2025-Oct-06 06:30:52.686582
+Replit-Commit-Author: Agent
+2025-Oct-06 06:30:52.686582
+Replit-Commit-Session-Id: e3dd2a96-053b-4090-9ac1-84c2b3c5b4fe
+2025-Oct-06 06:30:52.686582
+Replit-Commit-Checkpoint-Type: full_checkpoint
+2025-Oct-06 06:30:52.686582
+Replit-Commit-Screenshot-Url: https://storage.googleapis.com/screenshot-production-us-central1/acbed424-eb26-4c77-a75f-2c5768fff5db/e3dd2a96-053b-4090-9ac1-84c2b3c5b4fe/DT55cHl
+2025-Oct-06 06:30:52.813092
+[CMD]: docker images -q wo0woocog8cscoo8kkwo888w:44e7f00edf8289cfea0b2e65ec552283e06f5eb1 2>/dev/null
+2025-Oct-06 06:30:52.813092
+102fc48fa026
+2025-Oct-06 06:30:52.823218
+No configuration changed & image found (wo0woocog8cscoo8kkwo888w:44e7f00edf8289cfea0b2e65ec552283e06f5eb1) with the same Git Commit SHA. Build step skipped.
+2025-Oct-06 06:30:53.800158
+[CMD]: docker exec foocc80c408g4c0occs0gww8 bash -c 'cat /artifacts/foocc80c408g4c0occs0gww8/Dockerfile'
+2025-Oct-06 06:30:53.800158
+# Multi-stage build for production
+2025-Oct-06 06:30:53.800158
+FROM node:20-alpine AS builder
+2025-Oct-06 06:30:53.800158
+2025-Oct-06 06:30:53.800158
+WORKDIR /app
+2025-Oct-06 06:30:53.800158
+2025-Oct-06 06:30:53.800158
+# Copy package files
+2025-Oct-06 06:30:53.800158
+COPY package*.json ./
+2025-Oct-06 06:30:53.800158
+2025-Oct-06 06:30:53.800158
+# Install all dependencies (needed for build)
+2025-Oct-06 06:30:53.800158
+RUN npm install
+2025-Oct-06 06:30:53.800158
+2025-Oct-06 06:30:53.800158
+# Copy all source code
+2025-Oct-06 06:30:53.800158
+COPY . .
+2025-Oct-06 06:30:53.800158
+2025-Oct-06 06:30:53.800158
+# Build the application (builds both client and server)
+2025-Oct-06 06:30:53.800158
+RUN npm run build
+2025-Oct-06 06:30:53.800158
+2025-Oct-06 06:30:53.800158
+# Production stage
+2025-Oct-06 06:30:53.800158
+FROM node:20-alpine
+2025-Oct-06 06:30:53.800158
+2025-Oct-06 06:30:53.800158
+WORKDIR /app
+2025-Oct-06 06:30:53.800158
+2025-Oct-06 06:30:53.800158
+# Copy package files
+2025-Oct-06 06:30:53.800158
+COPY package*.json ./
+2025-Oct-06 06:30:53.800158
+2025-Oct-06 06:30:53.800158
+# Install only production dependencies
+2025-Oct-06 06:30:53.800158
+RUN npm install --omit=dev
+2025-Oct-06 06:30:53.800158
+2025-Oct-06 06:30:53.800158
+# Copy the built application from builder stage
+2025-Oct-06 06:30:53.800158
+COPY --from=builder /app/dist ./dist
+2025-Oct-06 06:30:53.800158
+2025-Oct-06 06:30:53.800158
+# Set environment variables
+2025-Oct-06 06:30:53.800158
+ENV NODE_ENV=production
+2025-Oct-06 06:30:53.800158
+ENV PORT=5000
+2025-Oct-06 06:30:53.800158
+2025-Oct-06 06:30:53.800158
+# Expose port
+2025-Oct-06 06:30:53.800158
+EXPOSE 5000
+2025-Oct-06 06:30:53.800158
+2025-Oct-06 06:30:53.800158
+# Health check
+2025-Oct-06 06:30:53.800158
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+2025-Oct-06 06:30:53.800158
+CMD node -e "require('http').get('http://localhost:5000/api/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"
+2025-Oct-06 06:30:53.800158
+2025-Oct-06 06:30:53.800158
+# Start the application
+2025-Oct-06 06:30:53.800158
+CMD ["node", "dist/index.js"]
+2025-Oct-06 06:30:54.006463
+----------------------------------------
+2025-Oct-06 06:30:54.016422
+Application has ports mapped to the host system, rolling update is not supported.
+2025-Oct-06 06:30:54.023741
+Removing old containers.
+2025-Oct-06 06:30:54.301466
+[CMD]: docker stop --time=30 wo0woocog8cscoo8kkwo888w-051056422025
+2025-Oct-06 06:30:54.301466
+wo0woocog8cscoo8kkwo888w-051056422025
+2025-Oct-06 06:30:54.421446
+[CMD]: docker rm -f wo0woocog8cscoo8kkwo888w-051056422025
+2025-Oct-06 06:30:54.421446
+wo0woocog8cscoo8kkwo888w-051056422025
+2025-Oct-06 06:30:54.821808
+[CMD]: docker exec foocc80c408g4c0occs0gww8 bash -c 'SOURCE_COMMIT=44e7f00edf8289cfea0b2e65ec552283e06f5eb1 COOLIFY_URL=http://wo0woocog8cscoo8kkwo888w.72.60.202.209.sslip.io COOLIFY_FQDN=wo0woocog8cscoo8kkwo888w.72.60.202.209.sslip.io COOLIFY_BRANCH=main COOLIFY_RESOURCE_UUID=wo0woocog8cscoo8kkwo888w COOLIFY_CONTAINER_NAME=wo0woocog8cscoo8kkwo888w-063046234468  docker compose --project-name wo0woocog8cscoo8kkwo888w --project-directory /artifacts/foocc80c408g4c0occs0gww8 -f /artifacts/foocc80c408g4c0occs0gww8/docker-compose.yaml up --build -d'
+2025-Oct-06 06:30:54.821808
+Container wo0woocog8cscoo8kkwo888w-063046234468  Creating
+2025-Oct-06 06:30:54.903225
+wo0woocog8cscoo8kkwo888w-063046234468 Your kernel does not support memory swappiness capabilities or the cgroup is not mounted. Memory swappiness discarded.
+2025-Oct-06 06:30:54.910123
+Container wo0woocog8cscoo8kkwo888w-063046234468  Created
+2025-Oct-06 06:30:54.910123
+Container wo0woocog8cscoo8kkwo888w-063046234468  Starting
+2025-Oct-06 06:30:55.337197
+Container wo0woocog8cscoo8kkwo888w-063046234468  Started
+2025-Oct-06 06:30:55.388941
+New container started.
+2025-Oct-06 06:30:56.206004
+Gracefully shutting down build container: foocc80c408g4c0occs0gww8
+2025-Oct-06 06:30:56.641330
+[CMD]: docker stop --time=30 foocc80c408g4c0occs0gww8
+2025-Oct-06 06:30:56.641330
+foocc80c408g4c0occs0gww8
+2025-Oct-06 06:30:56.883572
+[CMD]: docker rm -f foocc80c408g4c0occs0gww8
+2025-Oct-06 06:30:56.883572
+Error response from daemon: No such container: foocc80c408g4c0occs0gww8
