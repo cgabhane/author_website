@@ -12,8 +12,11 @@ RUN npm install
 # Copy all source code
 COPY . .
 
-# Build the application (builds both client and server)
-RUN npm run build
+# Build the client
+RUN npx vite build
+
+# Compile server TypeScript files individually (not bundled)
+RUN npx tsc --project tsconfig.server.json
 
 # Production stage
 FROM node:20-alpine
@@ -26,8 +29,14 @@ COPY package*.json ./
 # Install only production dependencies
 RUN npm install --omit=dev
 
-# Copy the built application from builder stage
-COPY --from=builder /app/dist ./dist
+# Copy the built client from builder stage
+COPY --from=builder /app/dist/public ./dist/public
+
+# Copy compiled server files from builder stage
+COPY --from=builder /app/dist/server ./dist/server
+
+# Copy shared types
+COPY --from=builder /app/shared ./shared
 
 # Set environment variables
 ENV NODE_ENV=production
@@ -41,4 +50,4 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
   CMD node -e "require('http').get('http://localhost:5000/api/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"
 
 # Start the application
-CMD ["node", "dist/index.js"]
+CMD ["node", "dist/server/index.js"]
