@@ -12,11 +12,8 @@ RUN npm install
 # Copy all source code
 COPY . .
 
-# Build the client
+# Build only the client
 RUN npx vite build
-
-# Compile server TypeScript files individually (not bundled)
-RUN npx tsc --project tsconfig.server.json
 
 # Production stage
 FROM node:20-alpine
@@ -26,17 +23,15 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install only production dependencies
-RUN npm install --omit=dev
+# Install production dependencies AND tsx (we need it to run TypeScript)
+RUN npm install --omit=dev && npm install tsx
 
 # Copy the built client from builder stage
 COPY --from=builder /app/dist/public ./dist/public
 
-# Copy compiled server files from builder stage
-COPY --from=builder /app/dist/server ./dist/server
-
-# Copy shared types
-COPY --from=builder /app/shared ./shared
+# Copy source files
+COPY server ./server
+COPY shared ./shared
 
 # Set environment variables
 ENV NODE_ENV=production
@@ -49,5 +44,5 @@ EXPOSE 5000
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
   CMD node -e "require('http').get('http://localhost:5000/api/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"
 
-# Start the application
-CMD ["node", "dist/server/index.js"]
+# Start the application with tsx
+CMD ["npx", "tsx", "server/index.ts"]
