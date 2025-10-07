@@ -104,7 +104,7 @@ export function BookingDialog({ open, onOpenChange }: BookingDialogProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-2xl max-h-[90vh]">
         <DialogHeader>
           <DialogTitle className="text-2xl">Schedule a Knowledge Exchange</DialogTitle>
           <DialogDescription>
@@ -113,7 +113,7 @@ export function BookingDialog({ open, onOpenChange }: BookingDialogProps) {
         </DialogHeader>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 overflow-y-auto max-h-[calc(90vh-180px)] pr-2">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Left Column - Personal Info */}
               <div className="space-y-4">
@@ -203,16 +203,17 @@ export function BookingDialog({ open, onOpenChange }: BookingDialogProps) {
                   render={({ field }) => (
                     <FormItem className="flex flex-col">
                       <FormLabel>Preferred Date</FormLabel>
-                      <div className="border rounded-md">
+                      <FormControl>
                         <Calendar
                           mode="single"
                           selected={selectedDate}
                           onSelect={handleDateSelect}
                           disabled={(date) => date < new Date() || date.getDay() === 0 || date.getDay() === 6}
                           initialFocus
+                          className="border rounded-md"
                           data-testid="calendar-date"
                         />
-                      </div>
+                      </FormControl>
                       <input type="hidden" {...field} />
                       <FormMessage />
                     </FormItem>
