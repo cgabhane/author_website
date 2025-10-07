@@ -35,7 +35,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           // Send notification email to Chetan
           await resend.emails.send({
             from: "Knowledge Exchange <onboarding@resend.dev>",
-            to: "contact@chetangabhane.in",
+            to: "genious.c123@gmail.com",
             subject: `New ${sessionTypeDisplay} Request`,
             html: `
               <h2>New Knowledge Exchange Request</h2>
