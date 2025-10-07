@@ -29,13 +29,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
         guidance: "Advisory Consultation"
       }[validatedData.sessionType];
 
-      // Try to send email notifications (non-blocking)
+      // Try to send email notifications (non-blocking, independent sends)
       if (resend) {
+        // Send notification email to Chetan (independent of visitor email)
         try {
-          // Send notification email to Chetan
           await resend.emails.send({
-            from: "Knowledge Exchange <onboarding@resend.dev>",
-            to: "genious.c123@gmail.com",
+            from: "Knowledge Exchange <contact@chetangabhane.in>",
+            to: "contact@chetangabhane.in",
             subject: `New ${sessionTypeDisplay} Request`,
             html: `
               <h2>New Knowledge Exchange Request</h2>
@@ -51,30 +51,35 @@ export async function registerRoutes(app: Express): Promise<Server> {
               <p>Appointment ID: ${appointment.id}</p>
             `,
           });
+          console.log(`✓ Notification email sent to contact@chetangabhane.in for appointment ${appointment.id}`);
+        } catch (notificationError) {
+          console.error(`✗ Failed to send notification email to contact@chetangabhane.in:`, notificationError);
+        }
 
-          // Send confirmation email to visitor
+        // Send confirmation email to visitor (independent of notification email)
+        try {
           await resend.emails.send({
-            from: "Chetan Gabhane <onboarding@resend.dev>",
+            from: "Chetan Gabhane <contact@chetangabhane.in>",
             to: validatedData.email,
-            subject: "Knowledge Exchange Request Received",
+            subject: "Your Knowledge Exchange Session Request Has Been Received",
             html: `
-              <h2>Thank You for Your Interest</h2>
+              <h2>Thank You for Your Request</h2>
               <p>Dear ${validatedData.name},</p>
-              <p>I've received your request for a <strong>${sessionTypeDisplay}</strong> and will be in touch shortly to confirm the details.</p>
-              <h3>Requested Details:</h3>
+              <p>Your request for a <strong>${sessionTypeDisplay}</strong> has been successfully received. I will review your request and get back to you within 24 hours to confirm the appointment details.</p>
+              <h3>Your Booking Details:</h3>
               <ul>
                 <li><strong>Session Type:</strong> ${sessionTypeDisplay}</li>
-                <li><strong>Preferred Date:</strong> ${validatedData.date}</li>
-                <li><strong>Preferred Time:</strong> ${validatedData.time}</li>
+                <li><strong>Requested Date:</strong> ${validatedData.date}</li>
+                <li><strong>Requested Time:</strong> ${validatedData.time}</li>
               </ul>
-              ${validatedData.message ? `<p><strong>Your message:</strong> ${validatedData.message}</p>` : ""}
-              <p>I look forward to our conversation about cloud transformation, AI innovation, and strategic technology leadership.</p>
-              <p>Best regards,<br>Chetan Gabhane<br>Cloud & AI Evangelist</p>
+              ${validatedData.message ? `<p><strong>Your Message:</strong><br>${validatedData.message}</p>` : ""}
+              <p>I look forward to our conversation about cloud transformation, AI innovation, and strategic technology leadership. You will receive a confirmation email with the meeting link once the appointment is confirmed.</p>
+              <p>Best regards,<br><strong>Chetan Gabhane</strong><br>Cloud & AI Evangelist<br><a href="mailto:contact@chetangabhane.in">contact@chetangabhane.in</a></p>
             `,
           });
-        } catch (emailError) {
-          // Log email errors but don't fail the booking
-          console.error("Email notification failed (booking still saved):", emailError);
+          console.log(`✓ Confirmation email sent to ${validatedData.email} for appointment ${appointment.id}`);
+        } catch (confirmationError) {
+          console.error(`✗ Failed to send confirmation email to ${validatedData.email}:`, confirmationError);
         }
       } else {
         console.warn("RESEND_API_KEY not configured - skipping email notifications");
