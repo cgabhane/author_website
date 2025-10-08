@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertAppointmentSchema, type Insight } from "@shared/schema";
+import { insertAppointmentSchema, insertSubscriberSchema, type Insight } from "@shared/schema";
 import { Resend } from "resend";
 import Parser from "rss-parser";
 
@@ -97,6 +97,90 @@ export async function registerRoutes(app: Express): Promise<Server> {
       };
       
       res.json(MOCK_INSIGHTS);
+    }
+  });
+
+  // POST /api/subscribe - Add new subscriber
+  app.post("/api/subscribe", async (req, res) => {
+    try {
+      // Validate request body
+      const validatedData = insertSubscriberSchema.parse(req.body);
+
+      // Check if email already subscribed
+      const existing = await storage.getSubscriberByEmail(validatedData.email);
+      if (existing) {
+        return res.status(400).json({
+          success: false,
+          message: "This email is already subscribed.",
+        });
+      }
+
+      // Create subscriber in storage
+      const subscriber = await storage.createSubscriber(validatedData);
+
+      // Send welcome email
+      if (resend) {
+        try {
+          await resend.emails.send({
+            from: "Chetan Gabhane <contact@chetangabhane.in>",
+            to: subscriber.email,
+            subject: "Welcome to My Newsletter!",
+            html: `
+              <h2>Thank You for Subscribing!</h2>
+              <p>Welcome to my newsletter where I share insights on:</p>
+              <ul>
+                ${subscriber.interests.map(interest => `<li>${interest}</li>`).join('')}
+              </ul>
+              <p>You'll receive updates directly in your inbox whenever I publish new content on these topics.</p>
+              <p>Best regards,<br><strong>Chetan Gabhane</strong><br>Cloud & AI Evangelist<br><a href="mailto:contact@chetangabhane.in">contact@chetangabhane.in</a></p>
+            `,
+          });
+          console.log(`✓ Welcome email sent to ${subscriber.email}`);
+        } catch (emailError) {
+          console.error(`✗ Failed to send welcome email to ${subscriber.email}:`, emailError);
+        }
+      }
+
+      res.json({
+        success: true,
+        message: "Successfully subscribed! Check your email for confirmation.",
+      });
+    } catch (error: any) {
+      console.error("Subscription error:", error);
+      
+      if (error.name === "ZodError") {
+        return res.status(400).json({
+          success: false,
+          message: "Please check your input and try again.",
+          errors: error.errors,
+        });
+      }
+
+      if (error.message === "Email already subscribed") {
+        return res.status(400).json({
+          success: false,
+          message: "This email is already subscribed.",
+        });
+      }
+
+      res.status(500).json({
+        success: false,
+        message: "Unable to process your subscription. Please try again later.",
+      });
+    }
+  });
+
+  // GET /api/subscribers - Get all subscribers (for admin view)
+  app.get("/api/subscribers", async (_req, res) => {
+    try {
+      const subscribers = await storage.getSubscribers();
+      res.json(subscribers);
+    } catch (error) {
+      console.error("Error fetching subscribers:", error);
+      res.status(500).json({
+        success: false,
+        message: "Unable to fetch subscribers.",
+      });
     }
   });
 
