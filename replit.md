@@ -110,9 +110,69 @@ Preferred communication style: Simple, everyday language.
 
 **Third-Party Services**
 - **Resend** - Email notifications for appointment bookings (optional, app works without it)
+- **Substack** - RSS feed integration for Latest Insights section
 - Newsletter signup (toast notification placeholder, ready for email service integration)
 - External book purchase links (Amazon, etc.)
 - Social media links (LinkedIn, email contact)
+
+### Latest Insights - Substack RSS Integration
+
+**Publication URL**: https://chetangabhane.substack.com
+
+**Backend Implementation** (`server/routes.ts`):
+- **Endpoint**: GET `/api/insights`
+- **RSS Parser**: Uses `rss-parser` npm package to fetch and parse Substack RSS feed
+- **Caching Strategy**: 
+  - 1-hour TTL (Time To Live) for all responses
+  - Caches both successful fetches and fallback data
+  - Prevents repeated network calls to Substack
+- **Fallback Logic**:
+  - Returns mock data when Substack feed is empty (no published posts)
+  - Returns mock data when RSS fetch fails (network errors)
+  - All fallback responses are cached with same TTL
+- **Data Transformation**: Parses RSS items into Insight type with id, title, url, pubDate, excerpt, category
+
+**Frontend Implementation**:
+- **Component**: `client/src/components/Insights.tsx`
+- **Page**: `client/src/pages/Home.tsx`
+- **Data Fetching**: TanStack Query with `/api/insights` endpoint
+- **Loading States**: 
+  - Skeleton loaders displayed while fetching
+  - Graceful fallback to mock data if API fails
+- **User Interaction**: Clickable cards that open Substack posts in new tab
+- **Display**: Shows category badge, title, and arrow icon for each insight
+
+**Data Schema** (`shared/schema.ts`):
+```typescript
+interface Insight {
+  id: string;
+  title: string;
+  url: string;
+  pubDate?: string;
+  excerpt?: string;
+  category?: string;
+}
+```
+
+**Mock Fallback Data**:
+- "Why Most Cloud Migrations Fail – and How to Fix It" (Cloud Strategy)
+- "The Rise of AI Agents in Cloud Operations" (AI Operations)
+- "Sovereign Cloud: Balancing Compliance and Innovation" (Compliance)
+
+**Integration Flow**:
+1. User visits homepage → Frontend fetches from `/api/insights`
+2. Backend checks cache → If valid (< 1 hour), returns cached data
+3. If cache expired → Fetches from Substack RSS feed
+4. If Substack has posts → Returns posts, caches them
+5. If Substack empty/error → Returns mock data, caches it
+6. Frontend displays insights with loading skeleton
+7. User clicks insight → Opens in new tab
+
+**Error Handling**:
+- Network failures: Cached fallback data served
+- Empty RSS feed: Mock data served and cached
+- Parse errors: Mock data served and cached
+- All errors logged for monitoring
 
 ## Deployment Configuration
 
