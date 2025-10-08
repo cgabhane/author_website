@@ -1,21 +1,66 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { Send } from "lucide-react";
+import { useMutation } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
+
+const INTEREST_OPTIONS = [
+  { id: "cloud", label: "Cloud Strategy" },
+  { id: "ai", label: "AI & Innovation" },
+  { id: "leadership", label: "Tech Leadership" },
+  { id: "compliance", label: "Compliance & Governance" },
+];
 
 export default function Newsletter() {
   const [email, setEmail] = useState("");
+  const [interests, setInterests] = useState<string[]>([]);
   const { toast } = useToast();
+
+  const subscribeMutation = useMutation({
+    mutationFn: async (data: { email: string; interests: string[] }) => {
+      return apiRequest("POST", "/api/subscribe", data);
+    },
+    onSuccess: () => {
+      toast({
+        title: "Successfully subscribed!",
+        description: "Check your email for a welcome message.",
+      });
+      setEmail("");
+      setInterests([]);
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Subscription failed",
+        description: error.message || "Please try again later.",
+        variant: "destructive",
+      });
+    },
+  });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Newsletter signup:", email);
-    toast({
-      title: "Thanks for subscribing!",
-      description: "You'll receive updates and insights in your inbox.",
-    });
-    setEmail("");
+    
+    if (interests.length === 0) {
+      toast({
+        title: "Please select interests",
+        description: "Choose at least one topic you're interested in.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    subscribeMutation.mutate({ email, interests });
+  };
+
+  const handleInterestToggle = (interestId: string) => {
+    setInterests(prev =>
+      prev.includes(interestId)
+        ? prev.filter(id => id !== interestId)
+        : [...prev, interestId]
+    );
   };
 
   return (
@@ -35,28 +80,56 @@ export default function Newsletter() {
                 Stay Connected
               </h2>
               <p className="text-lg text-muted-foreground max-w-xl mx-auto">
-                Subscribe to get insights, articles, and book updates directly in your inbox
+                Subscribe to get insights, articles, and updates directly in your inbox
               </p>
             </div>
-            
-            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 justify-center max-w-lg mx-auto pt-4">
-              <Input
-                type="email"
-                placeholder="your.email@company.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="flex-1 h-12 text-base border-2"
-                data-testid="input-newsletter-email"
-              />
-              <Button type="submit" size="lg" className="h-12 px-8" data-testid="button-newsletter-subscribe">
-                Subscribe
-                <Send className="ml-2 h-4 w-4" />
-              </Button>
-            </form>
+
+            <div className="space-y-6 pt-4">
+              <div className="flex flex-wrap gap-4 justify-center">
+                {INTEREST_OPTIONS.map((option) => (
+                  <div key={option.id} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={option.id}
+                      checked={interests.includes(option.id)}
+                      onCheckedChange={() => handleInterestToggle(option.id)}
+                      data-testid={`checkbox-interest-${option.id}`}
+                    />
+                    <label
+                      htmlFor={option.id}
+                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                    >
+                      {option.label}
+                    </label>
+                  </div>
+                ))}
+              </div>
+
+              <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 justify-center max-w-lg mx-auto">
+                <Input
+                  type="email"
+                  placeholder="your.email@company.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  disabled={subscribeMutation.isPending}
+                  className="flex-1 h-12 text-base border-2"
+                  data-testid="input-newsletter-email"
+                />
+                <Button 
+                  type="submit" 
+                  size="lg" 
+                  className="h-12 px-8" 
+                  disabled={subscribeMutation.isPending}
+                  data-testid="button-newsletter-subscribe"
+                >
+                  {subscribeMutation.isPending ? "Subscribing..." : "Subscribe"}
+                  <Send className="ml-2 h-4 w-4" />
+                </Button>
+              </form>
+            </div>
             
             <p className="text-sm text-muted-foreground pt-2">
-              Join thousands of professionals staying ahead in cloud and AI
+              Join professionals staying ahead in cloud and AI
             </p>
           </div>
         </div>
