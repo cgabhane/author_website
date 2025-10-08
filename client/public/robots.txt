@@ -1,0 +1,12 @@
+# Robots.txt for chetangabhane.in
+User-agent: *
+Allow: /
+
+# Disallow admin pages from search engines
+Disallow: /admin/
+
+# Sitemap location
+Sitemap: https://chetangabhane.in/sitemap.xml
+
+# Crawl-delay for polite bots
+Crawl-delay: 1
