@@ -1,6 +1,8 @@
 import Navigation from "@/components/Navigation";
 import PageHeader from "@/components/PageHeader";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
+import StructuredData from "@/components/StructuredData";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Download, Mail, Linkedin, Globe, FileText } from "lucide-react";
@@ -18,8 +20,32 @@ export default function PressKit() {
     { title: "The Future of Multicloud in 2025 and Beyond", category: "Industry Trends" }
   ];
 
+  const books = [
+    {
+      title: "Reverse Engineering with Terraform",
+      description: "Practical automation, integration & scalability with Terraform",
+      coverImage: "https://chetangabhane.in/book1.jpg",
+      buyUrl: "https://www.amazon.in/Reverse-Engineering-Terraform-Introduction-Infrastructure/dp/B0CKSDNNNX"
+    },
+    {
+      title: "Navigating VMware Turmoil",
+      description: "Strategic insights for enterprises transitioning from VMware to cloud alternatives",
+      coverImage: "https://chetangabhane.in/book2.jpg",
+      buyUrl: "#"
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="Press Kit – Media Resources & Speaking Topics | Chetan Gabhane"
+        description="Media kit for Chetan Gabhane: professional bio, headshots, book covers, speaking topics. Available for conferences, podcasts, and media interviews on cloud strategy and AI."
+        keywords="cloud speaker, AI evangelist speaker, technology conference speaker, cloud strategy author, VMware expert speaker, press kit"
+        canonicalUrl="https://chetangabhane.in/press-kit"
+      />
+      {books.map((book, index) => (
+        <StructuredData key={index} type="book" data={book} />
+      ))}
       <Navigation />
       <PageHeader title="Press Kit" subtitle="For Media • Speaking • Event Organizers" />
 

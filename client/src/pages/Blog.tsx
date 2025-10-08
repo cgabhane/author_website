@@ -2,6 +2,7 @@ import Navigation from "@/components/Navigation";
 import PageHeader from "@/components/PageHeader";
 import BlogCard from "@/components/BlogCard";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 
 export default function Blog() {
   const blogPosts = [
@@ -33,6 +34,12 @@ export default function Blog() {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="Blog – Cloud & AI Insights | Chetan Gabhane"
+        description="Thought leadership on cloud strategy, AI operations, VMware transitions, and enterprise architecture. Expert insights from cloud evangelist Chetan Gabhane."
+        keywords="cloud migration blog, AI operations insights, VMware cloud transition, cloud strategy articles, enterprise architecture blog"
+        canonicalUrl="https://chetangabhane.in/blog"
+      />
       <Navigation />
       <PageHeader title="Blog" subtitle="Thought Leadership • Insights • Cloud & AI" />
       <section className="py-20">

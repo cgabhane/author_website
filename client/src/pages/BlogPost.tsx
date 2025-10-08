@@ -2,6 +2,8 @@ import { useRoute, Link } from "wouter";
 import Navigation from "@/components/Navigation";
 import PageHeader from "@/components/PageHeader";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
+import StructuredData from "@/components/StructuredData";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 
@@ -13,7 +15,9 @@ export default function BlogPost() {
     "cloud-migrations": {
       title: "Why Most Cloud Migrations Fail – and How to Fix It",
       date: "September 2025",
+      publishedTime: "2025-09-15T10:00:00Z",
       author: "Chetan Gabhane",
+      description: "Cloud adoption continues to accelerate, but many enterprises still find their migration initiatives stalling or failing outright. Learn the five most common reasons migrations fail and practical steps to avoid them.",
       content: (
         <>
           <p>
@@ -80,6 +84,22 @@ export default function BlogPost() {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title={`${post.title} | Chetan Gabhane`}
+        description={post.description || post.title}
+        article={true}
+        publishedTime={post.publishedTime}
+        canonicalUrl={`https://chetangabhane.in/blog/${postId}`}
+      />
+      <StructuredData 
+        type="article" 
+        data={{
+          title: post.title,
+          description: post.description || post.title,
+          publishedTime: post.publishedTime,
+          url: `https://chetangabhane.in/blog/${postId}`
+        }}
+      />
       <Navigation />
       <PageHeader 
         title={post.title}
