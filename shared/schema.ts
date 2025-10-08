@@ -47,6 +47,25 @@ export const insertAppointmentSchema = createInsertSchema(appointments).omit({
 export type InsertAppointment = z.infer<typeof insertAppointmentSchema>;
 export type Appointment = typeof appointments.$inferSelect;
 
+// Subscribers table for email subscriptions
+export const subscribers = pgTable("subscribers", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  email: text("email").notNull().unique(),
+  interests: text("interests").array().notNull().default(sql`ARRAY[]::text[]`),
+  subscribedAt: timestamp("subscribed_at").notNull().defaultNow(),
+});
+
+export const insertSubscriberSchema = createInsertSchema(subscribers).omit({
+  id: true,
+  subscribedAt: true,
+}).extend({
+  email: z.string().email("Please enter a valid email address"),
+  interests: z.array(z.string()).min(1, "Please select at least one interest"),
+});
+
+export type InsertSubscriber = z.infer<typeof insertSubscriberSchema>;
+export type Subscriber = typeof subscribers.$inferSelect;
+
 // Insight type for Substack RSS integration
 export const insightSchema = z.object({
   id: z.string(),

@@ -1,4 +1,4 @@
-import { type User, type InsertUser, type Appointment, type InsertAppointment } from "@shared/schema";
+import { type User, type InsertUser, type Appointment, type InsertAppointment, type Subscriber, type InsertSubscriber } from "@shared/schema";
 import { randomUUID } from "crypto";
 
 // modify the interface with any CRUD methods
@@ -10,15 +10,20 @@ export interface IStorage {
   createUser(user: InsertUser): Promise<User>;
   createAppointment(appointment: InsertAppointment): Promise<Appointment>;
   getAppointments(): Promise<Appointment[]>;
+  createSubscriber(subscriber: InsertSubscriber): Promise<Subscriber>;
+  getSubscribers(): Promise<Subscriber[]>;
+  getSubscriberByEmail(email: string): Promise<Subscriber | undefined>;
 }
 
 export class MemStorage implements IStorage {
   private users: Map<string, User>;
   private appointments: Map<string, Appointment>;
+  private subscribers: Map<string, Subscriber>;
 
   constructor() {
     this.users = new Map();
     this.appointments = new Map();
+    this.subscribers = new Map();
   }
 
   async getUser(id: string): Promise<User | undefined> {
@@ -53,6 +58,30 @@ export class MemStorage implements IStorage {
 
   async getAppointments(): Promise<Appointment[]> {
     return Array.from(this.appointments.values());
+  }
+
+  async createSubscriber(insertSubscriber: InsertSubscriber): Promise<Subscriber> {
+    const existing = this.subscribers.get(insertSubscriber.email);
+    if (existing) {
+      throw new Error("Email already subscribed");
+    }
+    
+    const id = randomUUID();
+    const subscriber: Subscriber = {
+      ...insertSubscriber,
+      id,
+      subscribedAt: new Date(),
+    };
+    this.subscribers.set(subscriber.email, subscriber);
+    return subscriber;
+  }
+
+  async getSubscribers(): Promise<Subscriber[]> {
+    return Array.from(this.subscribers.values());
+  }
+
+  async getSubscriberByEmail(email: string): Promise<Subscriber | undefined> {
+    return this.subscribers.get(email);
   }
 }
 
