@@ -1,210 +1,66 @@
 # Chetan Gabhane Professional Portfolio Website
 
 ## Overview
-
-This is a professional portfolio website for Chetan Gabhane, a Cloud & AI Evangelist, Author, and Strategic Advisor. The site showcases his published works, thought leadership content, speaking topics, and provides contact information for media inquiries and consulting opportunities. Built as a full-stack application with a React frontend and Express backend, it emphasizes clean, sophisticated design inspired by professional author portfolios.
+This project is Chetan Gabhane's professional portfolio, showcasing his work as a Cloud & AI Evangelist, Author, and Strategic Advisor. It features his publications, thought leadership, speaking topics, and contact information. The site is a full-stack application with a React frontend and Express backend, designed to be clean and sophisticated, drawing inspiration from professional author portfolios. The business vision is to establish a strong online presence, enhance his personal brand, and generate leads for media inquiries and consulting opportunities.
 
 ## User Preferences
-
 Preferred communication style: Simple, everyday language.
 
 ## System Architecture
 
-### Frontend Architecture
+### Frontend
+- **Frameworks**: React 18 with TypeScript, Vite for bundling.
+- **Routing**: Wouter for client-side navigation.
+- **Data Fetching**: TanStack Query for server state management.
+- **UI/UX**:
+    - **Component Library**: shadcn/ui built on Radix UI.
+    - **Styling**: Tailwind CSS with custom themes (Navy Blue, Deep Charcoal), responsive design, light/dark mode.
+    - **Typography**: Georgia/Palatino for headers, Inter for body text.
+- **Component Structure**: Organized into page components (Home, Blog) and reusable components (Hero, Navigation).
 
-**Framework & Build System**
-- **React 18** with TypeScript for the UI layer
-- **Vite** as the build tool and development server
-- **Wouter** for client-side routing (lightweight alternative to React Router)
-- **TanStack Query** for server state management and data fetching
-
-**UI Component System**
-- **shadcn/ui** component library built on Radix UI primitives
-- **Tailwind CSS** for styling with custom theme configuration
-- **Design tokens** defined in CSS variables for consistent theming
-- Custom color palette: Navy Blue primary, Deep Charcoal text, accent colors for secondary elements
-- Typography system: Georgia/Palatino serifs for headers, Inter sans-serif for body text
-- Supports both light and dark modes
-
-**Component Architecture**
-- Page components: `Home`, `Blog`, `BlogPost`, `PressKit`, `NotFound`
-- Reusable components: `Hero`, `About`, `Books`, `Insights`, `Newsletter`, `Contact`, `Navigation`, `Footer`
-- UI primitives in `components/ui/` directory (buttons, cards, dialogs, forms, etc.)
-- Component examples in `components/examples/` for development reference
-
-**Styling Approach**
-- Utility-first with Tailwind CSS
-- Custom CSS variables for theme colors and spacing
-- Responsive design with mobile-first approach
-- Hover and active state utilities (`hover-elevate`, `active-elevate-2`)
-- Consistent border radius system (lg: 9px, md: 6px, sm: 3px)
-
-### Backend Architecture
-
-**Server Framework**
-- **Express.js** as the web server
-- **TypeScript** for type safety
-- Custom middleware for request logging and error handling
-- Development and production build configurations
-
-**Development vs Production**
-- Development: Vite dev server integrated with Express middleware
-- Production: Static file serving from `dist/public`
-- Hot Module Replacement (HMR) in development via Vite
-- Replit-specific plugins for development banner and error overlay
-
-**API Structure**
-- Routes defined in `server/routes.ts` (currently minimal, ready for expansion)
-- All API routes prefixed with `/api`
-- Error handling middleware catches and formats errors
-
-**Storage Layer**
-- Abstracted storage interface (`IStorage`) for future database integration
-- In-memory storage implementation (`MemStorage`) for development
-- User model defined with `id`, `username`, `password` fields
-- Ready for Drizzle ORM integration with PostgreSQL (schema defined but not yet connected)
+### Backend
+- **Framework**: Express.js with TypeScript.
+- **Development**: Vite dev server integration with HMR.
+- **API**: Minimal API routes prefixed with `/api`, includes error handling.
+- **Storage**: Abstracted storage interface, currently using in-memory storage, planned for PostgreSQL with Drizzle ORM.
 
 ### Data Storage
+- **Planned Database**: PostgreSQL via Neon serverless.
+- **ORM**: Drizzle ORM for type-safe queries.
+- **Schema**: Defined in `shared/schema.ts`, includes Users table with Zod validation.
 
-**Planned Database**
-- **PostgreSQL** via Neon serverless
-- **Drizzle ORM** for type-safe database queries
-- Schema defined in `shared/schema.ts`
-- Migration configuration in `drizzle.config.ts`
-- Currently using in-memory storage until database is provisioned
+### SEO Optimization
+- **Components**: `SEO.tsx` for dynamic meta tags (Open Graph, Twitter Cards), `StructuredData.tsx` for Schema.org JSON-LD (Person, Article, Book, Organization schemas), `Analytics.tsx` for Google Analytics 4 and LinkedIn Insight Tag.
+- **Files**: `sitemap.xml` and `robots.txt` in `public` directory.
+- **Strategy**: Focus on rich snippets, keyword targeting, and social media sharing optimization with minimal performance impact.
 
-**Data Models**
-- Users table with UUID primary keys
-- Zod schemas for validation via `drizzle-zod`
-- Shared types between frontend and backend via `@shared` path alias
+### Deployment
+- **Platform**: Coolify v4.0.0-beta.434 on Hostinger VPS.
+- **Containerization**: Docker multi-stage build using `node:20-alpine`, exposing port 5000.
+- **Build Process**: Vite for client, esbuild for server, targeting Node ESM.
+- **Environment Variables**: `PORT`, `NODE_ENV`, `RESEND_API_KEY`.
 
-### External Dependencies
+## External Dependencies
 
-**Core Libraries**
-- `@neondatabase/serverless` - PostgreSQL database connection
-- `drizzle-orm` & `drizzle-zod` - ORM and schema validation
-- `react-hook-form` & `@hookform/resolvers` - Form handling and validation
-- `zod` - Runtime type validation
+### Core Libraries
+- `@neondatabase/serverless`: PostgreSQL connection.
+- `drizzle-orm`, `drizzle-zod`: ORM and schema validation.
+- `react-hook-form`, `@hookform/resolvers`, `zod`: Form handling and validation.
 
-**UI Component Libraries**
-- `@radix-ui/*` - Headless UI component primitives (accordion, dialog, dropdown, tooltip, etc.)
-- `class-variance-authority` - Type-safe variant styling
-- `cmdk` - Command menu component
-- `embla-carousel-react` - Carousel/slider functionality
-- `lucide-react` - Icon library
+### UI Components
+- `@radix-ui/*`: Headless UI primitives.
+- `class-variance-authority`: Type-safe variant styling.
+- `cmdk`: Command menu.
+- `embla-carousel-react`: Carousel.
+- `lucide-react`: Icons.
 
-**Development Tools**
-- `@replit/vite-plugin-*` - Replit-specific development enhancements
-- `esbuild` - Fast JavaScript bundler for production builds
-- `tsx` - TypeScript execution for development
+### Development Tools
+- `@replit/vite-plugin-*`: Replit-specific enhancements.
+- `esbuild`: JavaScript bundler.
+- `tsx`: TypeScript execution.
 
-**Build & Bundling**
-- Vite handles client-side bundling
-- esbuild bundles server-side code for production
-- Path aliases: `@/` for client, `@shared/` for shared code, `@assets/` for static assets
-
-**Static Assets**
-- Profile images and book covers stored in `attached_assets/`
-- Legacy HTML/CSS files preserved as design references
-- Images imported via Vite's asset handling
-
-**Third-Party Services**
-- **Resend** - Email notifications for appointment bookings (optional, app works without it)
-- **Substack** - RSS feed integration for Latest Insights section
-- Newsletter signup (toast notification placeholder, ready for email service integration)
-- External book purchase links (Amazon, etc.)
-- Social media links (LinkedIn, email contact)
-
-### Latest Insights - Substack RSS Integration
-
-**Publication URL**: https://chetangabhane.substack.com
-
-**Backend Implementation** (`server/routes.ts`):
-- **Endpoint**: GET `/api/insights`
-- **RSS Parser**: Uses `rss-parser` npm package to fetch and parse Substack RSS feed
-- **Caching Strategy**: 
-  - 1-hour TTL (Time To Live) for all responses
-  - Caches both successful fetches and fallback data
-  - Prevents repeated network calls to Substack
-- **Fallback Logic**:
-  - Returns mock data when Substack feed is empty (no published posts)
-  - Returns mock data when RSS fetch fails (network errors)
-  - All fallback responses are cached with same TTL
-- **Data Transformation**: Parses RSS items into Insight type with id, title, url, pubDate, excerpt, category
-
-**Frontend Implementation**:
-- **Component**: `client/src/components/Insights.tsx`
-- **Page**: `client/src/pages/Home.tsx`
-- **Data Fetching**: TanStack Query with `/api/insights` endpoint
-- **Loading States**: 
-  - Skeleton loaders displayed while fetching
-  - Graceful fallback to mock data if API fails
-- **User Interaction**: Clickable cards that open Substack posts in new tab
-- **Display**: Shows category badge, title, and arrow icon for each insight
-
-**Data Schema** (`shared/schema.ts`):
-```typescript
-interface Insight {
-  id: string;
-  title: string;
-  url: string;
-  pubDate?: string;
-  excerpt?: string;
-  category?: string;
-}
-```
-
-**Mock Fallback Data**:
-- "Why Most Cloud Migrations Fail – and How to Fix It" (Cloud Strategy)
-- "The Rise of AI Agents in Cloud Operations" (AI Operations)
-- "Sovereign Cloud: Balancing Compliance and Innovation" (Compliance)
-
-**Integration Flow**:
-1. User visits homepage → Frontend fetches from `/api/insights`
-2. Backend checks cache → If valid (< 1 hour), returns cached data
-3. If cache expired → Fetches from Substack RSS feed
-4. If Substack has posts → Returns posts, caches them
-5. If Substack empty/error → Returns mock data, caches it
-6. Frontend displays insights with loading skeleton
-7. User clicks insight → Opens in new tab
-
-**Error Handling**:
-- Network failures: Cached fallback data served
-- Empty RSS feed: Mock data served and cached
-- Parse errors: Mock data served and cached
-- All errors logged for monitoring
-
-## Deployment Configuration
-
-### Coolify Deployment (Hostinger VPS)
-- **Platform**: Coolify v4.0.0-beta.434
-- **Server**: Hostinger VPS (72.60.202.209)
-- **Domain**: chetangabhane.in (custom domain configured)
-- **Deployment URL**: wo0woocog8cscoo8kkwo888w.72.60.202.209.sslip.io
-- **Auto-deploy**: Webhook configured for `main` branch pushes
-- **GitHub Repository**: cgabhane/author_website
-
-### Docker Configuration
-- **Multi-stage build**: Builder stage + production stage
-- **Base Image**: node:20-alpine
-- **Port**: 5000 (bound to 0.0.0.0)
-- **Health Check**: GET /api/health endpoint
-- **Environment**: NODE_ENV=production
-
-### Build Process
-1. **Client Build**: `npx vite build` → outputs to `dist/public`
-2. **Server Build**: 
-   - `esbuild server/index.ts` with `--external:./vite.js --external:./static.js`
-   - `esbuild server/static.ts` → outputs to `dist/static.js`
-3. **Production**: Node ESM with explicit `.js` extensions in dynamic imports
-
-### Environment Variables
-- `PORT` - Server port (default: 5000)
-- `NODE_ENV` - Environment mode (development/production)
-- `RESEND_API_KEY` - Optional email service API key (app works without it)
-
-### Key Technical Decisions
-- **esbuild external flags**: Prevents bundling local modules (`./vite.js`, `./static.js`)
-- **ESM compatibility**: Explicit `.js` extensions required for dynamic imports in Node ESM
-- **Graceful degradation**: Resend email client is optional - app starts and works without API key
-- **Static file serving**: Production uses Express static middleware instead of Vite
+### Third-Party Services
+- **Resend**: Optional email notifications (for appointment bookings).
+- **Substack**: RSS feed integration for "Latest Insights" section (https://chetangabhane.substack.com), with backend caching and fallback logic.
+- **Google Analytics 4**: For website analytics.
+- **LinkedIn Insight Tag**: For B2B tracking and retargeting.

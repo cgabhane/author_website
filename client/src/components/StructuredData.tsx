@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 interface StructuredDataProps {
   type: 'person' | 'article' | 'book' | 'organization';
@@ -6,8 +6,10 @@ interface StructuredDataProps {
 }
 
 export default function StructuredData({ type, data }: StructuredDataProps) {
+  const uniqueIdRef = useRef(`structured-data-${type}-${Math.random().toString(36).substring(2, 11)}`);
+  
   useEffect(() => {
-    const scriptId = `structured-data-${type}`;
+    const scriptId = uniqueIdRef.current;
     let script = document.getElementById(scriptId) as HTMLScriptElement;
     
     if (!script) {
@@ -117,7 +119,7 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
     script.textContent = JSON.stringify(structuredData);
 
     return () => {
-      const existingScript = document.getElementById(scriptId);
+      const existingScript = document.getElementById(uniqueIdRef.current);
       if (existingScript) {
         existingScript.remove();
       }
