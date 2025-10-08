@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface Insight {
   id: string;
@@ -10,10 +11,11 @@ interface Insight {
 
 interface InsightsProps {
   insights: Insight[];
+  isLoading?: boolean;
 }
 
-export default function Insights({ insights }: InsightsProps) {
-  const categories = ["Cloud Strategy", "AI Operations", "Compliance"];
+export default function Insights({ insights, isLoading = false }: InsightsProps) {
+  const defaultCategories = ["Cloud Strategy", "AI Operations", "Compliance"];
   
   const handleInsightClick = (url?: string) => {
     if (url) {
@@ -36,30 +38,47 @@ export default function Insights({ insights }: InsightsProps) {
         </div>
 
         <div className="grid gap-6">
-          {insights.map((insight, index) => (
-            <Card 
-              key={insight.id}
-              className="group hover-elevate transition-all cursor-pointer border-l-4 border-l-primary/50 hover:border-l-primary"
-              onClick={() => handleInsightClick(insight.url)}
-              data-testid={`insight-${insight.id}`}
-            >
-              <CardContent className="p-8">
-                <div className="flex items-start justify-between gap-6">
-                  <div className="flex-1 space-y-2">
-                    <div className="flex items-center gap-3">
-                      <span className="text-xs font-semibold text-primary/70 bg-primary/10 px-3 py-1 rounded-full">
-                        {categories[index % categories.length]}
-                      </span>
+          {isLoading ? (
+            // Loading skeleton
+            Array.from({ length: 3 }).map((_, index) => (
+              <Card key={`skeleton-${index}`} className="border-l-4 border-l-primary/50">
+                <CardContent className="p-8">
+                  <div className="flex items-start justify-between gap-6">
+                    <div className="flex-1 space-y-3">
+                      <Skeleton className="h-6 w-32" />
+                      <Skeleton className="h-6 w-full" />
                     </div>
-                    <h3 className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors">
-                      {insight.title}
-                    </h3>
+                    <Skeleton className="h-5 w-5 flex-shrink-0 mt-1" />
                   </div>
-                  <ArrowRight className="w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all flex-shrink-0 mt-1" />
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                </CardContent>
+              </Card>
+            ))
+          ) : (
+            insights.map((insight, index) => (
+              <Card 
+                key={insight.id}
+                className="group hover-elevate transition-all cursor-pointer border-l-4 border-l-primary/50 hover:border-l-primary"
+                onClick={() => handleInsightClick(insight.url)}
+                data-testid={`insight-${insight.id}`}
+              >
+                <CardContent className="p-8">
+                  <div className="flex items-start justify-between gap-6">
+                    <div className="flex-1 space-y-2">
+                      <div className="flex items-center gap-3">
+                        <span className="text-xs font-semibold text-primary/70 bg-primary/10 px-3 py-1 rounded-full">
+                          {insight.category || defaultCategories[index % defaultCategories.length]}
+                        </span>
+                      </div>
+                      <h3 className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors">
+                        {insight.title}
+                      </h3>
+                    </div>
+                    <ArrowRight className="w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all flex-shrink-0 mt-1" />
+                  </div>
+                </CardContent>
+              </Card>
+            ))
+          )}
         </div>
       </div>
     </section>

@@ -1,16 +1,103 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertAppointmentSchema } from "@shared/schema";
+import { insertAppointmentSchema, type Insight } from "@shared/schema";
 import { Resend } from "resend";
+import Parser from "rss-parser";
 
 // Initialize Resend only if API key is available
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
+
+// Initialize RSS parser
+const parser = new Parser();
+
+// Cache for RSS feed (1 hour TTL)
+let insightsCache: { data: Insight[], timestamp: number } | null = null;
+const CACHE_TTL = 60 * 60 * 1000; // 1 hour in milliseconds
+
+// Fallback mock data
+const MOCK_INSIGHTS: Insight[] = [
+  {
+    id: "1",
+    title: "Why Most Cloud Migrations Fail – and How to Fix It",
+    url: "https://www.linkedin.com/in/chetangabhane",
+    category: "Cloud Strategy"
+  },
+  {
+    id: "2",
+    title: "The Rise of AI Agents in Cloud Operations",
+    url: "https://www.linkedin.com/in/chetangabhane",
+    category: "AI Operations"
+  },
+  {
+    id: "3",
+    title: "Sovereign Cloud: Balancing Compliance and Innovation",
+    url: "https://www.linkedin.com/in/chetangabhane",
+    category: "Compliance"
+  }
+];
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // GET /api/health - Health check endpoint for Docker/Coolify
   app.get("/api/health", (_req, res) => {
     res.status(200).json({ status: "ok", timestamp: new Date().toISOString() });
+  });
+
+  // GET /api/insights - Fetch latest insights from Substack RSS
+  app.get("/api/insights", async (_req, res) => {
+    try {
+      // Check cache first
+      if (insightsCache && Date.now() - insightsCache.timestamp < CACHE_TTL) {
+        console.log("✓ Returning cached insights");
+        return res.json(insightsCache.data);
+      }
+
+      // Fetch from Substack RSS feed
+      const SUBSTACK_RSS_URL = "https://chetangabhane.substack.com/feed";
+      console.log(`Fetching insights from Substack: ${SUBSTACK_RSS_URL}`);
+      
+      const feed = await parser.parseURL(SUBSTACK_RSS_URL);
+      
+      // Transform RSS items to Insight type (limit to 5 latest posts)
+      const insights: Insight[] = feed.items.slice(0, 5).map((item, index) => ({
+        id: item.guid || `insight-${index}`,
+        title: item.title || "Untitled",
+        url: item.link || "",
+        pubDate: item.pubDate,
+        excerpt: item.contentSnippet?.substring(0, 150) || "",
+        category: item.categories?.[0] || undefined
+      }));
+
+      // If no insights found in Substack, cache and return mock data
+      if (insights.length === 0) {
+        console.log("⚠ Substack feed is empty, caching and returning fallback mock data");
+        insightsCache = {
+          data: MOCK_INSIGHTS,
+          timestamp: Date.now()
+        };
+        return res.json(MOCK_INSIGHTS);
+      }
+
+      // Update cache with real insights
+      insightsCache = {
+        data: insights,
+        timestamp: Date.now()
+      };
+
+      console.log(`✓ Successfully fetched ${insights.length} insights from Substack`);
+      res.json(insights);
+    } catch (error) {
+      console.error("Error fetching Substack RSS feed:", error);
+      console.log("⚠ Caching and returning fallback mock data");
+      
+      // Cache mock data as fallback to prevent repeated failed requests
+      insightsCache = {
+        data: MOCK_INSIGHTS,
+        timestamp: Date.now()
+      };
+      
+      res.json(MOCK_INSIGHTS);
+    }
   });
 
   // POST /api/appointments - Create new appointment and send email notifications

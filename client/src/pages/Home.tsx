@@ -10,6 +10,8 @@ import Footer from "@/components/Footer";
 import profileImage from '@assets/profile_1759318487930.jpg';
 import book1Cover from '@assets/book1_1759315863433.jpg';
 import book2Cover from '@assets/book2_1759315940962.jpg';
+import { useQuery } from "@tanstack/react-query";
+import type { Insight } from "@shared/schema";
 
 export default function Home() {
   const books = [
@@ -29,23 +31,36 @@ export default function Home() {
     }
   ];
 
-  const insights = [
+  // Fallback mock insights (used if API fails)
+  const mockInsights: Insight[] = [
     { 
       id: "1", 
       title: "Why Most Cloud Migrations Fail – and How to Fix It",
-      url: "https://www.linkedin.com/in/chetangabhane"
+      url: "https://www.linkedin.com/in/chetangabhane",
+      category: "Cloud Strategy"
     },
     { 
       id: "2", 
       title: "The Rise of AI Agents in Cloud Operations",
-      url: "https://www.linkedin.com/in/chetangabhane"
+      url: "https://www.linkedin.com/in/chetangabhane",
+      category: "AI Operations"
     },
     { 
       id: "3", 
       title: "Sovereign Cloud: Balancing Compliance and Innovation",
-      url: "https://www.linkedin.com/in/chetangabhane"
+      url: "https://www.linkedin.com/in/chetangabhane",
+      category: "Compliance"
     }
   ];
+
+  // Fetch insights from Substack RSS via API
+  const { data: insights, isLoading } = useQuery<Insight[]>({
+    queryKey: ["/api/insights"],
+    staleTime: 60 * 60 * 1000, // Consider data fresh for 1 hour
+  });
+
+  // Use fetched insights or fallback to mock data
+  const displayInsights = insights || mockInsights;
 
   return (
     <div className="min-h-screen bg-background">
@@ -54,7 +69,7 @@ export default function Home() {
       <About />
       <Books books={books} />
       <SpeakingMedia />
-      <Insights insights={insights} />
+      <Insights insights={displayInsights} isLoading={isLoading} />
       <Newsletter />
       <Contact />
       <Footer />

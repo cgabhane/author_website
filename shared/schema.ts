@@ -46,3 +46,15 @@ export const insertAppointmentSchema = createInsertSchema(appointments).omit({
 
 export type InsertAppointment = z.infer<typeof insertAppointmentSchema>;
 export type Appointment = typeof appointments.$inferSelect;
+
+// Insight type for Substack RSS integration
+export const insightSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  url: z.string(),
+  pubDate: z.string().optional(),
+  excerpt: z.string().optional(),
+  category: z.string().optional(),
+});
+
+export type Insight = z.infer<typeof insightSchema>;
