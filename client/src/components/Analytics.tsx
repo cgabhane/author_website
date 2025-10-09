@@ -6,7 +6,7 @@ interface AnalyticsProps {
 }
 
 export default function Analytics({ 
-  googleAnalyticsId = 'G-XXXXXXXXXX', // Replace with actual GA4 ID
+  googleAnalyticsId = 'G-DC8PH3ETE3', // Real GA4 Measurement ID
   linkedInPartnerId = 'XXXXXX' // Replace with actual LinkedIn Partner ID
 }: AnalyticsProps) {
   
