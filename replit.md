@@ -4,7 +4,13 @@
 This project is Chetan Gabhane's professional portfolio, showcasing his work as a Cloud & AI Evangelist, Author, and Strategic Advisor. It features his publications, thought leadership, speaking topics, and contact information. The site is a full-stack application with a React frontend and Express backend, designed to be clean and sophisticated, drawing inspiration from professional author portfolios. The business vision is to establish a strong online presence, enhance his personal brand, and generate leads for media inquiries and consulting opportunities.
 
 ## User Preferences
-Preferred communication style: Simple, everyday language.
+- **Communication style**: Simple, everyday language.
+- **Professional Context**: Working professional - Substack writing and author work are side hustles. Must avoid conflict of interest with day job.
+- **Content Guidelines**: 
+  - Use general frameworks and educational content (not employer-specific data)
+  - Keep examples anonymized or hypothetical
+  - Focus on thought leadership, not consulting during work hours
+  - Time-efficient strategies for side hustle (limited hours available)
 
 ## System Architecture
 
