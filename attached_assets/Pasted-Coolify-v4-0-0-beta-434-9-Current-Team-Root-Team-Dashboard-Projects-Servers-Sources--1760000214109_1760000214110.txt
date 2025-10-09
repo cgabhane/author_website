@@ -1,0 +1,506 @@
+Coolify
+v4.0.0-beta.434
+
+/
+9+
+Current Team
+
+Root Team
+Dashboard
+Projects
+Servers
+Sources
+Destinations
+S3 Storages
+Shared Variables
+Notifications
+Keys & Tokens
+Tags
+Terminal
+Profile
+Teams
+Settings
+Sponsor us
+Feedback
+Logout
+Deployment
+My first project
+production
+cgabhane/author_website:main-bcw84o0c080cwssg4oc8ksks
+Running
+
+Configuration
+Deployments
+Logs
+Terminal
+
+Links
+
+Advanced
+Redeploy
+Restart
+Stop
+Deployment Log
+Hide Debug Logs
+Deployment is Finished.
+
+
+
+
+2025-Oct-09 08:52:22.202748
+Starting deployment of cgabhane/author_website:main to localhost.
+2025-Oct-09 08:52:22.510541
+Preparing container with helper image: ghcr.io/coollabsio/coolify-helper:1.0.11.
+2025-Oct-09 08:52:22.632593
+[CMD]: docker stop --time=30 d8kggs4sc04g0gw44o0c8ks8
+2025-Oct-09 08:52:22.632593
+Flag --time has been deprecated, use --timeout instead
+2025-Oct-09 08:52:22.636607
+Error response from daemon: No such container: d8kggs4sc04g0gw44o0c8ks8
+2025-Oct-09 08:52:22.796609
+[CMD]: docker rm -f d8kggs4sc04g0gw44o0c8ks8
+2025-Oct-09 08:52:22.796609
+Error response from daemon: No such container: d8kggs4sc04g0gw44o0c8ks8
+2025-Oct-09 08:52:23.024896
+[CMD]: docker run -d --network coolify --name d8kggs4sc04g0gw44o0c8ks8  --rm -v /var/run/docker.sock:/var/run/docker.sock ghcr.io/coollabsio/coolify-helper:1.0.11
+2025-Oct-09 08:52:23.024896
+c3340bb6f1c6dc3cb9ea4eba290200536187db064318d1ad2beafde6eefc2807
+2025-Oct-09 08:52:24.806861
+[CMD]: docker exec d8kggs4sc04g0gw44o0c8ks8 bash -c 'GIT_SSH_COMMAND="ssh -o ConnectTimeout=30 -p 22 -o Port=22 -o LogLevel=ERROR -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" git ls-remote https://github.com/cgabhane/author_website refs/heads/main'
+2025-Oct-09 08:52:24.806861
+552f60dff167d36dc3917c65b05aab5cd8f6bb21	refs/heads/main
+2025-Oct-09 08:52:24.840502
+----------------------------------------
+2025-Oct-09 08:52:24.853025
+Importing cgabhane/author_website:main (commit sha HEAD) to /artifacts/d8kggs4sc04g0gw44o0c8ks8.
+2025-Oct-09 08:52:25.119178
+[CMD]: docker exec d8kggs4sc04g0gw44o0c8ks8 bash -c 'git clone --depth=1 --recurse-submodules --shallow-submodules -b 'main' 'https://github.com/cgabhane/author_website' '/artifacts/d8kggs4sc04g0gw44o0c8ks8' && cd /artifacts/d8kggs4sc04g0gw44o0c8ks8 && if [ -f .gitmodules ]; then sed -i "s#git@\(.*\):#https://\1/#g" /artifacts/d8kggs4sc04g0gw44o0c8ks8/.gitmodules || true && git submodule sync && GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" git submodule update --init --recursive --depth=1; fi && cd /artifacts/d8kggs4sc04g0gw44o0c8ks8 && GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" git lfs pull'
+2025-Oct-09 08:52:25.119178
+Cloning into '/artifacts/d8kggs4sc04g0gw44o0c8ks8'...
+2025-Oct-09 08:52:28.273686
+[CMD]: docker exec d8kggs4sc04g0gw44o0c8ks8 bash -c 'cd /artifacts/d8kggs4sc04g0gw44o0c8ks8 && git log -1 552f60dff167d36dc3917c65b05aab5cd8f6bb21 --pretty=%B'
+2025-Oct-09 08:52:28.273686
+Update sitemap to ensure all pages are indexed by search engines
+2025-Oct-09 08:52:28.278894
+The sitemap generator has been updated to correctly include all relevant pages for improved search engine visibility.
+2025-Oct-09 08:52:28.278894
+2025-Oct-09 08:52:28.278894
+Replit-Commit-Author: Agent
+2025-Oct-09 08:52:28.278894
+Replit-Commit-Session-Id: e3dd2a96-053b-4090-9ac1-84c2b3c5b4fe
+2025-Oct-09 08:52:28.278894
+Replit-Commit-Checkpoint-Type: full_checkpoint
+2025-Oct-09 08:52:28.278894
+Replit-Commit-Screenshot-Url: https://storage.googleapis.com/screenshot-production-us-central1/acbed424-eb26-4c77-a75f-2c5768fff5db/e3dd2a96-053b-4090-9ac1-84c2b3c5b4fe/23T6Ib2
+2025-Oct-09 08:52:28.408909
+Image not found (wo0woocog8cscoo8kkwo888w:552f60dff167d36dc3917c65b05aab5cd8f6bb21). Building new image.
+2025-Oct-09 08:52:29.393165
+[CMD]: docker exec d8kggs4sc04g0gw44o0c8ks8 bash -c 'cat /artifacts/d8kggs4sc04g0gw44o0c8ks8/Dockerfile'
+2025-Oct-09 08:52:29.393165
+# Multi-stage build for production
+2025-Oct-09 08:52:29.393165
+FROM node:20-alpine AS builder
+2025-Oct-09 08:52:29.393165
+2025-Oct-09 08:52:29.393165
+WORKDIR /app
+2025-Oct-09 08:52:29.393165
+2025-Oct-09 08:52:29.393165
+# Copy package files
+2025-Oct-09 08:52:29.393165
+COPY package*.json ./
+2025-Oct-09 08:52:29.393165
+2025-Oct-09 08:52:29.393165
+# Install all dependencies (needed for build)
+2025-Oct-09 08:52:29.393165
+RUN npm install
+2025-Oct-09 08:52:29.393165
+2025-Oct-09 08:52:29.393165
+# Copy all source code
+2025-Oct-09 08:52:29.393165
+COPY . .
+2025-Oct-09 08:52:29.393165
+2025-Oct-09 08:52:29.393165
+# Build client
+2025-Oct-09 08:52:29.393165
+RUN npx vite build
+2025-Oct-09 08:52:29.393165
+2025-Oct-09 08:52:29.393165
+# Build server with local vite/static modules as external
+2025-Oct-09 08:52:29.393165
+RUN npx esbuild server/index.ts \
+2025-Oct-09 08:52:29.393165
+--platform=node \
+2025-Oct-09 08:52:29.393165
+--packages=external \
+2025-Oct-09 08:52:29.393165
+--bundle \
+2025-Oct-09 08:52:29.393165
+--format=esm \
+2025-Oct-09 08:52:29.393165
+--outdir=dist \
+2025-Oct-09 08:52:29.393165
+--external:./vite.js \
+2025-Oct-09 08:52:29.393165
+--external:./static.js
+2025-Oct-09 08:52:29.393165
+2025-Oct-09 08:52:29.393165
+# Build static module separately for production
+2025-Oct-09 08:52:29.393165
+RUN npx esbuild server/static.ts \
+2025-Oct-09 08:52:29.393165
+--platform=node \
+2025-Oct-09 08:52:29.393165
+--packages=external \
+2025-Oct-09 08:52:29.393165
+--format=esm \
+2025-Oct-09 08:52:29.393165
+--outdir=dist
+2025-Oct-09 08:52:29.393165
+2025-Oct-09 08:52:29.393165
+# Production stage
+2025-Oct-09 08:52:29.393165
+FROM node:20-alpine
+2025-Oct-09 08:52:29.393165
+2025-Oct-09 08:52:29.393165
+WORKDIR /app
+2025-Oct-09 08:52:29.393165
+2025-Oct-09 08:52:29.393165
+# Copy package files
+2025-Oct-09 08:52:29.393165
+COPY package*.json ./
+2025-Oct-09 08:52:29.393165
+2025-Oct-09 08:52:29.393165
+# Install only production dependencies
+2025-Oct-09 08:52:29.393165
+RUN npm install --omit=dev
+2025-Oct-09 08:52:29.393165
+2025-Oct-09 08:52:29.393165
+# Copy the built application from builder stage
+2025-Oct-09 08:52:29.393165
+COPY --from=builder /app/dist ./dist
+2025-Oct-09 08:52:29.393165
+2025-Oct-09 08:52:29.393165
+# Set environment variables
+2025-Oct-09 08:52:29.393165
+ENV NODE_ENV=production
+2025-Oct-09 08:52:29.393165
+ENV PORT=5000
+2025-Oct-09 08:52:29.393165
+2025-Oct-09 08:52:29.393165
+# Expose port
+2025-Oct-09 08:52:29.393165
+EXPOSE 5000
+2025-Oct-09 08:52:29.393165
+2025-Oct-09 08:52:29.393165
+# Health check
+2025-Oct-09 08:52:29.393165
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+2025-Oct-09 08:52:29.393165
+CMD node -e "require('http').get('http://localhost:5000/api/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"
+2025-Oct-09 08:52:29.393165
+2025-Oct-09 08:52:29.393165
+# Start the application
+2025-Oct-09 08:52:29.393165
+CMD ["node", "dist/index.js"]
+2025-Oct-09 08:52:29.754118
+[CMD]: docker exec d8kggs4sc04g0gw44o0c8ks8 bash -c 'cat /artifacts/d8kggs4sc04g0gw44o0c8ks8/Dockerfile'
+2025-Oct-09 08:52:29.754118
+# Multi-stage build for production
+2025-Oct-09 08:52:29.754118
+FROM node:20-alpine AS builder
+2025-Oct-09 08:52:29.754118
+2025-Oct-09 08:52:29.754118
+WORKDIR /app
+2025-Oct-09 08:52:29.754118
+2025-Oct-09 08:52:29.754118
+# Copy package files
+2025-Oct-09 08:52:29.754118
+COPY package*.json ./
+2025-Oct-09 08:52:29.754118
+2025-Oct-09 08:52:29.754118
+# Install all dependencies (needed for build)
+2025-Oct-09 08:52:29.754118
+RUN npm install
+2025-Oct-09 08:52:29.754118
+2025-Oct-09 08:52:29.754118
+# Copy all source code
+2025-Oct-09 08:52:29.754118
+COPY . .
+2025-Oct-09 08:52:29.754118
+2025-Oct-09 08:52:29.754118
+# Build client
+2025-Oct-09 08:52:29.754118
+RUN npx vite build
+2025-Oct-09 08:52:29.754118
+2025-Oct-09 08:52:29.754118
+# Build server with local vite/static modules as external
+2025-Oct-09 08:52:29.754118
+RUN npx esbuild server/index.ts \
+2025-Oct-09 08:52:29.754118
+--platform=node \
+2025-Oct-09 08:52:29.754118
+--packages=external \
+2025-Oct-09 08:52:29.754118
+--bundle \
+2025-Oct-09 08:52:29.754118
+--format=esm \
+2025-Oct-09 08:52:29.754118
+--outdir=dist \
+2025-Oct-09 08:52:29.754118
+--external:./vite.js \
+2025-Oct-09 08:52:29.754118
+--external:./static.js
+2025-Oct-09 08:52:29.754118
+2025-Oct-09 08:52:29.754118
+# Build static module separately for production
+2025-Oct-09 08:52:29.754118
+RUN npx esbuild server/static.ts \
+2025-Oct-09 08:52:29.754118
+--platform=node \
+2025-Oct-09 08:52:29.754118
+--packages=external \
+2025-Oct-09 08:52:29.754118
+--format=esm \
+2025-Oct-09 08:52:29.754118
+--outdir=dist
+2025-Oct-09 08:52:29.754118
+2025-Oct-09 08:52:29.754118
+# Production stage
+2025-Oct-09 08:52:29.754118
+FROM node:20-alpine
+2025-Oct-09 08:52:29.754118
+2025-Oct-09 08:52:29.754118
+WORKDIR /app
+2025-Oct-09 08:52:29.754118
+2025-Oct-09 08:52:29.754118
+# Copy package files
+2025-Oct-09 08:52:29.754118
+COPY package*.json ./
+2025-Oct-09 08:52:29.754118
+2025-Oct-09 08:52:29.754118
+# Install only production dependencies
+2025-Oct-09 08:52:29.754118
+RUN npm install --omit=dev
+2025-Oct-09 08:52:29.754118
+2025-Oct-09 08:52:29.754118
+# Copy the built application from builder stage
+2025-Oct-09 08:52:29.754118
+COPY --from=builder /app/dist ./dist
+2025-Oct-09 08:52:29.754118
+2025-Oct-09 08:52:29.754118
+# Set environment variables
+2025-Oct-09 08:52:29.754118
+ENV NODE_ENV=production
+2025-Oct-09 08:52:29.754118
+ENV PORT=5000
+2025-Oct-09 08:52:29.754118
+2025-Oct-09 08:52:29.754118
+# Expose port
+2025-Oct-09 08:52:29.754118
+EXPOSE 5000
+2025-Oct-09 08:52:29.754118
+2025-Oct-09 08:52:29.754118
+# Health check
+2025-Oct-09 08:52:29.754118
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+2025-Oct-09 08:52:29.754118
+CMD node -e "require('http').get('http://localhost:5000/api/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"
+2025-Oct-09 08:52:29.754118
+2025-Oct-09 08:52:29.754118
+# Start the application
+2025-Oct-09 08:52:29.754118
+CMD ["node", "dist/index.js"]
+2025-Oct-09 08:52:29.965943
+----------------------------------------
+2025-Oct-09 08:52:29.973138
+Building docker image started.
+2025-Oct-09 08:52:29.979743
+To check the current progress, click on Show Debug Logs.
+2025-Oct-09 08:52:30.399815
+[CMD]: docker exec d8kggs4sc04g0gw44o0c8ks8 bash -c 'cat /artifacts/build.sh'
+2025-Oct-09 08:52:30.399815
+docker build  --add-host coolify:10.0.1.6 --add-host coolify-db:10.0.1.4 --add-host coolify-realtime:10.0.1.5 --add-host coolify-redis:10.0.1.2 --network host -f /artifacts/d8kggs4sc04g0gw44o0c8ks8/Dockerfile --build-arg SOURCE_COMMIT='552f60dff167d36dc3917c65b05aab5cd8f6bb21' --build-arg RESEND_API_KEY='re_M6FQ6CpA_HyFbApTPxsJn9HCF7FQrD29J' --build-arg COOLIFY_URL='http://wo0woocog8cscoo8kkwo888w.72.60.202.209.sslip.io,https://chetangabhane.in:5000' --build-arg COOLIFY_FQDN='wo0woocog8cscoo8kkwo888w.72.60.202.209.sslip.io,chetangabhane.in:5000' --build-arg COOLIFY_BRANCH='main' --build-arg COOLIFY_RESOURCE_UUID='wo0woocog8cscoo8kkwo888w' --build-arg COOLIFY_CONTAINER_NAME='wo0woocog8cscoo8kkwo888w-085220900521' --build-arg COOLIFY_BUILD_SECRETS_HASH=92bea226e893bf648cda2e46f7b7d9f798566d44080c92620b25126ab4fad4bb --build-arg 'COOLIFY_URL=http://wo0woocog8cscoo8kkwo888w.72.60.202.209.sslip.io,https://chetangabhane.in:5000' --build-arg 'COOLIFY_FQDN=wo0woocog8cscoo8kkwo888w.72.60.202.209.sslip.io,chetangabhane.in:5000' --build-arg 'COOLIFY_BRANCH=main' --build-arg 'COOLIFY_RESOURCE_UUID=wo0woocog8cscoo8kkwo888w' --build-arg 'COOLIFY_CONTAINER_NAME=wo0woocog8cscoo8kkwo888w-085220900521' --progress plain -t wo0woocog8cscoo8kkwo888w:552f60dff167d36dc3917c65b05aab5cd8f6bb21 /artifacts/d8kggs4sc04g0gw44o0c8ks8
+2025-Oct-09 08:52:30.941592
+[CMD]: docker exec d8kggs4sc04g0gw44o0c8ks8 bash -c 'bash /artifacts/build.sh'
+2025-Oct-09 08:52:30.941592
+#0 building with "default" instance using docker driver
+2025-Oct-09 08:52:30.945480
+#1 [internal] load build definition from Dockerfile
+2025-Oct-09 08:52:30.945480
+#1 transferring dockerfile: 1.85kB done
+2025-Oct-09 08:52:30.945480
+#1 DONE 0.0s
+2025-Oct-09 08:52:30.945480
+2025-Oct-09 08:52:30.945480
+#2 [internal] load metadata for docker.io/library/node:20-alpine
+2025-Oct-09 08:52:32.350923
+#2 DONE 1.6s
+2025-Oct-09 08:52:32.495344
+#3 [internal] load .dockerignore
+2025-Oct-09 08:52:32.495344
+#3 transferring context: 202B done
+2025-Oct-09 08:52:32.495344
+#3 DONE 0.0s
+2025-Oct-09 08:52:32.495344
+2025-Oct-09 08:52:32.495344
+#4 [builder 1/8] FROM docker.io/library/node:20-alpine@sha256:1ab6fc5a31d515dc7b6b25f6acfda2001821f2c2400252b6cb61044bd9f9ad48
+2025-Oct-09 08:52:32.495344
+#4 DONE 0.0s
+2025-Oct-09 08:52:32.495344
+2025-Oct-09 08:52:32.495344
+#5 [internal] load build context
+2025-Oct-09 08:52:32.645075
+#5 transferring context: 9.39MB 0.1s done
+2025-Oct-09 08:52:32.645075
+#5 DONE 0.1s
+2025-Oct-09 08:52:32.645075
+2025-Oct-09 08:52:32.645075
+#6 [builder 2/8] WORKDIR /app
+2025-Oct-09 08:52:32.645075
+#6 CACHED
+2025-Oct-09 08:52:32.645075
+2025-Oct-09 08:52:32.645075
+#7 [builder 3/8] COPY package*.json ./
+2025-Oct-09 08:52:32.645075
+#7 CACHED
+2025-Oct-09 08:52:32.645075
+2025-Oct-09 08:52:32.645075
+#8 [builder 4/8] RUN npm install
+2025-Oct-09 08:52:32.645075
+#8 CACHED
+2025-Oct-09 08:52:32.645075
+2025-Oct-09 08:52:32.645075
+#9 [builder 5/8] COPY . .
+2025-Oct-09 08:52:32.645075
+#9 DONE 0.1s
+2025-Oct-09 08:52:32.795707
+#10 [builder 6/8] RUN npx vite build
+2025-Oct-09 08:52:33.840802
+#10 1.195 vite v5.4.20 building for production...
+2025-Oct-09 08:52:33.993786
+#10 1.346 transforming...
+2025-Oct-09 08:52:37.878024
+#10 5.234
+2025-Oct-09 08:52:37.878024
+#10 5.234 A PostCSS plugin did not pass the `from` option to `postcss.parse`. This may cause imported assets to be incorrectly transformed. If you've recently added a PostCSS plugin that raised this warning, please contact the package author to fix the issue.
+2025-Oct-09 08:52:49.171376
+#10 16.53 ✓ 2674 modules transformed.
+2025-Oct-09 08:52:49.940430
+#10 17.30 rendering chunks...
+2025-Oct-09 08:52:50.125079
+#10 17.31 computing gzip size...
+2025-Oct-09 08:52:50.125079
+#10 17.33 ../dist/public/index.html                                    4.26 kB │ gzip:   1.27 kB
+2025-Oct-09 08:52:50.125079
+#10 17.34 ../dist/public/assets/book2_1759315940962-BGfuyUu9.jpg      54.36 kB
+2025-Oct-09 08:52:50.125079
+#10 17.34 ../dist/public/assets/profile2_1759318518565-BplPyTn0.jpg  142.36 kB
+2025-Oct-09 08:52:50.125079
+#10 17.34 ../dist/public/assets/profile_1759318487930-Cf_na7Bg.jpg   160.93 kB
+2025-Oct-09 08:52:50.125079
+#10 17.34 ../dist/public/assets/book1_1759315863433-ByldWVKz.jpg     202.22 kB
+2025-Oct-09 08:52:50.125079
+#10 17.34 ../dist/public/assets/index-DDm2Qhrl.css                    99.84 kB │ gzip:  15.08 kB
+2025-Oct-09 08:52:50.125079
+#10 17.34 ../dist/public/assets/index-B01BUSuX.js                    568.82 kB │ gzip: 172.52 kB
+2025-Oct-09 08:52:50.129762
+#10 17.34
+2025-Oct-09 08:52:50.129762
+#10 17.34 (!) Some chunks are larger than 500 kB after minification. Consider:
+2025-Oct-09 08:52:50.129762
+#10 17.34 - Using dynamic import() to code-split the application
+2025-Oct-09 08:52:50.129762
+#10 17.34 - Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+2025-Oct-09 08:52:50.129762
+#10 17.34 - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+2025-Oct-09 08:52:50.129762
+#10 17.34 ✓ built in 16.11s
+2025-Oct-09 08:52:50.129762
+#10 DONE 17.5s
+2025-Oct-09 08:52:50.279693
+#11 [builder 7/8] RUN npx esbuild server/index.ts     --platform=node     --packages=external     --bundle     --format=esm     --outdir=dist     --external:./vite.js     --external:./static.js
+2025-Oct-09 08:52:51.067444
+#11 0.939
+2025-Oct-09 08:52:51.067444
+#11 0.939   dist/index.js  14.8kb
+2025-Oct-09 08:52:51.067444
+#11 0.939
+2025-Oct-09 08:52:51.067444
+#11 0.939 ⚡ Done in 16ms
+2025-Oct-09 08:52:51.262203
+#11 DONE 1.0s
+2025-Oct-09 08:52:51.271533
+#12 [builder 8/8] RUN npx esbuild server/static.ts     --platform=node     --packages=external     --format=esm     --outdir=dist
+2025-Oct-09 08:52:51.826012
+#12 0.713
+2025-Oct-09 08:52:51.826012
+#12 0.713   dist/static.js  898b
+2025-Oct-09 08:52:51.826012
+#12 0.713
+2025-Oct-09 08:52:51.826012
+#12 0.713 ⚡ Done in 7ms
+2025-Oct-09 08:52:52.029839
+#12 DONE 0.8s
+2025-Oct-09 08:52:52.802470
+#13 [stage-1 4/5] RUN npm install --omit=dev
+2025-Oct-09 08:52:52.802470
+#13 CACHED
+2025-Oct-09 08:52:52.802470
+2025-Oct-09 08:52:52.802470
+#14 [stage-1 5/5] COPY --from=builder /app/dist ./dist
+2025-Oct-09 08:52:52.802470
+#14 CACHED
+2025-Oct-09 08:52:52.851353
+#15 exporting to image
+2025-Oct-09 08:52:52.851353
+#15 exporting layers done
+2025-Oct-09 08:52:52.851353
+#15 writing image sha256:481563eecd4a07eff54094a65d42fe687b3aa762edf6c6ce1e82b2be46aa007f done
+2025-Oct-09 08:52:52.851353
+#15 naming to docker.io/library/wo0woocog8cscoo8kkwo888w:552f60dff167d36dc3917c65b05aab5cd8f6bb21 done
+2025-Oct-09 08:52:52.851353
+#15 DONE 0.0s
+2025-Oct-09 08:52:52.879740
+Building docker image completed.
+2025-Oct-09 08:52:52.888393
+----------------------------------------
+2025-Oct-09 08:52:52.895183
+Application has ports mapped to the host system, rolling update is not supported.
+2025-Oct-09 08:52:52.902101
+Removing old containers.
+2025-Oct-09 08:52:53.141219
+[CMD]: docker stop --time=30 wo0woocog8cscoo8kkwo888w-082736871195
+2025-Oct-09 08:52:53.141219
+Flag --time has been deprecated, use --timeout instead
+2025-Oct-09 08:53:23.351344
+wo0woocog8cscoo8kkwo888w-082736871195
+2025-Oct-09 08:53:23.592146
+[CMD]: docker rm -f wo0woocog8cscoo8kkwo888w-082736871195
+2025-Oct-09 08:53:23.592146
+wo0woocog8cscoo8kkwo888w-082736871195
+2025-Oct-09 08:53:23.932023
+[CMD]: docker exec d8kggs4sc04g0gw44o0c8ks8 bash -c 'SOURCE_COMMIT=552f60dff167d36dc3917c65b05aab5cd8f6bb21 COOLIFY_URL=http://wo0woocog8cscoo8kkwo888w.72.60.202.209.sslip.io,https//chetangabhane.in:5000 COOLIFY_FQDN=wo0woocog8cscoo8kkwo888w.72.60.202.209.sslip.io,https COOLIFY_BRANCH=main COOLIFY_RESOURCE_UUID=wo0woocog8cscoo8kkwo888w COOLIFY_CONTAINER_NAME=wo0woocog8cscoo8kkwo888w-085220900521  docker compose --project-name wo0woocog8cscoo8kkwo888w --project-directory /artifacts/d8kggs4sc04g0gw44o0c8ks8 -f /artifacts/d8kggs4sc04g0gw44o0c8ks8/docker-compose.yaml up --build -d'
+2025-Oct-09 08:53:23.932023
+Container wo0woocog8cscoo8kkwo888w-085220900521  Creating
+2025-Oct-09 08:53:23.991767
+wo0woocog8cscoo8kkwo888w-085220900521 Your kernel does not support memory swappiness capabilities or the cgroup is not mounted. Memory swappiness discarded.
+2025-Oct-09 08:53:23.998672
+Container wo0woocog8cscoo8kkwo888w-085220900521  Created
+2025-Oct-09 08:53:23.998672
+Container wo0woocog8cscoo8kkwo888w-085220900521  Starting
+2025-Oct-09 08:53:24.205547
+Container wo0woocog8cscoo8kkwo888w-085220900521  Started
+2025-Oct-09 08:53:24.248719
+New container started.
+2025-Oct-09 08:53:24.753984
+Gracefully shutting down build container: d8kggs4sc04g0gw44o0c8ks8
+2025-Oct-09 08:53:25.038891
+[CMD]: docker stop --time=30 d8kggs4sc04g0gw44o0c8ks8
+2025-Oct-09 08:53:25.038891
+Flag --time has been deprecated, use --timeout instead
+2025-Oct-09 08:53:25.236965
+d8kggs4sc04g0gw44o0c8ks8
+2025-Oct-09 08:53:25.489810
+[CMD]: docker rm -f d8kggs4sc04g0gw44o0c8ks8
+2025-Oct-09 08:53:25.489810
+Error response from daemon: No such container: d8kggs4sc04g0gw44o0c8ks8
