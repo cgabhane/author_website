@@ -129,3 +129,31 @@ This project is Chetan Gabhane's professional portfolio, showcasing his work as 
   - Sales enablement for client proposals, consulting engagements, and business case presentations
   - Supports "always free for students/learners" brand promise while providing professional-grade sales materials
 - **Performance**: Client-side rendering only, zero database/API calls, instant diagram generation
+
+### Meeting Scheduling with Calendar Invites
+- **Purpose**: Free meeting scheduling with automated email notifications and universal calendar integration (.ics files).
+- **Route**: Booking via homepage dialog, calendar download at `/api/appointments/:id/calendar`
+- **Features**:
+  - Simple booking form with date/time selection via calendar UI
+  - Automated email notifications (visitor confirmation + admin alert)
+  - Universal calendar invite (.ics) download button in confirmation emails
+  - Works with all calendar apps (Google Calendar, Outlook, Apple Calendar, etc.)
+  - Includes both Zoom and Google Meet links in calendar event
+  - Automatic 15-minute reminder before meeting
+  - Static meeting room URLs (no per-meeting scheduling overhead)
+- **Technical Stack**:
+  - Schema: `appointments` table in PostgreSQL (id, name, email, sessionType, date, time, message, status, createdAt)
+  - API: `POST /api/appointments` for booking, `GET /api/appointments/:id/calendar` for .ics download
+  - Storage: In-memory (MemStorage) with `getAppointmentById()` for calendar generation
+  - Email: Resend API for confirmation and admin notifications
+  - Calendar: RFC 5545 compliant iCalendar format generation
+- **Meeting Configuration**:
+  - Zoom: `https://us05web.zoom.us/j/6836753272?pwd=WplvfCRiVIeTQG3qb89XHImkW9efR5.1` (passcode embedded)
+  - Google Meet: `https://meet.google.com/xzi-tzzj-jdv`
+  - Both links included in calendar invite description
+- **Business Value**: 
+  - Professional booking experience with minimal time investment
+  - Automated calendar integration reduces no-shows (15-min reminders)
+  - Visitor can choose preferred platform (Zoom or Meet)
+  - No third-party scheduling tools needed (no Calendly/Cal.com fees)
+- **Performance**: Lightweight in-memory storage, single API endpoint for .ics generation, zero ongoing costs
