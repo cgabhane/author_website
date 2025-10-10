@@ -1,4 +1,4 @@
-import { type User, type InsertUser, type Appointment, type InsertAppointment, type Subscriber, type InsertSubscriber } from "@shared/schema";
+import { type User, type InsertUser, type Appointment, type InsertAppointment, type Subscriber, type InsertSubscriber, type Assessment, type InsertAssessment } from "@shared/schema";
 import { randomUUID } from "crypto";
 
 // modify the interface with any CRUD methods
@@ -13,17 +13,20 @@ export interface IStorage {
   createSubscriber(subscriber: InsertSubscriber): Promise<Subscriber>;
   getSubscribers(): Promise<Subscriber[]>;
   getSubscriberByEmail(email: string): Promise<Subscriber | undefined>;
+  createAssessment(assessment: InsertAssessment): Promise<Assessment>;
 }
 
 export class MemStorage implements IStorage {
   private users: Map<string, User>;
   private appointments: Map<string, Appointment>;
   private subscribers: Map<string, Subscriber>;
+  private assessments: Map<string, Assessment>;
 
   constructor() {
     this.users = new Map();
     this.appointments = new Map();
     this.subscribers = new Map();
+    this.assessments = new Map();
   }
 
   async getUser(id: string): Promise<User | undefined> {
@@ -82,6 +85,18 @@ export class MemStorage implements IStorage {
 
   async getSubscriberByEmail(email: string): Promise<Subscriber | undefined> {
     return this.subscribers.get(email);
+  }
+
+  async createAssessment(insertAssessment: InsertAssessment): Promise<Assessment> {
+    const id = randomUUID();
+    const assessment: Assessment = {
+      ...insertAssessment,
+      id,
+      email: insertAssessment.email ?? null,
+      completedAt: new Date(),
+    };
+    this.assessments.set(id, assessment);
+    return assessment;
   }
 }
 

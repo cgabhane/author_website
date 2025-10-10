@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertAppointmentSchema, insertSubscriberSchema, type Insight } from "@shared/schema";
+import { insertAppointmentSchema, insertSubscriberSchema, insertAssessmentSchema, type Insight } from "@shared/schema";
 import { Resend } from "resend";
 import Parser from "rss-parser";
 
@@ -180,6 +180,150 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({
         success: false,
         message: "Unable to fetch subscribers.",
+      });
+    }
+  });
+
+  // POST /api/assessments - Save assessment results and send email
+  app.post("/api/assessments", async (req, res) => {
+    try {
+      // Validate request body
+      const validatedData = insertAssessmentSchema.parse(req.body);
+
+      // Create assessment in storage
+      const assessment = await storage.createAssessment(validatedData);
+
+      // Parse score breakdown
+      const scoreBreakdown = JSON.parse(validatedData.score);
+      
+      // Calculate percentage
+      const percentage = Math.round((scoreBreakdown.total / 60) * 100);
+
+      // Define skill levels for email content
+      const skillLevelContent: { [key: string]: { title: string; description: string; nextSteps: string[] } } = {
+        foundation: {
+          title: "Foundation Builder",
+          description: "You're at the beginning of your Cloud/AI journey with room to grow.",
+          nextSteps: [
+            "Learn cloud fundamentals (AWS/Azure basics)",
+            "Complete AI/ML intro courses",
+            "Build 2-3 personal projects"
+          ]
+        },
+        emerging: {
+          title: "Emerging Professional",
+          description: "You have foundational knowledge and are building practical skills.",
+          nextSteps: [
+            "Get cloud certification (AWS SAA, Azure AZ-104)",
+            "Build production-ready AI project",
+            "Contribute to open source"
+          ]
+        },
+        skilled: {
+          title: "Skilled Practitioner",
+          description: "You have solid mid-level skills across cloud and AI technologies.",
+          nextSteps: [
+            "Specialize: AI Ops OR Cloud Architecture",
+            "Lead a migration project",
+            "Mentor junior engineers"
+          ]
+        },
+        expert: {
+          title: "Expert Architect",
+          description: "You have senior-level expertise in cloud and AI systems.",
+          nextSteps: [
+            "Design enterprise architectures",
+            "Drive AI strategy initiatives",
+            "Speak at conferences"
+          ]
+        },
+        leader: {
+          title: "Industry Leader",
+          description: "You're operating at the highest level with deep expertise.",
+          nextSteps: [
+            "CTO/VP Engineering track",
+            "Independent consulting",
+            "Thought leadership & writing"
+          ]
+        }
+      };
+
+      const levelContent = skillLevelContent[validatedData.level];
+
+      // Send results email if email is provided
+      if (validatedData.email && resend) {
+        try {
+          await resend.emails.send({
+            from: "Chetan Gabhane <contact@chetangabhane.in>",
+            to: validatedData.email,
+            subject: `Your CloudAI PathFinder Results: ${levelContent.title}`,
+            html: `
+              <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                <h1 style="color: #1e3a8a;">Your CloudAI PathFinder Results</h1>
+                
+                <div style="background-color: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                  <h2 style="margin-top: 0;">Your Score: ${percentage}%</h2>
+                  <h3 style="color: #1e3a8a;">${levelContent.title}</h3>
+                  <p>${levelContent.description}</p>
+                </div>
+
+                <h3>Your Skill Breakdown:</h3>
+                <ul style="list-style: none; padding: 0;">
+                  <li><strong>☁️ Cloud Fundamentals:</strong> ${scoreBreakdown.cloud}/12</li>
+                  <li><strong>🤖 AI/ML Basics:</strong> ${scoreBreakdown.ai}/12</li>
+                  <li><strong>⚙️ DevOps & Automation:</strong> ${scoreBreakdown.devops}/12</li>
+                  <li><strong>🛡️ Security & Compliance:</strong> ${scoreBreakdown.security}/12</li>
+                  <li><strong>🚀 Real-World Application:</strong> ${scoreBreakdown.realworld}/12</li>
+                </ul>
+
+                <h3>Your Next Steps:</h3>
+                <ol>
+                  ${levelContent.nextSteps.map(step => `<li>${step}</li>`).join('')}
+                </ol>
+
+                <div style="background-color: #e0f2fe; padding: 15px; border-radius: 8px; margin: 20px 0;">
+                  <h4 style="margin-top: 0;">📚 Recommended Resources</h4>
+                  <ul>
+                    <li><a href="https://chetangabhane.substack.com">Subscribe to my Substack</a> for weekly insights</li>
+                    <li>Check out my books on <a href="https://chetangabhane.in">Cloud & AI Strategy</a></li>
+                    <li>Book a <a href="https://chetangabhane.in/press-kit">1-on-1 consulting session</a> for personalized guidance</li>
+                  </ul>
+                </div>
+
+                <p>Keep building your skills, and feel free to retake the assessment as you progress!</p>
+                
+                <p>Best regards,<br>
+                <strong>Chetan Gabhane</strong><br>
+                Cloud & AI Evangelist<br>
+                <a href="mailto:contact@chetangabhane.in">contact@chetangabhane.in</a></p>
+              </div>
+            `,
+          });
+          console.log(`✓ Assessment results sent to ${validatedData.email}`);
+        } catch (emailError) {
+          console.error(`✗ Failed to send assessment results to ${validatedData.email}:`, emailError);
+        }
+      }
+
+      res.json({
+        success: true,
+        message: "Assessment results saved successfully!",
+        assessmentId: assessment.id,
+      });
+    } catch (error: any) {
+      console.error("Assessment save error:", error);
+      
+      if (error.name === "ZodError") {
+        return res.status(400).json({
+          success: false,
+          message: "Please check your input and try again.",
+          errors: error.errors,
+        });
+      }
+
+      res.status(500).json({
+        success: false,
+        message: "Unable to save your results. Please try again later.",
       });
     }
   });
