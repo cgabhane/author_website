@@ -502,6 +502,22 @@ export default function VisualGenerator() {
       drawMultiCloud(ctx, currentTemplate.defaultData, title);
     } else if (currentTemplate.id === "zero-trust-security") {
       drawLayeredSecurity(ctx, currentTemplate.defaultData, title);
+    } else if (currentTemplate.id === "cloud-roi-framework") {
+      drawROIComparison(ctx, currentTemplate.defaultData, title);
+    } else if (currentTemplate.id === "cloud-adoption-roadmap") {
+      drawRoadmap(ctx, currentTemplate.defaultData, title);
+    } else if (currentTemplate.id === "cloud-cost-optimization") {
+      drawQuadrant(ctx, currentTemplate.defaultData, title);
+    } else if (currentTemplate.id === "multi-cloud-business-case") {
+      drawVendorComparison(ctx, currentTemplate.defaultData, title);
+    } else if (currentTemplate.id === "ai-value-timeline") {
+      drawMilestoneTimeline(ctx, currentTemplate.defaultData, title);
+    } else if (currentTemplate.id === "ai-use-case-matrix") {
+      drawQuadrant(ctx, currentTemplate.defaultData, title);
+    } else if (currentTemplate.id === "ai-maturity-model") {
+      drawMaturityLevels(ctx, currentTemplate.defaultData, title);
+    } else if (currentTemplate.id === "ai-roi-calculator") {
+      drawROICalculator(ctx, currentTemplate.defaultData, title);
     }
   }, [currentTemplate, customTitle]);
 
@@ -850,6 +866,405 @@ export default function VisualGenerator() {
         ctx.stroke();
       }
     });
+  };
+
+  const drawROIComparison = (ctx: CanvasRenderingContext2D, data: any, title: string) => {
+    // Title
+    ctx.fillStyle = "#1e293b";
+    ctx.font = "bold 28px Inter, sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText(title, 400, 50);
+
+    const comparison = data.comparison;
+    const boxWidth = 280;
+    const boxHeight = 220;
+    const startX = 120;
+    const startY = 140;
+
+    // Before box
+    ctx.fillStyle = "#fee2e2";
+    ctx.beginPath();
+    ctx.roundRect(startX, startY, boxWidth, boxHeight, 12);
+    ctx.fill();
+
+    ctx.fillStyle = "#dc2626";
+    ctx.font = "bold 20px Inter, sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText(comparison.before.label, startX + boxWidth / 2, startY + 35);
+
+    ctx.font = "bold 36px Inter, sans-serif";
+    ctx.fillText(comparison.before.cost, startX + boxWidth / 2, startY + 85);
+
+    ctx.font = "14px Inter, sans-serif";
+    comparison.before.items.forEach((item: string, i: number) => {
+      ctx.fillText(item, startX + boxWidth / 2, startY + 130 + i * 22);
+    });
+
+    // After box
+    ctx.fillStyle = "#dcfce7";
+    ctx.beginPath();
+    ctx.roundRect(startX + boxWidth + 40, startY, boxWidth, boxHeight, 12);
+    ctx.fill();
+
+    ctx.fillStyle = "#16a34a";
+    ctx.font = "bold 20px Inter, sans-serif";
+    ctx.fillText(comparison.after.label, startX + boxWidth + 40 + boxWidth / 2, startY + 35);
+
+    ctx.font = "bold 36px Inter, sans-serif";
+    ctx.fillText(comparison.after.cost, startX + boxWidth + 40 + boxWidth / 2, startY + 85);
+
+    ctx.font = "14px Inter, sans-serif";
+    comparison.after.items.forEach((item: string, i: number) => {
+      ctx.fillText(item, startX + boxWidth + 40 + boxWidth / 2, startY + 130 + i * 22);
+    });
+
+    // Savings callout
+    ctx.fillStyle = "#10b981";
+    ctx.font = "bold 28px Inter, sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText(comparison.savings, 400, 440);
+  };
+
+  const drawRoadmap = (ctx: CanvasRenderingContext2D, data: any, title: string) => {
+    // Title
+    ctx.fillStyle = "#1e293b";
+    ctx.font = "bold 28px Inter, sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText(title, 400, 50);
+
+    const phases = data.phases || [];
+    const phaseWidth = 160;
+    const startX = 100;
+    const startY = 150;
+
+    phases.forEach((phase: any, index: number) => {
+      const x = startX + index * (phaseWidth + 20);
+
+      // Phase box
+      ctx.fillStyle = phase.color + "20";
+      ctx.strokeStyle = phase.color;
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.roundRect(x, startY, phaseWidth, 200, 10);
+      ctx.fill();
+      ctx.stroke();
+
+      // Phase label
+      ctx.fillStyle = phase.color;
+      ctx.font = "bold 16px Inter, sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText(phase.label, x + phaseWidth / 2, startY + 30);
+
+      // Deliverables
+      ctx.fillStyle = "#1e293b";
+      ctx.font = "14px Inter, sans-serif";
+      phase.deliverables.forEach((deliverable: string, i: number) => {
+        ctx.fillText(deliverable, x + phaseWidth / 2, startY + 70 + i * 30);
+      });
+
+      // Arrow to next phase
+      if (index < phases.length - 1) {
+        ctx.strokeStyle = "#94a3b8";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(x + phaseWidth, startY + 100);
+        ctx.lineTo(x + phaseWidth + 20, startY + 100);
+        ctx.stroke();
+
+        // Arrow head
+        ctx.beginPath();
+        ctx.moveTo(x + phaseWidth + 15, startY + 95);
+        ctx.lineTo(x + phaseWidth + 20, startY + 100);
+        ctx.lineTo(x + phaseWidth + 15, startY + 105);
+        ctx.stroke();
+      }
+    });
+  };
+
+  const drawQuadrant = (ctx: CanvasRenderingContext2D, data: any, title: string) => {
+    // Title
+    ctx.fillStyle = "#1e293b";
+    ctx.font = "bold 28px Inter, sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText(title, 400, 50);
+
+    const quadrants = data.quadrants || [];
+    const quadrantSize = 280;
+    const startX = 140;
+    const startY = 120;
+
+    // Draw axes
+    ctx.strokeStyle = "#94a3b8";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(startX + quadrantSize, startY);
+    ctx.lineTo(startX + quadrantSize, startY + quadrantSize * 2);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(startX, startY + quadrantSize);
+    ctx.lineTo(startX + quadrantSize * 2, startY + quadrantSize);
+    ctx.stroke();
+
+    // Axis labels
+    ctx.fillStyle = "#64748b";
+    ctx.font = "14px Inter, sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText(data.axes.x + " →", startX + quadrantSize, startY + quadrantSize * 2 + 30);
+    
+    ctx.save();
+    ctx.translate(startX - 30, startY + quadrantSize);
+    ctx.rotate(-Math.PI / 2);
+    ctx.fillText(data.axes.y + " →", 0, 0);
+    ctx.restore();
+
+    // Draw quadrants
+    quadrants.forEach((quadrant: any) => {
+      const x = startX + quadrant.x * quadrantSize;
+      const y = startY + quadrant.y * quadrantSize;
+
+      ctx.fillStyle = quadrant.color + "20";
+      ctx.fillRect(x, y, quadrantSize, quadrantSize);
+
+      // Quadrant name
+      ctx.fillStyle = quadrant.color;
+      ctx.font = "bold 16px Inter, sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText(quadrant.name, x + quadrantSize / 2, y + 30);
+
+      // Items
+      ctx.fillStyle = "#1e293b";
+      ctx.font = "13px Inter, sans-serif";
+      quadrant.items.forEach((item: string, i: number) => {
+        ctx.fillText(item, x + quadrantSize / 2, y + 60 + i * 25);
+      });
+    });
+  };
+
+  const drawVendorComparison = (ctx: CanvasRenderingContext2D, data: any, title: string) => {
+    // Title
+    ctx.fillStyle = "#1e293b";
+    ctx.font = "bold 28px Inter, sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText(title, 400, 50);
+
+    const vendors = data.vendors || [];
+    const criteria = data.criteria || [];
+    const cellWidth = 140;
+    const cellHeight = 50;
+    const startX = 160;
+    const startY = 120;
+
+    // Draw header row
+    ctx.fillStyle = "#f1f5f9";
+    ctx.fillRect(startX, startY, cellWidth * criteria.length, cellHeight);
+
+    criteria.forEach((criterion: string, index: number) => {
+      ctx.fillStyle = "#1e293b";
+      ctx.font = "bold 14px Inter, sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText(criterion, startX + index * cellWidth + cellWidth / 2, startY + 30);
+    });
+
+    // Draw vendor rows
+    vendors.forEach((vendor: any, rowIndex: number) => {
+      const y = startY + (rowIndex + 1) * cellHeight;
+
+      // Vendor name
+      ctx.fillStyle = "#1e293b";
+      ctx.font = "bold 16px Inter, sans-serif";
+      ctx.textAlign = "right";
+      ctx.fillText(vendor.name, startX - 20, y + 30);
+
+      // Draw cells
+      const values = [vendor.cost, vendor.performance, vendor.ecosystem, vendor.lockin];
+      values.forEach((value: any, colIndex: number) => {
+        const x = startX + colIndex * cellWidth;
+
+        // Cell background
+        const colors: Record<string, string> = {
+          '$': '#10b981',
+          '$$': '#f59e0b',
+          '$$$': '#ef4444',
+          'Excellent': '#10b981',
+          'Very Good': '#3b82f6',
+          'Good': '#8b5cf6',
+          'Largest': '#3b82f6',
+          'Enterprise': '#8b5cf6',
+          'Data/AI': '#10b981',
+          'High': '#ef4444',
+          'Medium': '#f59e0b',
+          'Low': '#10b981'
+        };
+
+        ctx.fillStyle = colors[value] || '#cbd5e1';
+        ctx.fillRect(x, y, cellWidth, cellHeight);
+
+        // Cell text
+        ctx.fillStyle = "#ffffff";
+        ctx.font = "14px Inter, sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText(value, x + cellWidth / 2, y + 30);
+      });
+    });
+  };
+
+  const drawMilestoneTimeline = (ctx: CanvasRenderingContext2D, data: any, title: string) => {
+    // Title
+    ctx.fillStyle = "#1e293b";
+    ctx.font = "bold 28px Inter, sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText(title, 400, 50);
+
+    const milestones = data.milestones || [];
+    const startY = 150;
+    const milestoneHeight = 140;
+
+    milestones.forEach((milestone: any, index: number) => {
+      const y = startY + index * milestoneHeight;
+
+      // Timeline dot
+      ctx.fillStyle = milestone.color;
+      ctx.beginPath();
+      ctx.arc(100, y, 25, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Day label
+      ctx.fillStyle = "#ffffff";
+      ctx.font = "bold 14px Inter, sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText(`Day ${milestone.day}`, 100, y + 5);
+
+      // Milestone box
+      ctx.fillStyle = milestone.color + "20";
+      ctx.strokeStyle = milestone.color;
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.roundRect(150, y - 50, 500, 100, 10);
+      ctx.fill();
+      ctx.stroke();
+
+      // Milestone label
+      ctx.fillStyle = milestone.color;
+      ctx.font = "bold 18px Inter, sans-serif";
+      ctx.textAlign = "left";
+      ctx.fillText(milestone.label, 170, y - 20);
+
+      // Deliverables
+      ctx.fillStyle = "#1e293b";
+      ctx.font = "14px Inter, sans-serif";
+      milestone.deliverables.forEach((deliverable: string, i: number) => {
+        ctx.fillText(`• ${deliverable}`, 170, y + 10 + i * 22);
+      });
+
+      // Value
+      ctx.fillStyle = milestone.color;
+      ctx.font = "bold 16px Inter, sans-serif";
+      ctx.textAlign = "right";
+      ctx.fillText(milestone.value, 630, y + 30);
+
+      // Connection line
+      if (index < milestones.length - 1) {
+        ctx.strokeStyle = "#cbd5e1";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(100, y + 25);
+        ctx.lineTo(100, y + milestoneHeight - 25);
+        ctx.stroke();
+      }
+    });
+  };
+
+  const drawMaturityLevels = (ctx: CanvasRenderingContext2D, data: any, title: string) => {
+    // Title
+    ctx.fillStyle = "#1e293b";
+    ctx.font = "bold 28px Inter, sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText(title, 400, 50);
+
+    const levels = data.levels || [];
+    const levelHeight = 90;
+    const startY = 120;
+
+    levels.forEach((level: any, index: number) => {
+      const y = startY + index * levelHeight;
+
+      // Level bar
+      const barWidth = 500 + (index * 50);
+      const barX = 400 - barWidth / 2;
+
+      ctx.fillStyle = level.color;
+      ctx.beginPath();
+      ctx.roundRect(barX, y, barWidth, 70, 8);
+      ctx.fill();
+
+      // Level label
+      ctx.fillStyle = "#ffffff";
+      ctx.font = "bold 16px Inter, sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText(level.label, 400, y + 25);
+
+      // Characteristics
+      ctx.font = "14px Inter, sans-serif";
+      ctx.fillText(level.characteristics, 400, y + 50);
+    });
+  };
+
+  const drawROICalculator = (ctx: CanvasRenderingContext2D, data: any, title: string) => {
+    // Title
+    ctx.fillStyle = "#1e293b";
+    ctx.font = "bold 28px Inter, sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText(title, 400, 50);
+
+    const investment = data.investment;
+    const returns = data.returns;
+    const boxWidth = 300;
+    const startX = 100;
+    const startY = 120;
+
+    // Investment box
+    ctx.fillStyle = "#fee2e2";
+    ctx.beginPath();
+    ctx.roundRect(startX, startY, boxWidth, 250, 12);
+    ctx.fill();
+
+    ctx.fillStyle = "#dc2626";
+    ctx.font = "bold 18px Inter, sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText(investment.label, startX + boxWidth / 2, startY + 30);
+
+    ctx.font = "bold 32px Inter, sans-serif";
+    ctx.fillText(investment.amount, startX + boxWidth / 2, startY + 70);
+
+    ctx.font = "14px Inter, sans-serif";
+    investment.breakdown.forEach((item: any, i: number) => {
+      ctx.fillText(`${item.item}: ${item.cost}`, startX + boxWidth / 2, startY + 110 + i * 30);
+    });
+
+    // Returns box
+    ctx.fillStyle = "#dcfce7";
+    ctx.beginPath();
+    ctx.roundRect(startX + boxWidth + 40, startY, boxWidth, 250, 12);
+    ctx.fill();
+
+    ctx.fillStyle = "#16a34a";
+    ctx.font = "bold 18px Inter, sans-serif";
+    ctx.fillText(returns.label, startX + boxWidth + 40 + boxWidth / 2, startY + 30);
+
+    ctx.font = "bold 32px Inter, sans-serif";
+    ctx.fillText(returns.amount, startX + boxWidth + 40 + boxWidth / 2, startY + 70);
+
+    ctx.font = "14px Inter, sans-serif";
+    returns.breakdown.forEach((item: any, i: number) => {
+      ctx.fillText(`${item.item}: ${item.value}`, startX + boxWidth + 40 + boxWidth / 2, startY + 110 + i * 30);
+    });
+
+    // ROI callout
+    ctx.fillStyle = "#10b981";
+    ctx.font = "bold 28px Inter, sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText(data.roi, 400, 450);
   };
 
   const downloadImage = () => {
