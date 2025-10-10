@@ -66,7 +66,27 @@ This project is Chetan Gabhane's professional portfolio, showcasing his work as 
 - `tsx`: TypeScript execution.
 
 ### Third-Party Services
-- **Resend**: Optional email notifications (for appointment bookings).
+- **Resend**: Optional email notifications (for appointment bookings and assessment results).
 - **Substack**: RSS feed integration for "Latest Insights" section (https://chetangabhane.substack.com), with backend caching and fallback logic.
 - **Google Analytics 4**: For website analytics.
 - **LinkedIn Insight Tag**: For B2B tracking and retargeting.
+
+## Lead Generation Tools
+
+### CloudAI PathFinder (Career Assessment)
+- **Purpose**: Free career readiness assessment to generate qualified leads for books, courses, and consulting.
+- **Route**: `/career-assessment`
+- **Features**:
+  - 15-question assessment covering 5 skill pillars (Cloud, AI, DevOps, Security, Real-World Application)
+  - Client-side scoring (0-60 points total, 12 per pillar)
+  - 5 skill level tiers: Foundation Builder, Emerging Professional, Skilled Practitioner, Expert Architect, Industry Leader
+  - Personalized recommendations and career roadmap
+  - Email capture with automated results delivery via Resend
+  - Retake capability
+- **Technical Stack**:
+  - Question bank: `shared/questions.ts` (static data, no database overhead)
+  - Schema: `assessments` table in PostgreSQL (id, email, score JSON, level, completedAt)
+  - API: `POST /api/assessments` for saving results and sending emails
+  - Storage: In-memory (MemStorage) for lightweight operation
+- **Business Value**: Lead generation funnel for $29-299 digital products and $2k-8k consulting services
+- **Performance**: Zero VPS impact (client-side scoring, single POST, optional email)
