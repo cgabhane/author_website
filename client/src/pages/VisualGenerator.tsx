@@ -307,6 +307,140 @@ const templates: DiagramTemplate[] = [
         { id: 5, label: "Least Privilege Access", color: "#ef4444" }
       ]
     }
+  },
+  {
+    id: "cloud-roi-framework",
+    name: "Cloud ROI Framework",
+    category: "Sales Enablement - Cloud",
+    description: "Before/after cost comparison with TCO breakdown",
+    defaultData: {
+      title: "Cloud Migration ROI: 3-Year Impact",
+      comparison: {
+        before: { label: "On-Premise TCO", cost: "$2.4M", items: ["Hardware", "Data Center", "IT Staff", "Maintenance"] },
+        after: { label: "Cloud TCO", cost: "$1.2M", items: ["Cloud Services", "Managed Services", "Reduced Staff", "Auto-scaling"] },
+        savings: "50% Cost Reduction"
+      }
+    }
+  },
+  {
+    id: "cloud-adoption-roadmap",
+    name: "Cloud Adoption Roadmap",
+    category: "Sales Enablement - Cloud",
+    description: "Phased journey (Assess → Plan → Migrate → Optimize)",
+    defaultData: {
+      title: "Cloud Adoption: 12-Month Roadmap",
+      phases: [
+        { id: 1, label: "Q1: Assess", deliverables: ["TCO Analysis", "App Portfolio"], color: "#3b82f6" },
+        { id: 2, label: "Q2: Plan", deliverables: ["Cloud Strategy", "Migration Plan"], color: "#8b5cf6" },
+        { id: 3, label: "Q3: Migrate", deliverables: ["Workload Move", "Data Transfer"], color: "#10b981" },
+        { id: 4, label: "Q4: Optimize", deliverables: ["Cost Savings", "Performance"], color: "#f59e0b" }
+      ]
+    }
+  },
+  {
+    id: "cloud-cost-optimization",
+    name: "Cloud Cost Optimization Matrix",
+    category: "Sales Enablement - Cloud",
+    description: "Quick wins vs. long-term savings quadrant",
+    defaultData: {
+      title: "Cloud Cost Optimization: Priority Matrix",
+      quadrants: [
+        { name: "Quick Wins", x: 0, y: 0, items: ["Right-size VMs", "Delete Unused Resources"], color: "#10b981" },
+        { name: "Strategic Initiatives", x: 1, y: 0, items: ["Reserved Instances", "Spot Instances"], color: "#3b82f6" },
+        { name: "Low Priority", x: 0, y: 1, items: ["Minor Optimizations"], color: "#94a3b8" },
+        { name: "Long-term Investment", x: 1, y: 1, items: ["Architecture Redesign", "Serverless Migration"], color: "#8b5cf6" }
+      ],
+      axes: { x: "Effort", y: "Impact" }
+    }
+  },
+  {
+    id: "multi-cloud-business-case",
+    name: "Multi-Cloud Business Case",
+    category: "Sales Enablement - Cloud",
+    description: "Vendor comparison with decision criteria",
+    defaultData: {
+      title: "Multi-Cloud Strategy: Vendor Comparison",
+      vendors: [
+        { name: "AWS", cost: "$$", performance: "Excellent", ecosystem: "Largest", lockin: "High" },
+        { name: "Azure", cost: "$$$", performance: "Excellent", ecosystem: "Enterprise", lockin: "Medium" },
+        { name: "GCP", cost: "$", performance: "Very Good", ecosystem: "Data/AI", lockin: "Low" }
+      ],
+      criteria: ["Cost", "Performance", "Ecosystem", "Vendor Lock-in"]
+    }
+  },
+  {
+    id: "ai-value-timeline",
+    name: "AI Value Realization Timeline",
+    category: "Sales Enablement - AI",
+    description: "30/60/90 day value delivery milestones",
+    defaultData: {
+      title: "AI Implementation: Value Realization Timeline",
+      milestones: [
+        { day: 30, label: "Quick Wins", deliverables: ["Chatbot POC", "Cost Baseline"], value: "$50K savings", color: "#10b981" },
+        { day: 60, label: "Scale Pilots", deliverables: ["3 Use Cases", "Model Training"], value: "$200K impact", color: "#3b82f6" },
+        { day: 90, label: "Production", deliverables: ["Full Deployment", "Automation"], value: "$500K ROI", color: "#8b5cf6" }
+      ]
+    }
+  },
+  {
+    id: "ai-use-case-matrix",
+    name: "AI Use Case Prioritization Matrix",
+    category: "Sales Enablement - AI",
+    description: "Impact vs. Effort quadrant with use cases",
+    defaultData: {
+      title: "AI Use Case Prioritization: Impact vs Effort",
+      quadrants: [
+        { name: "Quick Wins", x: 0, y: 0, items: ["Chatbot Support", "Email Classification"], color: "#10b981" },
+        { name: "Strategic Projects", x: 1, y: 0, items: ["Predictive Analytics", "Personalization"], color: "#3b82f6" },
+        { name: "Fill-ins", x: 0, y: 1, items: ["Content Tagging"], color: "#94a3b8" },
+        { name: "Moonshots", x: 1, y: 1, items: ["AGI Research", "Novel ML Models"], color: "#8b5cf6" }
+      ],
+      axes: { x: "Implementation Effort", y: "Business Impact" }
+    }
+  },
+  {
+    id: "ai-maturity-model",
+    name: "AI Implementation Maturity Model",
+    category: "Sales Enablement - AI",
+    description: "5 levels from Experimental to Optimized",
+    defaultData: {
+      title: "AI Maturity Model: 5 Stages of Evolution",
+      levels: [
+        { id: 1, label: "Level 1: Experimental", characteristics: "POCs, No Strategy", color: "#ef4444" },
+        { id: 2, label: "Level 2: Reactive", characteristics: "Ad-hoc Projects", color: "#f59e0b" },
+        { id: 3, label: "Level 3: Defined", characteristics: "Clear Roadmap", color: "#eab308" },
+        { id: 4, label: "Level 4: Managed", characteristics: "ML Ops, Governance", color: "#10b981" },
+        { id: 5, label: "Level 5: Optimized", characteristics: "AI-First Culture", color: "#3b82f6" }
+      ]
+    }
+  },
+  {
+    id: "ai-roi-calculator",
+    name: "AI ROI Calculator Visual",
+    category: "Sales Enablement - AI",
+    description: "Investment vs. Return breakdown",
+    defaultData: {
+      title: "AI Investment ROI: 12-Month Projection",
+      investment: {
+        label: "Total Investment",
+        amount: "$500K",
+        breakdown: [
+          { item: "Platform/Tools", cost: "$200K", pct: 40 },
+          { item: "Talent/Training", cost: "$200K", pct: 40 },
+          { item: "Infrastructure", cost: "$100K", pct: 20 }
+        ]
+      },
+      returns: {
+        label: "Expected Returns",
+        amount: "$1.5M",
+        breakdown: [
+          { item: "Cost Savings", value: "$800K", pct: 53 },
+          { item: "Revenue Growth", value: "$500K", pct: 33 },
+          { item: "Efficiency Gains", value: "$200K", pct: 14 }
+        ]
+      },
+      roi: "3x ROI in Year 1"
+    }
   }
 ];
 
