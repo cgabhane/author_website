@@ -92,10 +92,10 @@ This project is Chetan Gabhane's professional portfolio, showcasing his work as 
 - **Performance**: Zero VPS impact (client-side scoring, single POST, optional email)
 
 ### Visual Content Generator
-- **Purpose**: Free tool to create professional diagrams for Substack posts and educational content.
+- **Purpose**: Free tool to create professional diagrams for Substack posts, educational content, and sales enablement materials.
 - **Route**: `/visual-generator`
 - **Features**:
-  - 14 professional templates across 6 categories
+  - **22 professional templates** across 8 categories (expanded from 14)
   - Custom title support for personalized diagrams
   - PNG (Substack-optimized) and SVG (vector) export formats
   - Category-grouped template selection for easy navigation
@@ -108,10 +108,24 @@ This project is Chetan Gabhane's professional portfolio, showcasing his work as 
   - **Data Engineering**: Data Pipeline Architecture
   - **Security**: Zero Trust Security
   - **AI Governance**: Ethical AI Framework
+  - **Sales Enablement - Cloud**: Cloud ROI Framework, Cloud Adoption Roadmap, Cloud Cost Optimization Matrix, Multi-Cloud Business Case
+  - **Sales Enablement - AI**: AI Value Realization Timeline, AI Use Case Prioritization Matrix, AI Implementation Maturity Model, AI ROI Calculator Visual
   - **Other**: VMware Alternatives Matrix, AI Cost Reduction Framework
+- **Sales Enablement Templates** (NEW):
+  - **Cloud ROI Framework**: Before/after TCO comparison showing cost reduction impact
+  - **Cloud Adoption Roadmap**: Phased 12-month journey (Assess → Plan → Migrate → Optimize)
+  - **Cloud Cost Optimization Matrix**: 2x2 quadrant (Effort vs Impact) for prioritizing optimizations
+  - **Multi-Cloud Business Case**: Vendor comparison table (AWS/Azure/GCP) with decision criteria
+  - **AI Value Realization Timeline**: 30/60/90 day milestones with ROI projections
+  - **AI Use Case Prioritization Matrix**: Impact vs Effort quadrant for AI initiative planning
+  - **AI Implementation Maturity Model**: 5-level maturity progression (Experimental → Optimized)
+  - **AI ROI Calculator Visual**: Investment vs Returns breakdown with 3x ROI visualization
 - **Technical Implementation**:
-  - Canvas-based rendering with custom drawing functions: flowchart, timeline, matrix, bar chart, multi-cloud, layered security
+  - Canvas-based rendering with custom drawing functions: flowchart, timeline, matrix, bar chart, multi-cloud, layered security, ROI comparison, roadmap, quadrant, vendor table, milestone timeline, maturity levels
   - React hooks: useMemo for template lookup, useCallback for optimized redrawing
   - Component: `client/src/pages/VisualGenerator.tsx`
-- **Business Value**: Educational tool positioning, builds authority, supports "always free for students/learners" brand promise
+- **Business Value**: 
+  - Educational tool positioning for thought leadership content
+  - Sales enablement for client proposals, consulting engagements, and business case presentations
+  - Supports "always free for students/learners" brand promise while providing professional-grade sales materials
 - **Performance**: Client-side rendering only, zero database/API calls, instant diagram generation
