@@ -10,6 +10,7 @@ export interface IStorage {
   createUser(user: InsertUser): Promise<User>;
   createAppointment(appointment: InsertAppointment): Promise<Appointment>;
   getAppointments(): Promise<Appointment[]>;
+  getAppointmentById(id: string): Promise<Appointment | undefined>;
   createSubscriber(subscriber: InsertSubscriber): Promise<Subscriber>;
   getSubscribers(): Promise<Subscriber[]>;
   getSubscriberByEmail(email: string): Promise<Subscriber | undefined>;
@@ -61,6 +62,10 @@ export class MemStorage implements IStorage {
 
   async getAppointments(): Promise<Appointment[]> {
     return Array.from(this.appointments.values());
+  }
+
+  async getAppointmentById(id: string): Promise<Appointment | undefined> {
+    return this.appointments.get(id);
   }
 
   async createSubscriber(insertSubscriber: InsertSubscriber): Promise<Subscriber> {

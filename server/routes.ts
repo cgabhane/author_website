@@ -451,6 +451,112 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Helper function to generate .ics calendar file content
+  function generateICalendar(appointment: any, sessionTypeDisplay: string): string {
+    // Parse date and time to create proper ISO datetime
+    const [year, month, day] = appointment.date.split('-').map(Number);
+    const timeMatch = appointment.time.match(/(\d+):(\d+)\s*(AM|PM)/i);
+    if (!timeMatch) {
+      throw new Error('Invalid time format');
+    }
+    
+    let hours = parseInt(timeMatch[1]);
+    const minutes = parseInt(timeMatch[2]);
+    const period = timeMatch[3].toUpperCase();
+    
+    // Convert to 24-hour format
+    if (period === 'PM' && hours !== 12) hours += 12;
+    if (period === 'AM' && hours === 12) hours = 0;
+    
+    // Create start datetime (UTC)
+    const startDate = new Date(year, month - 1, day, hours, minutes);
+    const endDate = new Date(startDate.getTime() + 60 * 60 * 1000); // 1 hour duration
+    
+    // Format dates for iCalendar (YYYYMMDDTHHmmssZ)
+    const formatICalDate = (date: Date) => {
+      return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+    };
+    
+    const now = new Date();
+    const timestamp = formatICalDate(now);
+    const dtstart = formatICalDate(startDate);
+    const dtend = formatICalDate(endDate);
+    
+    // Meeting details with both Zoom and Google Meet
+    const description = `Knowledge Exchange Session with Chetan Gabhane\\n\\n` +
+      `Session Type: ${sessionTypeDisplay}\\n\\n` +
+      `Meeting Options:\\n` +
+      `• Zoom: https://us05web.zoom.us/j/6836753272?pwd=WplvfCRiVIeTQG3qb89XHImkW9efR5.1\\n` +
+      `  Meeting ID: 683 675 3272 (Passcode embedded)\\n\\n` +
+      `• Google Meet: https://meet.google.com/xzi-tzzj-jdv\\n\\n` +
+      `Choose your preferred platform and join at the scheduled time.`;
+    
+    // Generate .ics content (iCalendar format)
+    return [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//Chetan Gabhane//Knowledge Exchange//EN',
+      'CALSCALE:GREGORIAN',
+      'METHOD:REQUEST',
+      'BEGIN:VEVENT',
+      `UID:${appointment.id}@chetangabhane.in`,
+      `DTSTAMP:${timestamp}`,
+      `DTSTART:${dtstart}`,
+      `DTEND:${dtend}`,
+      `SUMMARY:${sessionTypeDisplay} - Chetan Gabhane`,
+      `DESCRIPTION:${description}`,
+      `LOCATION:Online (Zoom or Google Meet)`,
+      `ORGANIZER;CN=Chetan Gabhane:mailto:contact@chetangabhane.in`,
+      `ATTENDEE;CN=${appointment.name}:mailto:${appointment.email}`,
+      'STATUS:CONFIRMED',
+      'SEQUENCE:0',
+      'BEGIN:VALARM',
+      'TRIGGER:-PT15M',
+      'ACTION:DISPLAY',
+      'DESCRIPTION:Reminder: Meeting in 15 minutes',
+      'END:VALARM',
+      'END:VEVENT',
+      'END:VCALENDAR'
+    ].join('\r\n');
+  }
+
+  // GET /api/appointments/:id/calendar - Download .ics calendar file
+  app.get("/api/appointments/:id/calendar", async (req, res) => {
+    try {
+      const appointmentId = req.params.id;
+      const appointment = await storage.getAppointmentById(appointmentId);
+      
+      if (!appointment) {
+        return res.status(404).json({
+          success: false,
+          message: "Appointment not found"
+        });
+      }
+      
+      // Format session type for display
+      const sessionTypeDisplay = {
+        consulting: "Strategic Guidance Session",
+        mentoring: "Mentoring Session",
+        guidance: "Advisory Consultation"
+      }[appointment.sessionType] || "Knowledge Exchange Session";
+      
+      // Generate .ics file content
+      const icsContent = generateICalendar(appointment, sessionTypeDisplay);
+      
+      // Set headers for file download
+      res.setHeader('Content-Type', 'text/calendar; charset=utf-8');
+      res.setHeader('Content-Disposition', `attachment; filename="knowledge-exchange-${appointmentId}.ics"`);
+      
+      res.send(icsContent);
+    } catch (error) {
+      console.error("Calendar generation error:", error);
+      res.status(500).json({
+        success: false,
+        message: "Unable to generate calendar file"
+      });
+    }
+  });
+
   const httpServer = createServer(app);
 
   return httpServer;
