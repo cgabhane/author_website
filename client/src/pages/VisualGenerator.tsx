@@ -132,6 +132,181 @@ const templates: DiagramTemplate[] = [
         { from: 5, to: 6 }
       ]
     }
+  },
+  {
+    id: "kubernetes-architecture",
+    name: "Kubernetes Architecture",
+    category: "DevOps",
+    description: "K8s cluster components and pod orchestration",
+    defaultData: {
+      title: "Kubernetes Architecture",
+      nodes: [
+        { id: 1, label: "Control Plane", x: 50, y: 50, color: "#3b82f6" },
+        { id: 2, label: "API Server", x: 30, y: 120, color: "#8b5cf6" },
+        { id: 3, label: "Scheduler", x: 50, y: 120, color: "#10b981" },
+        { id: 4, label: "Controller", x: 70, y: 120, color: "#f59e0b" },
+        { id: 5, label: "Worker Node", x: 30, y: 220, color: "#ef4444" },
+        { id: 6, label: "Worker Node", x: 70, y: 220, color: "#ef4444" },
+        { id: 7, label: "Pods", x: 50, y: 290, color: "#06b6d4" }
+      ],
+      connections: [
+        { from: 1, to: 2 },
+        { from: 1, to: 3 },
+        { from: 1, to: 4 },
+        { from: 2, to: 5 },
+        { from: 2, to: 6 },
+        { from: 5, to: 7 },
+        { from: 6, to: 7 }
+      ]
+    }
+  },
+  {
+    id: "microservices-pattern",
+    name: "Microservices Pattern",
+    category: "Architecture",
+    description: "Service mesh with API gateway",
+    defaultData: {
+      title: "Microservices Architecture",
+      nodes: [
+        { id: 1, label: "API Gateway", x: 50, y: 50, color: "#3b82f6" },
+        { id: 2, label: "Auth Service", x: 20, y: 150, color: "#8b5cf6" },
+        { id: 3, label: "User Service", x: 50, y: 150, color: "#10b981" },
+        { id: 4, label: "Order Service", x: 80, y: 150, color: "#f59e0b" },
+        { id: 5, label: "Database", x: 20, y: 250, color: "#ef4444" },
+        { id: 6, label: "Database", x: 50, y: 250, color: "#ef4444" },
+        { id: 7, label: "Database", x: 80, y: 250, color: "#ef4444" }
+      ],
+      connections: [
+        { from: 1, to: 2 },
+        { from: 1, to: 3 },
+        { from: 1, to: 4 },
+        { from: 2, to: 5 },
+        { from: 3, to: 6 },
+        { from: 4, to: 7 }
+      ]
+    }
+  },
+  {
+    id: "cicd-pipeline",
+    name: "CI/CD Pipeline",
+    category: "DevOps",
+    description: "Automated deployment pipeline stages",
+    defaultData: {
+      title: "CI/CD Pipeline",
+      stages: [
+        { id: 1, label: "Code Commit", description: "Git Push", color: "#3b82f6" },
+        { id: 2, label: "Build", description: "Compile & Test", color: "#8b5cf6" },
+        { id: 3, label: "Security Scan", description: "SAST/DAST", color: "#10b981" },
+        { id: 4, label: "Deploy Stage", description: "Pre-prod", color: "#f59e0b" },
+        { id: 5, label: "Deploy Prod", description: "Go Live", color: "#ef4444" }
+      ]
+    }
+  },
+  {
+    id: "data-pipeline",
+    name: "Data Pipeline Architecture",
+    category: "Data Engineering",
+    description: "ETL/streaming data flow",
+    defaultData: {
+      title: "Modern Data Pipeline",
+      nodes: [
+        { id: 1, label: "Data Sources", x: 50, y: 50, color: "#3b82f6" },
+        { id: 2, label: "Ingestion Layer", x: 50, y: 120, color: "#8b5cf6" },
+        { id: 3, label: "Stream Processing", x: 30, y: 200, color: "#10b981" },
+        { id: 4, label: "Batch Processing", x: 70, y: 200, color: "#f59e0b" },
+        { id: 5, label: "Data Lake", x: 30, y: 280, color: "#ef4444" },
+        { id: 6, label: "Data Warehouse", x: 70, y: 280, color: "#06b6d4" },
+        { id: 7, label: "Analytics/BI", x: 50, y: 360, color: "#ec4899" }
+      ],
+      connections: [
+        { from: 1, to: 2 },
+        { from: 2, to: 3 },
+        { from: 2, to: 4 },
+        { from: 3, to: 5 },
+        { from: 4, to: 6 },
+        { from: 5, to: 7 },
+        { from: 6, to: 7 }
+      ]
+    }
+  },
+  {
+    id: "serverless-architecture",
+    name: "Serverless Architecture",
+    category: "Cloud Strategy",
+    description: "Event-driven serverless pattern",
+    defaultData: {
+      title: "Serverless Architecture",
+      nodes: [
+        { id: 1, label: "API Gateway", x: 50, y: 50, color: "#3b82f6" },
+        { id: 2, label: "Lambda/Functions", x: 50, y: 140, color: "#8b5cf6" },
+        { id: 3, label: "Event Queue", x: 20, y: 230, color: "#10b981" },
+        { id: 4, label: "Database", x: 50, y: 230, color: "#f59e0b" },
+        { id: 5, label: "Object Storage", x: 80, y: 230, color: "#ef4444" },
+        { id: 6, label: "CDN", x: 50, y: 320, color: "#06b6d4" }
+      ],
+      connections: [
+        { from: 1, to: 2 },
+        { from: 2, to: 3 },
+        { from: 2, to: 4 },
+        { from: 2, to: 5 },
+        { from: 4, to: 6 }
+      ]
+    }
+  },
+  {
+    id: "api-gateway-pattern",
+    name: "API Gateway Pattern (BFF)",
+    category: "Architecture",
+    description: "Backend for Frontend design",
+    defaultData: {
+      title: "API Gateway (BFF Pattern)",
+      nodes: [
+        { id: 1, label: "Mobile App", x: 20, y: 50, color: "#3b82f6" },
+        { id: 2, label: "Web App", x: 80, y: 50, color: "#3b82f6" },
+        { id: 3, label: "Mobile BFF", x: 20, y: 140, color: "#8b5cf6" },
+        { id: 4, label: "Web BFF", x: 80, y: 140, color: "#8b5cf6" },
+        { id: 5, label: "Microservices", x: 50, y: 230, color: "#10b981" },
+        { id: 6, label: "Databases", x: 50, y: 320, color: "#f59e0b" }
+      ],
+      connections: [
+        { from: 1, to: 3 },
+        { from: 2, to: 4 },
+        { from: 3, to: 5 },
+        { from: 4, to: 5 },
+        { from: 5, to: 6 }
+      ]
+    }
+  },
+  {
+    id: "multi-cloud-strategy",
+    name: "Multi-Cloud Strategy",
+    category: "Cloud Strategy",
+    description: "Hybrid multi-cloud architecture",
+    defaultData: {
+      title: "Multi-Cloud Strategy",
+      clouds: [
+        { name: "AWS", services: ["EC2", "S3", "Lambda"], color: "#FF9900" },
+        { name: "Azure", services: ["VMs", "Blob", "Functions"], color: "#0078D4" },
+        { name: "GCP", services: ["Compute", "Storage", "Cloud Run"], color: "#4285F4" },
+        { name: "On-Premise", services: ["Legacy Systems"], color: "#64748b" }
+      ]
+    }
+  },
+  {
+    id: "zero-trust-security",
+    name: "Zero Trust Security",
+    category: "Security",
+    description: "Modern zero trust security model",
+    defaultData: {
+      title: "Zero Trust Security Architecture",
+      layers: [
+        { id: 1, label: "Identity Verification", color: "#3b82f6" },
+        { id: 2, label: "Device Trust", color: "#8b5cf6" },
+        { id: 3, label: "Network Segmentation", color: "#10b981" },
+        { id: 4, label: "Continuous Monitoring", color: "#f59e0b" },
+        { id: 5, label: "Least Privilege Access", color: "#ef4444" }
+      ]
+    }
   }
 ];
 
@@ -180,6 +355,22 @@ export default function VisualGenerator() {
       drawBarChart(ctx, currentTemplate.defaultData, title);
     } else if (currentTemplate.id === "rag-architecture") {
       drawFlowchart(ctx, currentTemplate.defaultData, title);
+    } else if (currentTemplate.id === "kubernetes-architecture") {
+      drawFlowchart(ctx, currentTemplate.defaultData, title);
+    } else if (currentTemplate.id === "microservices-pattern") {
+      drawFlowchart(ctx, currentTemplate.defaultData, title);
+    } else if (currentTemplate.id === "cicd-pipeline") {
+      drawTimeline(ctx, currentTemplate.defaultData, title);
+    } else if (currentTemplate.id === "data-pipeline") {
+      drawFlowchart(ctx, currentTemplate.defaultData, title);
+    } else if (currentTemplate.id === "serverless-architecture") {
+      drawFlowchart(ctx, currentTemplate.defaultData, title);
+    } else if (currentTemplate.id === "api-gateway-pattern") {
+      drawFlowchart(ctx, currentTemplate.defaultData, title);
+    } else if (currentTemplate.id === "multi-cloud-strategy") {
+      drawMultiCloud(ctx, currentTemplate.defaultData, title);
+    } else if (currentTemplate.id === "zero-trust-security") {
+      drawLayeredSecurity(ctx, currentTemplate.defaultData, title);
     }
   };
 
@@ -420,6 +611,110 @@ export default function VisualGenerator() {
     ctx.fillText("Total: 35% Cost Reduction", 400, 520);
   };
 
+  const drawMultiCloud = (ctx: CanvasRenderingContext2D, data: any, title: string) => {
+    // Title
+    ctx.fillStyle = "#1e293b";
+    ctx.font = "bold 28px Inter, sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText(title, 400, 50);
+
+    const clouds = data.clouds || [];
+    const cloudWidth = 180;
+    const startX = 100;
+    const startY = 120;
+
+    clouds.forEach((cloud: any, index: number) => {
+      const row = Math.floor(index / 2);
+      const col = index % 2;
+      const x = startX + col * (cloudWidth + 40);
+      const y = startY + row * 180;
+
+      // Cloud box
+      ctx.fillStyle = cloud.color + "20";
+      ctx.strokeStyle = cloud.color;
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.roundRect(x, y, cloudWidth, 140, 12);
+      ctx.fill();
+      ctx.stroke();
+
+      // Cloud name
+      ctx.fillStyle = cloud.color;
+      ctx.font = "bold 18px Inter, sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText(cloud.name, x + cloudWidth / 2, y + 30);
+
+      // Services
+      ctx.fillStyle = "#1e293b";
+      ctx.font = "14px Inter, sans-serif";
+      cloud.services.forEach((service: string, i: number) => {
+        ctx.fillText(service, x + cloudWidth / 2, y + 60 + i * 25);
+      });
+    });
+
+    // Integration layer
+    ctx.fillStyle = "#f1f5f9";
+    ctx.fillRect(100, 500, 600, 60);
+    ctx.fillStyle = "#1e293b";
+    ctx.font = "bold 16px Inter, sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText("Unified Management & Orchestration Layer", 400, 540);
+  };
+
+  const drawLayeredSecurity = (ctx: CanvasRenderingContext2D, data: any, title: string) => {
+    // Title
+    ctx.fillStyle = "#1e293b";
+    ctx.font = "bold 28px Inter, sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText(title, 400, 50);
+
+    const layers = data.layers || [];
+    const layerHeight = 80;
+    const startY = 120;
+    const layerWidth = 500;
+    const centerX = 400;
+
+    layers.forEach((layer: any, index: number) => {
+      const y = startY + index * (layerHeight + 10);
+      const width = layerWidth - (index * 40);
+      const x = centerX - width / 2;
+
+      // Layer background
+      ctx.fillStyle = layer.color;
+      ctx.beginPath();
+      ctx.roundRect(x, y, width, layerHeight, 8);
+      ctx.fill();
+
+      // Layer number
+      ctx.fillStyle = "#ffffff";
+      ctx.font = "bold 24px Inter, sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText((index + 1).toString(), x + 30, y + 50);
+
+      // Layer label
+      ctx.font = "bold 18px Inter, sans-serif";
+      ctx.fillText(layer.label, centerX, y + 50);
+
+      // Connection arrow to next layer
+      if (index < layers.length - 1) {
+        ctx.strokeStyle = "#cbd5e1";
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(centerX, y + layerHeight);
+        ctx.lineTo(centerX, y + layerHeight + 10);
+        ctx.stroke();
+
+        // Arrow head
+        ctx.beginPath();
+        ctx.moveTo(centerX - 8, y + layerHeight + 5);
+        ctx.lineTo(centerX, y + layerHeight + 10);
+        ctx.lineTo(centerX + 8, y + layerHeight + 5);
+        ctx.strokeStyle = "#cbd5e1";
+        ctx.stroke();
+      }
+    });
+  };
+
   const downloadImage = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -474,6 +769,10 @@ export default function VisualGenerator() {
             <p className="text-muted-foreground text-lg">
               Create professional diagrams for your Substack posts in seconds
             </p>
+            <div className="mt-4 inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full">
+              <Sparkles className="w-4 h-4" />
+              <span className="font-semibold">For Students & Learners - Always Free</span>
+            </div>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
@@ -490,16 +789,25 @@ export default function VisualGenerator() {
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="space-y-2">
-                  <Label htmlFor="template">Select Template</Label>
+                  <Label htmlFor="template">Select Template (14 Templates)</Label>
                   <Select value={selectedTemplate} onValueChange={setSelectedTemplate}>
                     <SelectTrigger id="template" data-testid="select-template">
                       <SelectValue placeholder="Choose a diagram type..." />
                     </SelectTrigger>
                     <SelectContent>
-                      {templates.map((template) => (
-                        <SelectItem key={template.id} value={template.id}>
-                          {template.name}
-                        </SelectItem>
+                      {Array.from(new Set(templates.map(t => t.category))).map((category) => (
+                        <div key={category}>
+                          <div className="px-2 py-1.5 text-sm font-semibold text-muted-foreground">
+                            {category}
+                          </div>
+                          {templates
+                            .filter(t => t.category === category)
+                            .map((template) => (
+                              <SelectItem key={template.id} value={template.id}>
+                                {template.name}
+                              </SelectItem>
+                            ))}
+                        </div>
                       ))}
                     </SelectContent>
                   </Select>
