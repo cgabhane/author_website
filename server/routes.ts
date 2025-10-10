@@ -364,7 +364,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
                 ${validatedData.message ? `<li><strong>Message:</strong> ${validatedData.message}</li>` : ""}
               </ul>
               
-              <h3>🎥 Meeting Links (Share with Visitor)</h3>
+              <h3>Meeting Links (Share with Visitor)</h3>
               <div style="background-color: #f5f5f5; padding: 15px; border-radius: 5px; margin: 15px 0;">
                 <p style="margin: 5px 0;"><strong>Zoom:</strong></p>
                 <p style="margin: 5px 0;"><a href="https://zoom.us/j/6836753272" style="color: #2563eb;">https://zoom.us/j/6836753272</a></p>
@@ -393,7 +393,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
               <p>Dear ${validatedData.name},</p>
               <p>Your request for a <strong>${sessionTypeDisplay}</strong> has been successfully received. I will review your request and get back to you within 24 hours to confirm the appointment details.</p>
               
-              <h3>📅 Your Booking Details:</h3>
+              <h3>Your Booking Details:</h3>
               <ul>
                 <li><strong>Session Type:</strong> ${sessionTypeDisplay}</li>
                 <li><strong>Requested Date:</strong> ${validatedData.date}</li>
@@ -401,16 +401,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
               </ul>
               ${validatedData.message ? `<p><strong>Your Message:</strong><br>${validatedData.message}</p>` : ""}
               
-              <h3>🎥 Meeting Options (Choose Your Preferred Platform):</h3>
+              <h3>Meeting Options (Choose Your Preferred Platform):</h3>
               <div style="background-color: #f5f5f5; padding: 15px; border-radius: 5px; margin: 15px 0;">
                 <p style="margin: 5px 0;"><strong>Option 1: Zoom</strong></p>
-                <p style="margin: 5px 0;"><a href="https://zoom.us/j/6836753272" style="color: #2563eb; text-decoration: none;">🔗 Join via Zoom</a></p>
+                <p style="margin: 5px 0;"><a href="https://zoom.us/j/6836753272" style="color: #2563eb; text-decoration: none;">Join via Zoom</a></p>
                 <p style="margin: 5px 0; font-size: 14px; color: #666;">Meeting ID: 683 675 3272</p>
                 
                 <hr style="border: none; border-top: 1px solid #ddd; margin: 15px 0;">
                 
                 <p style="margin: 5px 0;"><strong>Option 2: Google Meet</strong></p>
-                <p style="margin: 5px 0;"><a href="https://meet.google.com/xzi-tzzj-jdv" style="color: #2563eb; text-decoration: none;">🔗 Join via Google Meet</a></p>
+                <p style="margin: 5px 0;"><a href="https://meet.google.com/xzi-tzzj-jdv" style="color: #2563eb; text-decoration: none;">Join via Google Meet</a></p>
               </div>
               
               <p><em>Simply click your preferred meeting link at the scheduled time. No additional setup required!</em></p>
