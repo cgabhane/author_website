@@ -10,6 +10,7 @@ import BlogPost from "@/pages/BlogPost";
 import PressKit from "@/pages/PressKit";
 import Subscribers from "@/pages/Subscribers";
 import VisualGenerator from "@/pages/VisualGenerator";
+import CareerAssessment from "@/pages/CareerAssessment";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -20,6 +21,7 @@ function Router() {
       <Route path="/blog/:id" component={BlogPost} />
       <Route path="/press-kit" component={PressKit} />
       <Route path="/visual-generator" component={VisualGenerator} />
+      <Route path="/career-assessment" component={CareerAssessment} />
       <Route path="/admin/subscribers" component={Subscribers} />
       <Route component={NotFound} />
     </Switch>
