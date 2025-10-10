@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo, useCallback } from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
@@ -317,15 +317,12 @@ export default function VisualGenerator() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { toast } = useToast();
 
-  const currentTemplate = templates.find(t => t.id === selectedTemplate);
+  const currentTemplate = useMemo(
+    () => templates.find(t => t.id === selectedTemplate),
+    [selectedTemplate]
+  );
 
-  useEffect(() => {
-    if (currentTemplate && canvasRef.current) {
-      drawDiagram();
-    }
-  }, [selectedTemplate, customTitle]);
-
-  const drawDiagram = () => {
+  const drawDiagram = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas || !currentTemplate) return;
 
@@ -372,7 +369,13 @@ export default function VisualGenerator() {
     } else if (currentTemplate.id === "zero-trust-security") {
       drawLayeredSecurity(ctx, currentTemplate.defaultData, title);
     }
-  };
+  }, [currentTemplate, customTitle]);
+
+  useEffect(() => {
+    if (currentTemplate && canvasRef.current) {
+      drawDiagram();
+    }
+  }, [currentTemplate, drawDiagram]);
 
   const drawFlowchart = (ctx: CanvasRenderingContext2D, data: any, title: string) => {
     // Title
