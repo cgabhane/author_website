@@ -123,6 +123,13 @@ const templates: DiagramTemplate[] = [
         { id: 4, label: "Context Builder", x: 50, y: 250, color: "#f59e0b" },
         { id: 5, label: "LLM", x: 80, y: 150, color: "#ef4444" },
         { id: 6, label: "Response", x: 50, y: 350, color: "#3b82f6" }
+      ],
+      connections: [
+        { from: 1, to: 3 },
+        { from: 2, to: 3 },
+        { from: 3, to: 4 },
+        { from: 4, to: 5 },
+        { from: 5, to: 6 }
       ]
     }
   }
@@ -131,6 +138,7 @@ const templates: DiagramTemplate[] = [
 export default function VisualGenerator() {
   const [selectedTemplate, setSelectedTemplate] = useState<string>("");
   const [customTitle, setCustomTitle] = useState<string>("");
+  const [exportFormat, setExportFormat] = useState<"png" | "svg">("png");
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { toast } = useToast();
 
@@ -417,14 +425,38 @@ export default function VisualGenerator() {
     if (!canvas) return;
 
     const link = document.createElement('a');
-    link.download = `${selectedTemplate}-diagram.png`;
-    link.href = canvas.toDataURL('image/png');
+    
+    if (exportFormat === 'png') {
+      link.download = `${selectedTemplate}-diagram.png`;
+      link.href = canvas.toDataURL('image/png');
+    } else {
+      // Convert canvas to SVG
+      const svgContent = canvasToSVG(canvas);
+      const blob = new Blob([svgContent], { type: 'image/svg+xml' });
+      link.download = `${selectedTemplate}-diagram.svg`;
+      link.href = URL.createObjectURL(blob);
+    }
+    
     link.click();
 
     toast({
       title: "Success!",
-      description: "Diagram downloaded successfully. Ready to post on Substack!",
+      description: `Diagram downloaded as ${exportFormat.toUpperCase()}. Ready to post on Substack!`,
     });
+  };
+
+  const canvasToSVG = (canvas: HTMLCanvasElement): string => {
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return '';
+
+    // Create SVG wrapper
+    const svg = `
+      <svg xmlns="http://www.w3.org/2000/svg" width="${canvas.width}" height="${canvas.height}">
+        <image href="${canvas.toDataURL('image/png')}" width="${canvas.width}" height="${canvas.height}" />
+      </svg>
+    `;
+    
+    return svg;
   };
 
   return (
@@ -491,13 +523,26 @@ export default function VisualGenerator() {
                       <p className="text-sm text-muted-foreground">{currentTemplate.description}</p>
                     </div>
 
+                    <div className="space-y-2">
+                      <Label htmlFor="format">Export Format</Label>
+                      <Select value={exportFormat} onValueChange={(value) => setExportFormat(value as "png" | "svg")}>
+                        <SelectTrigger id="format" data-testid="select-format">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="png">PNG (Recommended for Substack)</SelectItem>
+                          <SelectItem value="svg">SVG (Vector Format)</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
                     <Button 
                       onClick={downloadImage} 
                       className="w-full"
                       data-testid="button-download"
                     >
                       <Download className="w-4 h-4 mr-2" />
-                      Download PNG
+                      Download {exportFormat.toUpperCase()}
                     </Button>
                   </>
                 )}
