@@ -77,3 +77,24 @@ export const insightSchema = z.object({
 });
 
 export type Insight = z.infer<typeof insightSchema>;
+
+// Career assessments table
+export const assessments = pgTable("assessments", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  email: text("email"),
+  score: text("score").notNull(),
+  level: text("level").notNull(),
+  completedAt: timestamp("completed_at").notNull().defaultNow(),
+});
+
+export const insertAssessmentSchema = createInsertSchema(assessments).omit({
+  id: true,
+  completedAt: true,
+}).extend({
+  email: z.string().email("Please enter a valid email address").optional(),
+  score: z.string(),
+  level: z.string(),
+});
+
+export type InsertAssessment = z.infer<typeof insertAssessmentSchema>;
+export type Assessment = typeof assessments.$inferSelect;
