@@ -405,7 +405,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
               <div style="margin: 20px 0;">
                 <a href="https://chetangabhane.in/api/appointments/${appointment.id}/calendar" 
                    style="display: inline-block; background-color: #2563eb; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: 600;">
-                  📅 Download Calendar Invite (.ics)
+                  Download Calendar Invite (.ics)
                 </a>
               </div>
               <p style="color: #666; font-size: 14px; margin-top: 10px;">
@@ -464,8 +464,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Helper function to generate .ics calendar file content
   function generateICalendar(appointment: any, sessionTypeDisplay: string): string {
-    // Parse date and time to create proper ISO datetime
-    const [year, month, day] = appointment.date.split('-').map(Number);
+    // Parse date (format: "October 15, 2025" or "MMMM d, yyyy")
+    const dateObj = new Date(appointment.date);
+    if (isNaN(dateObj.getTime())) {
+      throw new Error('Invalid date format');
+    }
+    
+    // Parse time (format: "09:00 AM" or "02:00 PM")
     const timeMatch = appointment.time.match(/(\d+):(\d+)\s*(AM|PM)/i);
     if (!timeMatch) {
       throw new Error('Invalid time format');
@@ -479,8 +484,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     if (period === 'PM' && hours !== 12) hours += 12;
     if (period === 'AM' && hours === 12) hours = 0;
     
-    // Create start datetime (UTC)
-    const startDate = new Date(year, month - 1, day, hours, minutes);
+    // Create start datetime by combining date and time
+    const startDate = new Date(dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate(), hours, minutes);
     const endDate = new Date(startDate.getTime() + 60 * 60 * 1000); // 1 hour duration
     
     // Format dates for iCalendar (YYYYMMDDTHHmmssZ)
