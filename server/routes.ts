@@ -367,8 +367,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
               <h3>Meeting Links (Share with Visitor)</h3>
               <div style="background-color: #f5f5f5; padding: 15px; border-radius: 5px; margin: 15px 0;">
                 <p style="margin: 5px 0;"><strong>Zoom:</strong></p>
-                <p style="margin: 5px 0;"><a href="https://zoom.us/j/6836753272" style="color: #2563eb;">https://zoom.us/j/6836753272</a></p>
-                <p style="margin: 5px 0; font-size: 14px; color: #666;">Meeting ID: 683 675 3272</p>
+                <p style="margin: 5px 0;"><a href="https://us05web.zoom.us/j/6836753272?pwd=WplvfCRiVIeTQG3qb89XHImkW9efR5.1" style="color: #2563eb;">https://us05web.zoom.us/j/6836753272?pwd=WplvfCRiVIeTQG3qb89XHImkW9efR5.1</a></p>
+                <p style="margin: 5px 0; font-size: 14px; color: #666;">Meeting ID: 683 675 3272 (Passcode embedded in link)</p>
                 
                 <p style="margin: 15px 0 5px 0;"><strong>Google Meet:</strong></p>
                 <p style="margin: 5px 0;"><a href="https://meet.google.com/xzi-tzzj-jdv" style="color: #2563eb;">https://meet.google.com/xzi-tzzj-jdv</a></p>
@@ -404,8 +404,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
               <h3>Meeting Options (Choose Your Preferred Platform):</h3>
               <div style="background-color: #f5f5f5; padding: 15px; border-radius: 5px; margin: 15px 0;">
                 <p style="margin: 5px 0;"><strong>Option 1: Zoom</strong></p>
-                <p style="margin: 5px 0;"><a href="https://zoom.us/j/6836753272" style="color: #2563eb; text-decoration: none;">Join via Zoom</a></p>
-                <p style="margin: 5px 0; font-size: 14px; color: #666;">Meeting ID: 683 675 3272</p>
+                <p style="margin: 5px 0;"><a href="https://us05web.zoom.us/j/6836753272?pwd=WplvfCRiVIeTQG3qb89XHImkW9efR5.1" style="color: #2563eb; text-decoration: none;">Join via Zoom</a></p>
+                <p style="margin: 5px 0; font-size: 14px; color: #666;">Meeting ID: 683 675 3272 (Passcode embedded - just click to join!)</p>
                 
                 <hr style="border: none; border-top: 1px solid #ddd; margin: 15px 0;">
                 
