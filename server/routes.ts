@@ -401,6 +401,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
               </ul>
               ${validatedData.message ? `<p><strong>Your Message:</strong><br>${validatedData.message}</p>` : ""}
               
+              <h3>Add to Your Calendar:</h3>
+              <div style="margin: 20px 0;">
+                <a href="https://chetangabhane.in/api/appointments/${appointment.id}/calendar" 
+                   style="display: inline-block; background-color: #2563eb; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: 600;">
+                  📅 Download Calendar Invite (.ics)
+                </a>
+              </div>
+              <p style="color: #666; font-size: 14px; margin-top: 10px;">
+                Works with Google Calendar, Outlook, Apple Calendar, and more. Includes automatic 15-minute reminder!
+              </p>
+
               <h3>Meeting Options (Choose Your Preferred Platform):</h3>
               <div style="background-color: #f5f5f5; padding: 15px; border-radius: 5px; margin: 15px 0;">
                 <p style="margin: 5px 0;"><strong>Option 1: Zoom</strong></p>
