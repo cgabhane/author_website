@@ -90,3 +90,28 @@ This project is Chetan Gabhane's professional portfolio, showcasing his work as 
   - Storage: In-memory (MemStorage) for lightweight operation
 - **Business Value**: Lead generation funnel for $29-299 digital products and $2k-8k consulting services
 - **Performance**: Zero VPS impact (client-side scoring, single POST, optional email)
+
+### Visual Content Generator
+- **Purpose**: Free tool to create professional diagrams for Substack posts and educational content.
+- **Route**: `/visual-generator`
+- **Features**:
+  - 14 professional templates across 6 categories
+  - Custom title support for personalized diagrams
+  - PNG (Substack-optimized) and SVG (vector) export formats
+  - Category-grouped template selection for easy navigation
+  - Real-time canvas preview (800x600px)
+- **Template Categories**:
+  - **AI & ML**: AI Agent Architecture, RAG System Architecture
+  - **Architecture**: Microservices Pattern, API Gateway Pattern (BFF)
+  - **Cloud Strategy**: Multi-Cloud Strategy, Serverless Architecture, Cloud Migration Stages
+  - **DevOps**: Kubernetes Architecture, CI/CD Pipeline
+  - **Data Engineering**: Data Pipeline Architecture
+  - **Security**: Zero Trust Security
+  - **AI Governance**: Ethical AI Framework
+  - **Other**: VMware Alternatives Matrix, AI Cost Reduction Framework
+- **Technical Implementation**:
+  - Canvas-based rendering with custom drawing functions: flowchart, timeline, matrix, bar chart, multi-cloud, layered security
+  - React hooks: useMemo for template lookup, useCallback for optimized redrawing
+  - Component: `client/src/pages/VisualGenerator.tsx`
+- **Business Value**: Educational tool positioning, builds authority, supports "always free for students/learners" brand promise
+- **Performance**: Client-side rendering only, zero database/API calls, instant diagram generation
