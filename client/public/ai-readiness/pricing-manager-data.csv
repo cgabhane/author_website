@@ -1,0 +1,7 @@
+period,product,list_price,realised_price,units,variable_cost_per_unit
+Q1,A,100,92,1000,60
+Q1,B,250,230,300,170
+Q1,C,40,38,2000,22
+Q2,A,100,88,1150,61
+Q2,B,260,240,260,172
+Q2,C,40,37,2100,23

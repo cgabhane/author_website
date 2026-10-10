@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { initPostHog } from '@/lib/posthog';
 
 interface AnalyticsProps {
   googleAnalyticsId?: string;
@@ -11,6 +12,8 @@ export default function Analytics({
 }: AnalyticsProps) {
   
   useEffect(() => {
+    initPostHog();
+
     // Google Analytics 4
     if (googleAnalyticsId && googleAnalyticsId !== 'G-XXXXXXXXXX') {
       // Check if script already exists
