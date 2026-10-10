@@ -1,12 +1,12 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertAppointmentSchema, insertSubscriberSchema, insertAssessmentSchema, type Insight } from "@shared/schema";
-import { Resend } from "resend";
+import { type Appointment, type Insight } from "@shared/schema";
 import Parser from "rss-parser";
-
-// Initialize Resend only if API key is available
-const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
+import { sendEmail } from "./mailer";
+import { RateLimiter, limitByIp } from "./rateLimit";
+import { escapeHtml, escapeIcsText, sanitizeIcsParam } from "./security";
+import { INVALID_INPUT, SESSION_TYPES, appointmentSchema, assessmentSchema, subscribeSchema } from "./validation";
 
 // Initialize RSS parser
 const parser = new Parser();
@@ -100,69 +100,61 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Abuse limits for the public forms (in-memory; see server/rateLimit.ts).
+  const subscribeByIp = new RateLimiter(LIMITS.formRequestsPerIp, FIFTEEN_MINUTES);
+  const assessmentByIp = new RateLimiter(LIMITS.formRequestsPerIp, FIFTEEN_MINUTES);
+  const appointmentByIp = new RateLimiter(LIMITS.formRequestsPerIp, FIFTEEN_MINUTES);
+  const emailsPerRecipient = new RateLimiter(LIMITS.emailsPerRecipientPerDay, ONE_DAY);
+  // Global cap, independent of client IP, so the owner's inbox cannot be flooded even
+  // if per-IP limits are evaded. Over the cap the booking is still stored, only the
+  // notification email is skipped.
+  const ownerNotifications = new RateLimiter(LIMITS.ownerNotificationsPerHour, ONE_HOUR);
+
+  // GET /api/subscribers and the /admin/subscribers page were removed: they exposed
+  // the subscriber list to anyone. There is deliberately no replacement endpoint.
+
   // POST /api/subscribe - Add new subscriber
-  app.post("/api/subscribe", async (req, res) => {
+  app.post("/api/subscribe", limitByIp(subscribeByIp), async (req, res) => {
+    const parsed = subscribeSchema.safeParse(req.body);
+    if (!parsed.success) return res.status(400).json(INVALID_INPUT);
+    const { email, interests } = parsed.data;
+
+    // Same response whether or not the address is already subscribed, so the form
+    // cannot be used to check who is on the list.
+    const genericSuccess = {
+      success: true,
+      message: "Thanks! If this address is new, a welcome email is on its way.",
+    };
+
     try {
-      // Validate request body
-      const validatedData = insertSubscriberSchema.parse(req.body);
+      if (await storage.getSubscriberByEmail(email)) return res.json(genericSuccess);
+      await storage.createSubscriber({ email, interests });
 
-      // Check if email already subscribed
-      const existing = await storage.getSubscriberByEmail(validatedData.email);
-      if (existing) {
-        return res.status(400).json({
-          success: false,
-          message: "This email is already subscribed.",
-        });
-      }
-
-      // Create subscriber in storage
-      const subscriber = await storage.createSubscriber(validatedData);
-
-      // Send welcome email
-      if (resend) {
-        try {
-          await resend.emails.send({
+      if (emailsPerRecipient.allow(email)) {
+        const topics = interests.map((id) => INTEREST_LABELS[id]);
+        await sendEmail(
+          {
             from: "Chetan Gabhane <contact@chetangabhane.in>",
-            to: subscriber.email,
+            to: email,
             subject: "Welcome to My Newsletter!",
             html: `
               <h2>Thank You for Subscribing!</h2>
               <p>Welcome to my newsletter where I share insights on:</p>
               <ul>
-                ${subscriber.interests.map(interest => `<li>${interest}</li>`).join('')}
+                ${topics.map((topic) => `<li>${escapeHtml(topic)}</li>`).join("")}
               </ul>
               <p>You'll receive updates directly in your inbox whenever I publish new content on these topics.</p>
               <p>Best regards,<br><strong>Chetan Gabhane</strong><br>Cloud & AI Evangelist<br><a href="mailto:contact@chetangabhane.in">contact@chetangabhane.in</a></p>
             `,
-          });
-          console.log(`✓ Welcome email sent to ${subscriber.email}`);
-        } catch (emailError) {
-          console.error(`✗ Failed to send welcome email to ${subscriber.email}:`, emailError);
-        }
+            text: `Thank you for subscribing!\n\nYou'll receive updates on: ${topics.join(", ")}.\n\nBest regards,\nChetan Gabhane\ncontact@chetangabhane.in`,
+          },
+          "newsletter welcome",
+        );
       }
 
-      res.json({
-        success: true,
-        message: "Successfully subscribed! Check your email for confirmation.",
-      });
-    } catch (error: any) {
-      console.error("Subscription error:", error);
-      
-      if (error.name === "ZodError") {
-        return res.status(400).json({
-          success: false,
-          message: "Please check your input and try again.",
-          errors: error.errors,
-        });
-      }
-
-      if (error.message === "Email already subscribed") {
-        return res.status(400).json({
-          success: false,
-          message: "This email is already subscribed.",
-        });
-      }
-
+      res.json(genericSuccess);
+    } catch (error) {
+      console.error(`[subscribe] failed (${error instanceof Error ? error.name : "unknown error"})`);
       res.status(500).json({
         success: false,
         message: "Unable to process your subscription. Please try again later.",
@@ -170,115 +162,45 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // GET /api/subscribers - Get all subscribers (for admin view)
-  app.get("/api/subscribers", async (_req, res) => {
-    try {
-      const subscribers = await storage.getSubscribers();
-      res.json(subscribers);
-    } catch (error) {
-      console.error("Error fetching subscribers:", error);
-      res.status(500).json({
-        success: false,
-        message: "Unable to fetch subscribers.",
-      });
-    }
-  });
-
   // POST /api/assessments - Save assessment results and send email
-  app.post("/api/assessments", async (req, res) => {
+  app.post("/api/assessments", limitByIp(assessmentByIp), async (req, res) => {
+    const parsed = assessmentSchema.safeParse(req.body);
+    if (!parsed.success) return res.status(400).json(INVALID_INPUT);
+    const { email, score, level } = parsed.data;
+
     try {
-      // Validate request body
-      const validatedData = insertAssessmentSchema.parse(req.body);
+      const assessment = await storage.createAssessment({ email, score: JSON.stringify(score), level });
+      const levelContent = SKILL_LEVEL_CONTENT[level];
+      const percentage = Math.min(100, Math.round((score.total / 60) * 100));
 
-      // Create assessment in storage
-      const assessment = await storage.createAssessment(validatedData);
-
-      // Parse score breakdown
-      const scoreBreakdown = JSON.parse(validatedData.score);
-      
-      // Calculate percentage
-      const percentage = Math.round((scoreBreakdown.total / 60) * 100);
-
-      // Define skill levels for email content
-      const skillLevelContent: { [key: string]: { title: string; description: string; nextSteps: string[] } } = {
-        foundation: {
-          title: "Foundation Builder",
-          description: "You're at the beginning of your Cloud/AI journey with room to grow.",
-          nextSteps: [
-            "Learn cloud fundamentals (AWS/Azure basics)",
-            "Complete AI/ML intro courses",
-            "Build 2-3 personal projects"
-          ]
-        },
-        emerging: {
-          title: "Emerging Professional",
-          description: "You have foundational knowledge and are building practical skills.",
-          nextSteps: [
-            "Get cloud certification (AWS SAA, Azure AZ-104)",
-            "Build production-ready AI project",
-            "Contribute to open source"
-          ]
-        },
-        skilled: {
-          title: "Skilled Practitioner",
-          description: "You have solid mid-level skills across cloud and AI technologies.",
-          nextSteps: [
-            "Specialize: AI Ops OR Cloud Architecture",
-            "Lead a migration project",
-            "Mentor junior engineers"
-          ]
-        },
-        expert: {
-          title: "Expert Architect",
-          description: "You have senior-level expertise in cloud and AI systems.",
-          nextSteps: [
-            "Design enterprise architectures",
-            "Drive AI strategy initiatives",
-            "Speak at conferences"
-          ]
-        },
-        leader: {
-          title: "Industry Leader",
-          description: "You're operating at the highest level with deep expertise.",
-          nextSteps: [
-            "CTO/VP Engineering track",
-            "Independent consulting",
-            "Thought leadership & writing"
-          ]
-        }
-      };
-
-      const levelContent = skillLevelContent[validatedData.level];
-
-      // Send results email if email is provided
-      if (validatedData.email && resend) {
-        try {
-          await resend.emails.send({
+      if (email && emailsPerRecipient.allow(email)) {
+        await sendEmail(
+          {
             from: "Chetan Gabhane <contact@chetangabhane.in>",
-            to: validatedData.email,
+            to: email,
             subject: `Your CloudAI PathFinder Results: ${levelContent.title}`,
             html: `
               <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
                 <h1 style="color: #1e3a8a;">Your CloudAI PathFinder Results</h1>
-                
+
                 <div style="background-color: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
                   <h2 style="margin-top: 0;">Your Score: ${percentage}%</h2>
-                  <h3 style="color: #1e3a8a;">${levelContent.title}</h3>
-                  <p>${levelContent.description}</p>
+                  <h3 style="color: #1e3a8a;">${escapeHtml(levelContent.title)}</h3>
+                  <p>${escapeHtml(levelContent.description)}</p>
                 </div>
 
                 <h3>Your Skill Breakdown:</h3>
                 <ul style="list-style: none; padding: 0;">
-                  <li><strong>☁️ Cloud Fundamentals:</strong> ${scoreBreakdown.cloud}/12</li>
-                  <li><strong>🤖 AI/ML Basics:</strong> ${scoreBreakdown.ai}/12</li>
-                  <li><strong>⚙️ DevOps & Automation:</strong> ${scoreBreakdown.devops}/12</li>
-                  <li><strong>🛡️ Security & Compliance:</strong> ${scoreBreakdown.security}/12</li>
-                  <li><strong>🚀 Real-World Application:</strong> ${scoreBreakdown.realworld}/12</li>
+                  <li><strong>☁️ Cloud Fundamentals:</strong> ${score.cloud}/12</li>
+                  <li><strong>🤖 AI/ML Basics:</strong> ${score.ai}/12</li>
+                  <li><strong>⚙️ DevOps & Automation:</strong> ${score.devops}/12</li>
+                  <li><strong>🛡️ Security & Compliance:</strong> ${score.security}/12</li>
+                  <li><strong>🚀 Real-World Application:</strong> ${score.realworld}/12</li>
                 </ul>
 
                 <h3>Your Next Steps:</h3>
                 <ol>
-                  ${levelContent.nextSteps.map(step => `<li>${step}</li>`).join('')}
+                  ${levelContent.nextSteps.map((step) => `<li>${escapeHtml(step)}</li>`).join("")}
                 </ol>
 
                 <div style="background-color: #e0f2fe; padding: 15px; border-radius: 8px; margin: 20px 0;">
@@ -291,18 +213,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
                 </div>
 
                 <p>Keep building your skills, and feel free to retake the assessment as you progress!</p>
-                
+
                 <p>Best regards,<br>
                 <strong>Chetan Gabhane</strong><br>
                 Cloud & AI Evangelist<br>
                 <a href="mailto:contact@chetangabhane.in">contact@chetangabhane.in</a></p>
               </div>
             `,
-          });
-          console.log(`✓ Assessment results sent to ${validatedData.email}`);
-        } catch (emailError) {
-          console.error(`✗ Failed to send assessment results to ${validatedData.email}:`, emailError);
-        }
+            text: [
+              "Your CloudAI PathFinder Results",
+              `Score: ${percentage}% - ${levelContent.title}`,
+              levelContent.description,
+              "",
+              `Cloud Fundamentals: ${score.cloud}/12`,
+              `AI/ML Basics: ${score.ai}/12`,
+              `DevOps & Automation: ${score.devops}/12`,
+              `Security & Compliance: ${score.security}/12`,
+              `Real-World Application: ${score.realworld}/12`,
+              "",
+              "Next steps:",
+              ...levelContent.nextSteps.map((step, i) => `${i + 1}. ${step}`),
+              "",
+              "Best regards,",
+              "Chetan Gabhane",
+              "contact@chetangabhane.in",
+            ].join("\n"),
+          },
+          "assessment results",
+        );
       }
 
       res.json({
@@ -310,17 +248,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         message: "Assessment results saved successfully!",
         assessmentId: assessment.id,
       });
-    } catch (error: any) {
-      console.error("Assessment save error:", error);
-      
-      if (error.name === "ZodError") {
-        return res.status(400).json({
-          success: false,
-          message: "Please check your input and try again.",
-          errors: error.errors,
-        });
-      }
-
+    } catch (error) {
+      console.error(`[assessments] failed (${error instanceof Error ? error.name : "unknown error"})`);
       res.status(500).json({
         success: false,
         message: "Unable to save your results. Please try again later.",
@@ -329,81 +258,84 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // POST /api/appointments - Create new appointment and send email notifications
-  app.post("/api/appointments", async (req, res) => {
+  app.post("/api/appointments", limitByIp(appointmentByIp), async (req, res) => {
+    const parsed = appointmentSchema.safeParse(req.body);
+    if (!parsed.success) return res.status(400).json(INVALID_INPUT);
+    const data = parsed.data;
+
     try {
-      // Validate request body
-      const validatedData = insertAppointmentSchema.parse(req.body);
+      const appointment = await storage.createAppointment(data);
+      const sessionTypeDisplay = SESSION_TYPES[data.sessionType];
+      const safe = {
+        name: escapeHtml(data.name),
+        email: escapeHtml(data.email),
+        date: escapeHtml(data.date),
+        time: escapeHtml(data.time),
+        message: data.message ? escapeHtml(data.message).replace(/\r?\n/g, "<br>") : "",
+      };
 
-      // Create appointment in storage
-      const appointment = await storage.createAppointment(validatedData);
+      // Notification to Chetan. Meeting links stay out of every automatic email;
+      // they are shared manually when a session is confirmed.
+      if (!ownerNotifications.allow("owner")) {
+        console.warn("[email] appointment notification: skipped, hourly cap reached");
+      } else await sendEmail(
+        {
+          from: "Knowledge Exchange <contact@chetangabhane.in>",
+          to: "contact@chetangabhane.in",
+          subject: `New ${sessionTypeDisplay} Request`,
+          html: `
+            <h2>New Knowledge Exchange Request</h2>
+            <p>You have a new appointment request:</p>
+            <ul>
+              <li><strong>Name:</strong> ${safe.name}</li>
+              <li><strong>Email:</strong> ${safe.email}</li>
+              <li><strong>Session Type:</strong> ${sessionTypeDisplay}</li>
+              <li><strong>Date:</strong> ${safe.date}</li>
+              <li><strong>Time:</strong> ${safe.time}</li>
+              ${safe.message ? `<li><strong>Message:</strong> ${safe.message}</li>` : ""}
+            </ul>
+            <p>Reply to confirm the session and share the meeting link.</p>
+            <p>Appointment ID: ${appointment.id}</p>
+          `,
+          text: [
+            "New Knowledge Exchange Request",
+            `Name: ${data.name}`,
+            `Email: ${data.email}`,
+            `Session Type: ${sessionTypeDisplay}`,
+            `Date: ${data.date}`,
+            `Time: ${data.time}`,
+            data.message ? `Message: ${data.message}` : "",
+            "",
+            `Appointment ID: ${appointment.id}`,
+          ].join("\n"),
+        },
+        "appointment notification",
+      );
 
-      // Format session type for display
-      const sessionTypeDisplay = {
-        consulting: "Strategic Guidance Session",
-        mentoring: "Mentoring Session",
-        guidance: "Advisory Consultation"
-      }[validatedData.sessionType];
-
-      // Try to send email notifications (non-blocking, independent sends)
-      if (resend) {
-        // Send notification email to Chetan (independent of visitor email)
-        try {
-          await resend.emails.send({
-            from: "Knowledge Exchange <contact@chetangabhane.in>",
-            to: "contact@chetangabhane.in",
-            subject: `New ${sessionTypeDisplay} Request`,
-            html: `
-              <h2>New Knowledge Exchange Request</h2>
-              <p>You have a new appointment request:</p>
-              <ul>
-                <li><strong>Name:</strong> ${validatedData.name}</li>
-                <li><strong>Email:</strong> ${validatedData.email}</li>
-                <li><strong>Session Type:</strong> ${sessionTypeDisplay}</li>
-                <li><strong>Date:</strong> ${validatedData.date}</li>
-                <li><strong>Time:</strong> ${validatedData.time}</li>
-                ${validatedData.message ? `<li><strong>Message:</strong> ${validatedData.message}</li>` : ""}
-              </ul>
-              
-              <h3>Meeting Links (Share with Visitor)</h3>
-              <div style="background-color: #f5f5f5; padding: 15px; border-radius: 5px; margin: 15px 0;">
-                <p style="margin: 5px 0;"><strong>Zoom:</strong></p>
-                <p style="margin: 5px 0;"><a href="https://us05web.zoom.us/j/6836753272?pwd=WplvfCRiVIeTQG3qb89XHImkW9efR5.1" style="color: #2563eb;">https://us05web.zoom.us/j/6836753272?pwd=WplvfCRiVIeTQG3qb89XHImkW9efR5.1</a></p>
-                <p style="margin: 5px 0; font-size: 14px; color: #666;">Meeting ID: 683 675 3272 (Passcode embedded in link)</p>
-                
-                <p style="margin: 15px 0 5px 0;"><strong>Google Meet:</strong></p>
-                <p style="margin: 5px 0;"><a href="https://meet.google.com/xzi-tzzj-jdv" style="color: #2563eb;">https://meet.google.com/xzi-tzzj-jdv</a></p>
-              </div>
-              
-              <p>Appointment ID: ${appointment.id}</p>
-            `,
-          });
-          console.log(`✓ Notification email sent to contact@chetangabhane.in for appointment ${appointment.id}`);
-        } catch (notificationError) {
-          console.error(`✗ Failed to send notification email to contact@chetangabhane.in:`, notificationError);
-        }
-
-        // Send confirmation email to visitor (independent of notification email)
-        try {
-          await resend.emails.send({
+      // Confirmation to the visitor: at most 3 per recipient per day, no meeting links,
+      // and no visitor-supplied text (name or message), because the address is unverified
+      // and the email must not carry content written by whoever submitted the form.
+      if (emailsPerRecipient.allow(data.email)) {
+        await sendEmail(
+          {
             from: "Chetan Gabhane <contact@chetangabhane.in>",
-            to: validatedData.email,
+            to: data.email,
             subject: "Your Knowledge Exchange Session Request Has Been Received",
             html: `
               <h2>Thank You for Your Request</h2>
-              <p>Dear ${validatedData.name},</p>
+              <p>Hello,</p>
               <p>Your request for a <strong>${sessionTypeDisplay}</strong> has been successfully received. I will review your request and get back to you within 24 hours to confirm the appointment details.</p>
-              
+
               <h3>Your Booking Details:</h3>
               <ul>
                 <li><strong>Session Type:</strong> ${sessionTypeDisplay}</li>
-                <li><strong>Requested Date:</strong> ${validatedData.date}</li>
-                <li><strong>Requested Time:</strong> ${validatedData.time}</li>
+                <li><strong>Requested Date:</strong> ${safe.date}</li>
+                <li><strong>Requested Time:</strong> ${safe.time}</li>
               </ul>
-              ${validatedData.message ? `<p><strong>Your Message:</strong><br>${validatedData.message}</p>` : ""}
-              
+
               <h3>Add to Your Calendar:</h3>
               <div style="margin: 20px 0;">
-                <a href="https://chetangabhane.in/api/appointments/${appointment.id}/calendar" 
+                <a href="https://chetangabhane.in/api/appointments/${appointment.id}/calendar"
                    style="display: inline-block; background-color: #2563eb; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: 600;">
                   Download Calendar Invite (.ics)
                 </a>
@@ -412,31 +344,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
                 Works with Google Calendar, Outlook, Apple Calendar, and more. Includes automatic 15-minute reminder!
               </p>
 
-              <h3>Meeting Options (Choose Your Preferred Platform):</h3>
-              <div style="background-color: #f5f5f5; padding: 15px; border-radius: 5px; margin: 15px 0;">
-                <p style="margin: 5px 0;"><strong>Option 1: Zoom</strong></p>
-                <p style="margin: 5px 0;"><a href="https://us05web.zoom.us/j/6836753272?pwd=WplvfCRiVIeTQG3qb89XHImkW9efR5.1" style="color: #2563eb; text-decoration: none;">Join via Zoom</a></p>
-                <p style="margin: 5px 0; font-size: 14px; color: #666;">Meeting ID: 683 675 3272 (Passcode embedded - just click to join!)</p>
-                
-                <hr style="border: none; border-top: 1px solid #ddd; margin: 15px 0;">
-                
-                <p style="margin: 5px 0;"><strong>Option 2: Google Meet</strong></p>
-                <p style="margin: 5px 0;"><a href="https://meet.google.com/xzi-tzzj-jdv" style="color: #2563eb; text-decoration: none;">Join via Google Meet</a></p>
-              </div>
-              
-              <p><em>Simply click your preferred meeting link at the scheduled time. No additional setup required!</em></p>
-              
+              <p><strong>Next step:</strong> once I confirm your session, I'll email you the meeting link.</p>
+
               <p>I look forward to our conversation about cloud transformation, AI innovation, and strategic technology leadership.</p>
-              
+
               <p>Best regards,<br><strong>Chetan Gabhane</strong><br>Cloud & AI Evangelist<br><a href="mailto:contact@chetangabhane.in">contact@chetangabhane.in</a></p>
             `,
-          });
-          console.log(`✓ Confirmation email sent to ${validatedData.email} for appointment ${appointment.id}`);
-        } catch (confirmationError) {
-          console.error(`✗ Failed to send confirmation email to ${validatedData.email}:`, confirmationError);
-        }
-      } else {
-        console.warn("RESEND_API_KEY not configured - skipping email notifications");
+            text: [
+              "Thank you for your request",
+              "",
+              "Hello,",
+              `Your request for a ${sessionTypeDisplay} has been received. I will get back to you within 24 hours to confirm the details.`,
+              "",
+              `Requested date: ${data.date}`,
+              `Requested time: ${data.time}`,
+              "",
+              `Calendar invite: https://chetangabhane.in/api/appointments/${appointment.id}/calendar`,
+              "",
+              "Once I confirm your session, I'll email you the meeting link.",
+              "",
+              "Best regards,",
+              "Chetan Gabhane",
+              "contact@chetangabhane.in",
+            ].join("\n"),
+          },
+          "appointment confirmation",
+        );
       }
 
       res.json({
@@ -444,17 +377,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         message: "Appointment request received! Check your email for confirmation.",
         appointmentId: appointment.id,
       });
-    } catch (error: any) {
-      console.error("Appointment booking error:", error);
-      
-      if (error.name === "ZodError") {
-        return res.status(400).json({
-          success: false,
-          message: "Please check your input and try again.",
-          errors: error.errors,
-        });
-      }
-
+    } catch (error) {
+      console.error(`[appointments] failed (${error instanceof Error ? error.name : "unknown error"})`);
       res.status(500).json({
         success: false,
         message: "Unable to process your request. Please try again later.",
@@ -462,118 +386,149 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Helper function to generate .ics calendar file content
-  function generateICalendar(appointment: any, sessionTypeDisplay: string): string {
-    // Parse date (format: "October 15, 2025" or "MMMM d, yyyy")
-    const dateObj = new Date(appointment.date);
-    if (isNaN(dateObj.getTime())) {
-      throw new Error('Invalid date format');
-    }
-    
-    // Parse time (format: "09:00 AM" or "02:00 PM")
-    const timeMatch = appointment.time.match(/(\d+):(\d+)\s*(AM|PM)/i);
-    if (!timeMatch) {
-      throw new Error('Invalid time format');
-    }
-    
-    let hours = parseInt(timeMatch[1]);
-    const minutes = parseInt(timeMatch[2]);
-    const period = timeMatch[3].toUpperCase();
-    
-    // Convert to 24-hour format
-    if (period === 'PM' && hours !== 12) hours += 12;
-    if (period === 'AM' && hours === 12) hours = 0;
-    
-    // Create start datetime by combining date and time
-    const startDate = new Date(dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate(), hours, minutes);
-    const endDate = new Date(startDate.getTime() + 60 * 60 * 1000); // 1 hour duration
-    
-    // Format dates for iCalendar (YYYYMMDDTHHmmssZ)
-    const formatICalDate = (date: Date) => {
-      return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
-    };
-    
-    const now = new Date();
-    const timestamp = formatICalDate(now);
-    const dtstart = formatICalDate(startDate);
-    const dtend = formatICalDate(endDate);
-    
-    // Meeting details with both Zoom and Google Meet
-    const description = `Knowledge Exchange Session with Chetan Gabhane\\n\\n` +
-      `Session Type: ${sessionTypeDisplay}\\n\\n` +
-      `Meeting Options:\\n` +
-      `• Zoom: https://us05web.zoom.us/j/6836753272?pwd=WplvfCRiVIeTQG3qb89XHImkW9efR5.1\\n` +
-      `  Meeting ID: 683 675 3272 (Passcode embedded)\\n\\n` +
-      `• Google Meet: https://meet.google.com/xzi-tzzj-jdv\\n\\n` +
-      `Choose your preferred platform and join at the scheduled time.`;
-    
-    // Generate .ics content (iCalendar format)
-    return [
-      'BEGIN:VCALENDAR',
-      'VERSION:2.0',
-      'PRODID:-//Chetan Gabhane//Knowledge Exchange//EN',
-      'CALSCALE:GREGORIAN',
-      'METHOD:REQUEST',
-      'BEGIN:VEVENT',
-      `UID:${appointment.id}@chetangabhane.in`,
-      `DTSTAMP:${timestamp}`,
-      `DTSTART:${dtstart}`,
-      `DTEND:${dtend}`,
-      `SUMMARY:${sessionTypeDisplay} - Chetan Gabhane`,
-      `DESCRIPTION:${description}`,
-      `LOCATION:Online (Zoom or Google Meet)`,
-      `ORGANIZER;CN=Chetan Gabhane:mailto:contact@chetangabhane.in`,
-      `ATTENDEE;CN=${appointment.name}:mailto:${appointment.email}`,
-      'STATUS:CONFIRMED',
-      'SEQUENCE:0',
-      'BEGIN:VALARM',
-      'TRIGGER:-PT15M',
-      'ACTION:DISPLAY',
-      'DESCRIPTION:Reminder: Meeting in 15 minutes',
-      'END:VALARM',
-      'END:VEVENT',
-      'END:VCALENDAR'
-    ].join('\r\n');
-  }
-
   // GET /api/appointments/:id/calendar - Download .ics calendar file
   app.get("/api/appointments/:id/calendar", async (req, res) => {
     try {
-      const appointmentId = req.params.id;
-      const appointment = await storage.getAppointmentById(appointmentId);
-      
+      const appointment = await storage.getAppointmentById(req.params.id);
       if (!appointment) {
-        return res.status(404).json({
-          success: false,
-          message: "Appointment not found"
-        });
+        return res.status(404).json({ success: false, message: "Appointment not found" });
       }
-      
-      // Format session type for display
-      const sessionTypeDisplay = {
-        consulting: "Strategic Guidance Session",
-        mentoring: "Mentoring Session",
-        guidance: "Advisory Consultation"
-      }[appointment.sessionType] || "Knowledge Exchange Session";
-      
-      // Generate .ics file content
+
+      const sessionTypeDisplay =
+        SESSION_TYPES[appointment.sessionType as keyof typeof SESSION_TYPES] ?? "Knowledge Exchange Session";
       const icsContent = generateICalendar(appointment, sessionTypeDisplay);
-      
-      // Set headers for file download
-      res.setHeader('Content-Type', 'text/calendar; charset=utf-8');
-      res.setHeader('Content-Disposition', `attachment; filename="knowledge-exchange-${appointmentId}.ics"`);
-      
+
+      res.setHeader("Content-Type", "text/calendar; charset=utf-8");
+      res.setHeader("Content-Disposition", `attachment; filename="knowledge-exchange-${appointment.id}.ics"`);
       res.send(icsContent);
     } catch (error) {
-      console.error("Calendar generation error:", error);
-      res.status(500).json({
-        success: false,
-        message: "Unable to generate calendar file"
-      });
+      console.error(`[calendar] failed (${error instanceof Error ? error.name : "unknown error"})`);
+      res.status(500).json({ success: false, message: "Unable to generate calendar file" });
     }
   });
 
   const httpServer = createServer(app);
 
   return httpServer;
+}
+
+const FIFTEEN_MINUTES = 15 * 60 * 1000;
+const ONE_HOUR = 60 * 60 * 1000;
+const ONE_DAY = 24 * ONE_HOUR;
+
+// Read when routes are registered; tests may raise a value before creating an app.
+export const LIMITS = {
+  formRequestsPerIp: 5, // per form, per 15 minutes
+  emailsPerRecipientPerDay: 3,
+  ownerNotificationsPerHour: 20,
+};
+
+const INTEREST_LABELS: Record<string, string> = {
+  cloud: "Cloud Strategy",
+  ai: "AI & Innovation",
+  leadership: "Tech Leadership",
+  compliance: "Compliance & Governance",
+};
+
+const SKILL_LEVEL_CONTENT: Record<
+  "foundation" | "emerging" | "skilled" | "expert" | "leader",
+  { title: string; description: string; nextSteps: string[] }
+> = {
+  foundation: {
+    title: "Foundation Builder",
+    description: "You're at the beginning of your Cloud/AI journey with room to grow.",
+    nextSteps: [
+      "Learn cloud fundamentals (AWS/Azure basics)",
+      "Complete AI/ML intro courses",
+      "Build 2-3 personal projects",
+    ],
+  },
+  emerging: {
+    title: "Emerging Professional",
+    description: "You have foundational knowledge and are building practical skills.",
+    nextSteps: [
+      "Get cloud certification (AWS SAA, Azure AZ-104)",
+      "Build production-ready AI project",
+      "Contribute to open source",
+    ],
+  },
+  skilled: {
+    title: "Skilled Practitioner",
+    description: "You have solid mid-level skills across cloud and AI technologies.",
+    nextSteps: [
+      "Specialize: AI Ops OR Cloud Architecture",
+      "Lead a migration project",
+      "Mentor junior engineers",
+    ],
+  },
+  expert: {
+    title: "Expert Architect",
+    description: "You have senior-level expertise in cloud and AI systems.",
+    nextSteps: [
+      "Design enterprise architectures",
+      "Drive AI strategy initiatives",
+      "Speak at conferences",
+    ],
+  },
+  leader: {
+    title: "Industry Leader",
+    description: "You're operating at the highest level with deep expertise.",
+    nextSteps: [
+      "CTO/VP Engineering track",
+      "Independent consulting",
+      "Thought leadership & writing",
+    ],
+  },
+};
+
+// Builds the .ics file. Every appointment value is escaped so it cannot add
+// calendar properties; meeting links are not included.
+export function generateICalendar(appointment: Appointment, sessionTypeDisplay: string): string {
+  const dateObj = new Date(appointment.date);
+  if (isNaN(dateObj.getTime())) throw new Error("Invalid date format");
+
+  const timeMatch = appointment.time.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
+  if (!timeMatch) throw new Error("Invalid time format");
+
+  let hours = parseInt(timeMatch[1]);
+  const minutes = parseInt(timeMatch[2]);
+  const period = timeMatch[3].toUpperCase();
+  if (period === "PM" && hours !== 12) hours += 12;
+  if (period === "AM" && hours === 12) hours = 0;
+
+  const startDate = new Date(dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate(), hours, minutes);
+  const endDate = new Date(startDate.getTime() + 60 * 60 * 1000);
+  const formatICalDate = (date: Date) => date.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
+
+  const description = escapeIcsText(
+    `Knowledge Exchange Session with Chetan Gabhane\n\nSession Type: ${sessionTypeDisplay}\n\n` +
+      "The meeting link will be emailed when the session is confirmed.",
+  );
+
+  return [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//Chetan Gabhane//Knowledge Exchange//EN",
+    "CALSCALE:GREGORIAN",
+    "METHOD:REQUEST",
+    "BEGIN:VEVENT",
+    `UID:${appointment.id}@chetangabhane.in`,
+    `DTSTAMP:${formatICalDate(new Date())}`,
+    `DTSTART:${formatICalDate(startDate)}`,
+    `DTEND:${formatICalDate(endDate)}`,
+    `SUMMARY:${escapeIcsText(`${sessionTypeDisplay} - Chetan Gabhane`)}`,
+    `DESCRIPTION:${description}`,
+    "LOCATION:Online (link sent on confirmation)",
+    "ORGANIZER;CN=Chetan Gabhane:mailto:contact@chetangabhane.in",
+    `ATTENDEE;CN=${sanitizeIcsParam(appointment.name)}:mailto:${sanitizeIcsParam(appointment.email)}`,
+    "STATUS:TENTATIVE",
+    "SEQUENCE:0",
+    "BEGIN:VALARM",
+    "TRIGGER:-PT15M",
+    "ACTION:DISPLAY",
+    "DESCRIPTION:Reminder: Meeting in 15 minutes",
+    "END:VALARM",
+    "END:VEVENT",
+    "END:VCALENDAR",
+  ].join("\r\n");
 }

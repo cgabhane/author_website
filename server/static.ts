@@ -131,13 +131,6 @@ const PAGES: Record<string, PageMeta> = {
     heading: "Visual Content Generator",
     inSitemap: false,
   },
-  "/admin/subscribers": {
-    title: "Subscribers | Chetan Gabhane",
-    description: "Admin page.",
-    heading: "Subscribers",
-    inSitemap: false,
-    noindex: true,
-  },
 };
 
 const NOT_FOUND: PageMeta = {

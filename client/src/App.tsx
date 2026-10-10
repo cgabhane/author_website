@@ -9,7 +9,6 @@ import Home from "@/pages/Home";
 import Blog from "@/pages/Blog";
 import BlogPost from "@/pages/BlogPost";
 import PressKit from "@/pages/PressKit";
-import Subscribers from "@/pages/Subscribers";
 import VisualGenerator from "@/pages/VisualGenerator";
 import CareerAssessment from "@/pages/CareerAssessment";
 import AiReadiness from "@/pages/AiReadiness";
@@ -39,7 +38,6 @@ function Router() {
       <Route path="/ai-readiness" component={AiReadiness} />
       <Route path="/ai-readiness/roles/:slug" component={AiReadinessRole} />
       <Route path="/ai-readiness/:slug" component={AiReadinessGuide} />
-      <Route path="/admin/subscribers" component={Subscribers} />
       <Route component={NotFound} />
     </Switch>
   );
