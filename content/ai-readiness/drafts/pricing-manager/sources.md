@@ -8,6 +8,7 @@
 
 | Level | Meaning |
 |---|---|
+| S0 | [Centaurs and Cyborgs on the Jagged Frontier](https://www.oneusefulthing.org/p/centaurs-and-cyborgs-on-the-jagged) (Ethan Mollick, co-author of the BCG/Harvard field experiment) | 200 | content_verified | 758 BCG consultants; inside the frontier 12.2% more tasks, 25.1% faster, ~40% higher quality; outside it, correct 60-70% with AI vs 84% without. Primary HBS/SSRN pages block automated access, so the co-author's write-up is cited. Working paper, not peer-reviewed at the time of the post |
 | `content_verified` | Page opened, title matches, and the specific claim we use was confirmed in the page text |
 | `title_verified` | Page opened and the title matches the topic; the detailed content was not checked line by line |
 | `url_accessible_content_unverified` | URL opens but the content could not be read (e.g. compressed PDF); do not rely on it for specific claims |

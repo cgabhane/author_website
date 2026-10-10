@@ -74,18 +74,18 @@ const PAGES: Record<string, PageMeta> = {
     inSitemap: true,
   },
   "/ai-readiness/pricing-manager": {
-    title: "AI Readiness for Pricing Managers: An 8-Week Practical Plan | Chetan Gabhane",
+    title: "AI for Pricing Managers: An 8-Week Field Plan for Experienced Pricing Professionals | Chetan Gabhane",
     description:
-      "A beginner-friendly 8-week plan for pricing managers to use AI safely for margin analysis, scenario modelling and management reporting, with exercises and checked sources.",
-    heading: "AI Readiness for Pricing Managers: An 8-Week Practical Plan",
+      "A practical 8-week plan for experienced pricing managers: where AI genuinely helps in price waterfalls, scenario modelling, negotiation prep and leadership memos, and where it will quietly mislead you.",
+    heading: "AI Readiness for Pricing Managers: An 8-Week Field Plan",
     inSitemap: true,
     markdownFile: "ai-readiness/pricing-manager.md",
   },
   "/ai-readiness/software-developer": {
-    title: "AI for Experienced C, C++ and Python Developers: An 8-Week Plan | Chetan Gabhane",
+    title: "AI for Senior C, C++ and Python Developers: An 8-Week Engineering Plan | Chetan Gabhane",
     description:
-      "A practical 8-week plan for experienced C, C++ and Python developers to get AI-ready: AI pair programming, neural networks from scratch, building with LLM APIs, and local inference in C/C++.",
-    heading: "AI Readiness for Experienced Software Developers (C, C++, Python): An 8-Week Plan",
+      "An honest 8-week plan for experienced C, C++ and Python developers: agentic coding done properly, neural networks from first principles, shipping LLM features with evals, and local inference in C/C++.",
+    heading: "AI Readiness for Senior C, C++ and Python Developers: An 8-Week Engineering Plan",
     inSitemap: true,
     markdownFile: "ai-readiness/software-developer.md",
   },

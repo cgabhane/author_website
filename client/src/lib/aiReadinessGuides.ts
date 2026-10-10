@@ -14,18 +14,18 @@ export const aiReadinessGuides: AiReadinessGuide[] = [
     slug: "pricing-manager",
     role: "Pricing Manager",
     roleFamily: "finance_commercial",
-    title: "AI Readiness for Pricing Managers: An 8-Week Practical Plan",
+    title: "AI Readiness for Pricing Managers: An 8-Week Field Plan",
     description:
-      "A beginner-friendly 8-week plan for pricing managers to use AI safely for margin analysis, scenario modelling and management reporting, with exercises and checked sources.",
+      "For experienced pricing managers: where AI genuinely helps in price waterfalls, scenario modelling, negotiation prep and leadership memos, and where it will quietly mislead you.",
     weeks: 8,
   },
   {
     slug: "software-developer",
-    role: "Software Developer (C, C++, Python)",
+    role: "Senior Software Developer (C, C++, Python)",
     roleFamily: "engineering",
-    title: "AI Readiness for Experienced Software Developers (C, C++, Python): An 8-Week Plan",
+    title: "AI Readiness for Senior C, C++ and Python Developers: An 8-Week Engineering Plan",
     description:
-      "A practical 8-week plan for experienced C, C++ and Python developers to get AI-ready: AI pair programming, neural networks from scratch, building with LLM APIs, and local inference in C/C++.",
+      "An honest plan for experienced developers: agentic coding done properly, neural networks from first principles, shipping LLM features with evals, and local inference in C/C++.",
     weeks: 8,
   },
 ];

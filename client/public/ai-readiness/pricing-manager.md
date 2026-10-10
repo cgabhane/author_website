@@ -1,8 +1,8 @@
 ---
-title: "AI Readiness for Pricing Managers: An 8-Week Practical Plan"
+title: "AI Readiness for Pricing Managers: An 8-Week Field Plan"
 slug: pricing-manager
-seo_title: "AI for Pricing Managers: An 8-Week Practical Plan | Chetan Gabhane"
-seo_description: "A beginner-friendly 8-week plan for pricing managers to use AI safely for margin analysis, scenario modelling and management reporting, with exercises and checked sources."
+seo_title: "AI for Pricing Managers: An 8-Week Field Plan for Experienced Pricing Professionals | Chetan Gabhane"
+seo_description: "A practical 8-week plan for experienced pricing managers: where AI genuinely helps in price waterfalls, scenario modelling, negotiation prep and leadership memos, and where it will quietly mislead you."
 canonical_url: "https://chetangabhane.in/ai-readiness/pricing-manager"
 author: Chetan Gabhane
 status: published
@@ -13,84 +13,28 @@ created_at: 2026-10-10
 last_source_check_at: 2026-10-10
 ---
 
-# AI Readiness for Pricing Managers: An 8-Week Practical Plan
+# AI Readiness for Pricing Managers: An 8-Week Field Plan
 
-**Outcome:** in eight weeks, at about 3 hours a week, you will be able to use an AI assistant to speed up pricing analysis, while proving every number with a spreadsheet and presenting a recommendation your management can trust.
+You do not need another AI course. You have spent years learning how price, volume, cost and customer behaviour really interact, and no language model knows your market the way you do.
 
-## Who this is for
+What you need is a precise answer to two questions:
 
-- Pricing managers and analysts who are new to AI tools.
-- You already work with prices, discounts, costs and volumes in spreadsheets.
-- You do **not** need to code.
+1. **Where does AI genuinely make a pricing professional faster and sharper?**
+2. **Where will it confidently produce something wrong, in a way that only shows up when the CFO asks a follow-up question?**
 
-**Assumptions:** this guide does not know your industry, your company's AI policy or which tools you are allowed to use. Where those matter, it tells you to check. Adapt the examples to your context.
+That second question is not theoretical. In a field experiment with 758 BCG consultants, people using AI on tasks *inside* its capabilities completed 12.2% more tasks, 25.1% faster, with about 40% higher quality. On a task just *outside* those capabilities, the people using AI got the answer right noticeably less often: roughly 60–70% of the time, against 84% for those working without it [S0]. The researchers called this boundary the **jagged frontier**, because it is uneven and hard to see.
 
-## Start here: three rules
+This plan is about mapping that frontier for pricing work, using your own expertise as the judge.
 
-1. **AI suggests, the spreadsheet decides.** Language models explain, summarise and propose ideas well. They are not a reliable calculator. Every number goes through a deterministic tool like Excel.
-2. **Synthetic or approved data only.** Never paste customer prices, contracts, unpublished pricing strategy or employer data into a tool your company has not approved.
-3. **You own the decision.** AI can draft the memo. A human makes the pricing call.
-
-## Where AI helps a pricing manager
-
-| Task | What AI is good for | What must stay with you and your spreadsheet |
-|---|---|---|
-| Margin reviews | Spotting patterns worth checking, drafting hypotheses | Calculating margin, discount and contribution |
-| Price-volume-mix analysis | Explaining what each effect means in plain language | The decomposition itself |
-| Scenario modelling | Suggesting scenarios and questions to ask stakeholders | Elasticity assumptions and the model's arithmetic |
-| Management reporting | First drafts of memos, slide outlines, executive summaries | Final numbers, confidence and recommendation |
-| Learning | Explaining a concept you half-remember | Checking it against a trusted textbook |
-
-## Skills map
-
-| Skill | Week | Evidence you have it |
-|---|---|---|
-| Safe AI use and verification | 1–2 | You can name what AI gets wrong and how you would check it |
-| Structured prompting | 1–2 | A personal prompt library of 5+ tested prompts |
-| Margin and contribution analysis | 3–4 | A workbook whose totals reconcile to the source data |
-| Price-volume-mix thinking | 3–4 | You can explain why revenue rose while contribution fell |
-| Scenario and sensitivity modelling | 5–6 | Baseline, upside and downside scenarios with an assumptions log |
-| Executive communication | 7–8 | A one-page brief a manager can act on |
+**Time:** about 3 hours a week for 8 weeks. **Tools:** Excel plus whichever AI assistant your company has approved. **Assumption:** you know pricing better than any AI. This plan never teaches you pricing; it teaches you what AI does to it.
 
 ---
 
-## Weeks 1–2: AI fundamentals, safe use and choosing tasks
+## Do this today: the 30-minute trap test
 
-**Goal:** know what AI can and cannot do, and pick three low-risk tasks to practise on.
+Before you read anything else, find out how your AI assistant behaves on a pricing question.
 
-### Exercise 1.1: Learn a prompt structure (45 min)
-
-- **Objective:** write prompts that give useful, checkable answers.
-- **Steps:** Microsoft suggests a prompt can carry a **goal, context, source and expectations** [S10]. Add one more line of your own: **how you will verify the answer**. Write 5 prompts for pricing tasks using that pattern and save them.
-- **Example prompt:** *"Goal: explain the difference between gross margin and contribution margin. Context: I am a pricing manager refreshing basics. Expectations: under 200 words, one numeric example. Verification: show the formula so I can check it in Excel."*
-- **Deliverable:** a prompt library (a simple document is fine).
-- **Validation:** each prompt produces an answer you could check against a source or a spreadsheet.
-
-### Exercise 1.2: Catch the AI out (45 min)
-
-- **Objective:** see verification failures first-hand.
-- **Steps:** paste the small synthetic table from Exercise 3.1 into an approved AI assistant. Ask it to calculate total revenue and contribution for each quarter. Then calculate the same in Excel.
-- **Deliverable:** a note of every place the AI's answer and Excel's answer differ.
-- **Validation:** you can explain why you would never put an AI-calculated number in front of management unchecked.
-
-### Exercise 1.3: Task inventory and risk checklist (60 min)
-
-- **Objective:** choose where to start.
-- **Steps:** list 10 recurring tasks from a typical month. Mark each one for *data sensitivity* (low/medium/high) and *checkability* (easy/hard). Pick three tasks that are low sensitivity and easy to check.
-- **Deliverable:** a one-page AI opportunity map with 3 candidate tasks, and a risk checklist: customer data, contract terms, unpublished prices, competitor intelligence, personal data.
-- **Further reading:** NIST's AI Risk Management Framework is a voluntary framework for thinking about AI risk [S1], and its Generative AI Profile is a companion resource for generative AI [S2]. You do not need to read them cover to cover; skim the overview for vocabulary.
-- **Safety note:** if your company has an AI usage policy, read it now. It overrides this guide.
-
----
-
-## Weeks 3–4: Margin and price-volume-mix analysis
-
-**Goal:** use AI to *think* about margin data while the spreadsheet does the maths.
-
-### Exercise 3.1: Build the workbook (90 min)
-
-- **Objective:** a reproducible margin workbook.
-- **Data:** use this synthetic dataset, or [download it as a CSV file](/ai-readiness/pricing-manager-data.csv).
+1. Open an approved AI assistant and paste this **synthetic** data (or [download it as a CSV](/ai-readiness/pricing-manager-data.csv)):
 
 | period | product | list price | realised price | units | variable cost / unit |
 |---|---|---|---|---|---|
@@ -101,43 +45,91 @@ last_source_check_at: 2026-10-10
 | Q2 | B | 260 | 240 | 260 | 172 |
 | Q2 | C | 40 | 37 | 2,100 | 23 |
 
-- **Steps:** in Excel, calculate for each row: revenue (realised price x units), discount % (1 − realised/list), contribution per unit (realised price − variable cost) and total contribution. Contribution margin is what is left from the selling price after variable costs [S3].
-- **Check your answers:**
+2. Ask it one question, exactly as a busy executive would: *"How did Q2 go compared with Q1?"*
+3. Score the answer against the facts below, which were calculated in a spreadsheet:
 
 | | Q1 | Q2 | Change |
 |---|---|---|---|
 | Revenue | 237,000 | 241,300 | **+4,300** |
-| Total contribution | 82,000 | 78,130 | **−3,870** |
-| Contribution margin % | 34.6% | 32.4% | −2.2 pts |
-| Weighted average discount | 7.1% | 9.5% | +2.4 pts |
+| Contribution | 82,000 | 78,130 | **−3,870** |
+| Contribution margin | 34.6% | 32.4% | −2.2 pts |
+| Weighted discount off list | 7.1% | 9.5% | +2.4 pts |
 
-- **Deliverable:** the workbook.
-- **Validation:** your totals match the table above exactly.
+**Did it lead with "revenue grew"?** Many assistants will, because the question did not ask about margin. Revenue did grow. The business still made less money, because product A's discount deepened from 8% to 12% while its unit cost rose.
 
-### Exercise 3.2: Why did revenue rise but contribution fall? (60 min)
-
-- **Objective:** explain a change, not just report it.
-- **Steps:** split the revenue change into **price, volume and mix** effects. Price-volume-mix analysis separates a change in revenue into these components [S13]. In this guide's convention:
-  - *Price effect* = change in realised price x current-period units, per product
-  - *Volume effect* = change in total units x prior-period average price
-  - *Mix effect* = the rest: the effect of selling a different blend of products
-- **Check your answers:** price −4,100; volume +15,082; mix −6,682. Together they equal the +4,300 revenue change.
-- **Then ask AI:** paste your results (not the raw data) and ask for three hypotheses that could explain them. Check each one against the data. For example, product A's discount went from 8% to 12% while its unit cost rose; does that support or contradict the AI's story?
-- **Deliverable:** a findings list. For each finding: the evidence, the assumption and the caveat. Plus a log of which AI suggestions you **accepted, revised or rejected**, and why.
-- **Validation:** every conclusion traces back to a number in your workbook.
-- **Note:** PVM conventions differ between organisations. Use your finance team's convention if one exists.
+Keep a note of what happened. You have just seen the jagged frontier in your own field, and every exercise below builds on it.
 
 ---
 
-## Weeks 5–6: Scenario modelling and decision support
+## What to ignore (so you can save your time)
 
-**Goal:** build scenarios a reviewer can reproduce and challenge.
+- **"AI pricing engines will replace pricing managers."** The interesting work, deciding what the business should do and convincing people, is exactly where AI is weakest.
+- **Buying a tool before you have a use case.** Start with the assistant you already have. Buy only when a workflow is proven.
+- **Long lists of "magic prompts".** Clear context and a clear question beat any trick.
+- **Learning to build machine-learning models.** Useful for data scientists; not needed to be an AI-ready pricing leader.
+- **Certificates as proof.** Your evidence is better work, delivered faster. Track it.
 
-### Exercise 5.1: Baseline, upside, downside (90 min)
+---
 
-- **Objective:** see how assumptions drive outcomes.
-- **Concept:** price elasticity of demand is the percentage change in quantity divided by the percentage change in price [S6]. You will rarely know it precisely, so treat it as an **assumption to vary**, never a fact.
-- **Steps:** take product A in Q2 (price 88, 1,150 units, variable cost 61). Put the inputs in separate cells from the formulas. Model:
+## Your pricing week, mapped against the frontier
+
+| Usually inside the frontier (use freely, check lightly) | On the edge (useful, verify carefully) | Outside it (keep human and deterministic) |
+|---|---|---|
+| Drafting price-increase letters and sales FAQs | Writing Excel formulas for a price waterfall | Calculating final numbers |
+| Summarising public competitor announcements | Spotting patterns in discount data | Choosing an elasticity value |
+| Structuring a pricing memo for leadership | Clustering win/loss notes into themes | The final pricing decision |
+| Role-playing a tough procurement negotiation | Explaining a price-volume-mix result | Anything involving confidential deal data in an unapproved tool |
+| Turning analysis into plain language for sales | Suggesting hypotheses for margin erosion | Anything that could look like coordinating prices with competitors: involve legal |
+
+Treat this map as a starting hypothesis. Your job over eight weeks is to redraw it from your own evidence.
+
+---
+
+## Sprint 1 (Weeks 1–2): Quick wins and your operating rules
+
+**The job:** win back time on the communication-heavy tasks that eat your week.
+
+**Build:** a personal prompt library for five tasks you do every month. Suggestions: a price-increase letter to key accounts, an internal FAQ for sales on a new price list, a one-page competitor brief from public sources, a summary of a deal-review discussion, and an executive summary of a pricing analysis.
+
+**Field notes from practice:**
+- Give the model what you would give a new analyst: the audience, the purpose, the constraints and an example of what good looks like. Microsoft's guidance frames this as goal, context, source and expectations [S10].
+- Ask it to **ask you three questions before it writes anything**. The quality jump is immediate.
+- End every request with: *"What in this draft would a sceptical CFO challenge?"* It is the cheapest review you will ever get.
+- Keep the best version of each prompt. In two weeks you will have a reusable asset your team will ask for.
+
+**Checkpoint:** one recurring task that now takes half the time at the same quality. Time it; do not guess.
+
+**The trap experienced people fall into:** fluency. A beautifully written letter with one wrong date or a misstated term is worse than a rough draft, because nobody re-reads polished text.
+
+---
+
+## Sprint 2 (Weeks 3–4): AI as your analyst's analyst
+
+**The job:** go deeper on margin erosion and price leakage, faster, without delegating arithmetic to a language model.
+
+**The working rule:** *AI writes the formula, Excel does the maths.* Ask the assistant to design the calculation, then you run it.
+
+**Build:**
+1. Using the synthetic dataset, ask the assistant to propose the Excel formulas and layout for a simple **price waterfall** (list price to realised price) and a **price-volume-mix** bridge. Build it in Excel.
+2. Check your bridge. In this guide's convention (price effect at current volume) the answers are: price **−4,100**, volume **+15,082**, mix **−6,682**, totalling the +4,300 revenue change. Conventions differ between organisations; FTI Consulting's white paper explains one widely used approach [S13]. Use your finance team's convention if you have one.
+3. Now ask the assistant for **three hypotheses** that explain the results, and test each one against the data. Then ask it to **argue against your preferred explanation**.
+
+**Field notes from practice:**
+- Paste results, not raw customer data. Aggregated, anonymised summaries are usually enough for the AI to help.
+- Ask for the formula *and* a one-line explanation of each step. You will catch logic errors in the explanation that you would miss in the formula.
+- Keep a log of AI suggestions you accepted, changed or rejected. After two weeks it tells you exactly where AI helps your analysis.
+
+**Checkpoint:** a workbook that reconciles to the source data, and a findings list where every claim points to a number.
+
+**The trap:** the persuasive story. AI is very good at narratives that fit the data loosely. Correlation, seasonality, mix shifts and data errors can all produce the same chart.
+
+---
+
+## Sprint 3 (Weeks 5–6): Scenarios and negotiation rehearsal
+
+**The job:** prepare for pricing decisions and the conversations that follow them.
+
+**Build, part one: a transparent scenario model.** Take product A in Q2 (price 88, 1,150 units, variable cost 61). Keep inputs separate from formulas and model a price change under different volume assumptions:
 
 | Scenario | Price change | Assumed volume change | Contribution | vs. baseline |
 |---|---|---|---|---|
@@ -146,82 +138,74 @@ last_source_check_at: 2026-10-10
 | Price up, demand falls sharply | +5% | −15% | 30,694 | −356 |
 | Deeper discount | −5% | +7.5% | 27,939 | −3,111 |
 
-- **What this teaches:** the same +5% price move can help or hurt depending on one assumption. That assumption is what your management discussion should be about.
-- **Tools:** Excel's Scenario Manager stores sets of input values you can switch between [S8]. Goal Seek finds the single input needed to hit a target, for example the price that keeps contribution flat [S9]. Data Tables show results across a range of values [S7].
-- **Deliverable:** a scenario table, a sensitivity chart (contribution against assumed volume change) and an assumptions log.
-- **Validation:** a colleague can change one input and get the same answer you did.
+The same +5% move can help or hurt depending on one assumption. Elasticity (the percentage change in quantity for a percentage change in price [S6]) belongs in your model as a **range you test**, never a number an AI hands you. Excel's Scenario Manager stores and switches input sets [S8]; Goal Seek finds, for example, the volume loss at which a price rise stops paying off [S9].
 
-### Exercise 5.2: Break-even check (30 min)
+**Build, part two: negotiation rehearsal.** Ask the assistant to play the head of procurement at a key account receiving a 5% increase. Tell it to be difficult: threaten to dual-source, quote a competitor, demand a phased increase. Run the conversation for ten minutes. Then ask it to **critique your answers** and suggest stronger ones.
 
-- **Steps:** assume product A carries 20,000 of fixed cost. Break-even units = fixed cost / contribution per unit [S4]. At Q2 prices that is 20,000 / 27 = about 741 units. Re-run it for each scenario. OpenStax has a full walkthrough of break-even sensitivity [S5].
-- **Use AI for:** drafting the questions you would ask sales and finance before trusting the volume assumption.
-- **Do not use AI for:** inventing an elasticity number or choosing the final price.
-- **Deliverable:** a short decision memo: options, trade-offs, risks and data gaps.
+**Field notes from practice:**
+- Give the role-play real texture: the customer's situation, their likely pressures, what you can and cannot concede.
+- Run it twice: once where you hold the line, once where you trade. Compare.
+- Use the same technique for internal stakeholders: a sales director who wants a bigger discount budget is good practice too.
+
+**Checkpoint:** a scenario model someone else can re-run by changing one cell, and one rehearsed negotiation with notes on what you would say differently.
+
+**The trap:** an invented elasticity. If an AI gives you a precise number with no source, treat it as made up.
 
 ---
 
-## Weeks 7–8: Executive communication and capstone
+## Sprint 4 (Weeks 7–8): The leadership memo and teach-back
 
-**Goal:** present an evidence-backed recommendation.
+**The job:** turn analysis into a decision, then multiply your learning across the team.
 
-### Capstone (about 6 hours across two weeks)
+**Capstone:** answer one question on synthetic or explicitly approved data, for example *"Should we reduce the discount on product A next quarter?"*
 
-1. Use the synthetic dataset, or data your company has explicitly approved for this purpose.
-2. Pick one question, for example: *"Should we reduce the discount on product A next quarter?"*
-3. Build a baseline and at least two scenarios.
-4. Check all arithmetic in Excel.
-5. Use AI to draft a one-page executive brief, then edit it yourself.
-6. The brief must state: recommendation, confidence level, limitations, alternative explanations, and **what evidence would change your mind.**
+1. Build the baseline and at least two scenarios. Check every number in Excel.
+2. Ask the AI to draft a one-page memo: recommendation, options, trade-offs, risks and data gaps.
+3. Rewrite it in your own voice. The AI's draft is scaffolding, not the building.
+4. Ask the AI to act as your CFO and attack the memo. Fix what survives the attack.
+5. State your confidence level and **what evidence would change your recommendation.**
 
-### Suggested scorecard
+**Teach-back:** run a 30-minute session for your team. Show them the trap test, your prompt library and one before-and-after example. Teaching it is the fastest way to find the gaps in your own understanding, and it turns your eight weeks into a team capability.
 
-This rubric is illustrative, not an industry standard.
+**Suggested scorecard** (illustrative, not an industry standard):
 
 | Criterion | Weight |
 |---|---|
-| Numerical correctness | 30% |
-| Traceability to data and assumptions | 20% |
-| Scenario transparency | 15% |
-| Business relevance | 15% |
-| Clarity for management | 10% |
-| Risk and limitation handling | 10% |
+| Numbers correct and reconciled | 30% |
+| Every claim traceable to data or a stated assumption | 20% |
+| Scenarios transparent and reproducible | 15% |
+| Commercial judgement and relevance | 15% |
+| Clarity for leadership | 10% |
+| Honest handling of risks and limits | 10% |
 
 ---
 
-## How to know it is working
+## Making it stick at work
 
-- You catch at least one AI error per week in Weeks 1–4 (this is a good sign).
-- Your workbooks reconcile to the source every time.
-- Your prompt library grows and your prompts get shorter.
-- A manager can read your brief in two minutes and knows what you recommend and why.
+- **Share your prompt library** with the pricing and sales-ops teams. Agree on which tasks it is approved for.
+- **Write down your team's rules:** which tools, which data, who reviews what.
+- **Measure something:** hours saved on a recurring task, turnaround time on deal reviews, or the number of memo revisions. Evidence wins budget; enthusiasm does not.
+- **Revisit your frontier map every quarter.** The models improve, and some red cells will turn amber.
 
-## Risks and guardrails
+## Guardrails, briefly
 
-- **Confidential data:** only approved tools, only approved data.
-- **Hallucinated numbers:** every number is recalculated in a spreadsheet.
-- **False confidence:** scenarios show ranges, not a single "right" answer.
-- **Decision accountability:** AI never makes the final pricing decision.
-- **No guarantees:** this plan builds skills. It does not promise promotion, savings or career outcomes.
+Use only approved tools and approved data. Recalculate every number in a deterministic tool. Keep competitor-price discussions on the right side of competition law and involve legal when in doubt. The final pricing decision stays human. This plan builds skills; it does not promise savings, promotions or career outcomes.
 
 ## Resources
 
-Last checked 10 October 2026.
+Last checked 10 October 2026. **If you only open three:** the jagged frontier write-up [S0], Microsoft's prompt guide [S10] and Excel's what-if tools [S7].
 
-| Resource | Why it is useful | What to do with it |
+| Resource | Why it is on this list | When |
 |---|---|---|
-| [NIST AI Risk Management Framework](https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-ai-rmf-10) [S1] | A shared vocabulary for AI risk | Skim the overview in Week 1 |
-| [NIST Generative AI Profile](https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence) [S2] | Companion resource for generative AI | Optional, Week 2 |
-| [Microsoft: writing prompts in Copilot](https://support.microsoft.com/en-us/microsoft-365-copilot/get-started-writing-prompts-in-microsoft-365-copilot) [S10] | Simple prompt structure | Use in Exercise 1.1 |
-| [Anthropic: prompt engineering overview](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview) [S11] | Define success criteria before refining prompts | Optional, Week 2 |
-| [Google: prompt design strategies](https://ai.google.dev/gemini-api/docs/prompting-strategies) [S12] | Another vendor's view of prompting | Optional |
-| [OpenStax: contribution margin](https://openstax.org/books/principles-managerial-accounting/pages/3-1-explain-contribution-margin-and-calculate-contribution-margin-per-unit-contribution-margin-ratio-and-total-contribution-margin) [S3] | Free textbook refresher | Before Exercise 3.1 |
-| [OpenStax: break-even point](https://openstax.org/books/principles-managerial-accounting/pages/3-2-calculate-a-break-even-point-in-units-and-dollars) [S4] | Break-even formulas | Exercise 5.2 |
-| [OpenStax: break-even sensitivity](https://openstax.org/books/principles-managerial-accounting/pages/3-3-perform-break-even-sensitivity-analysis-for-a-single-product-under-changing-business-situations) [S5] | What-if practice | Exercise 5.2 |
-| [OpenStax: price elasticity](https://openstax.org/books/principles-economics-2e/pages/5-1-price-elasticity-of-demand-and-price-elasticity-of-supply) [S6] | Elasticity and the midpoint method | Exercise 5.1 |
-| [FTI Consulting: price volume mix analysis](https://www.fticonsulting.com/insights/white-papers/quantifiable-approach-price-volume-mix-analysis) [S13] | Worked PVM explanation (consultancy white paper) | Exercise 3.2 |
-| [Microsoft: Introduction to What-If Analysis](https://support.microsoft.com/en-us/excel/introduction-to-what-if-analysis) [S7] | Scenarios, Goal Seek, Data Tables | Week 5 |
-| [Microsoft: Scenario Manager](https://support.microsoft.com/en-us/excel/switch-between-various-sets-of-values-by-using-scenarios) [S8] | Step-by-step scenarios | Exercise 5.1 |
-| [Microsoft: Goal Seek](https://support.microsoft.com/en-us/excel/use-goal-seek-to-find-the-result-you-want-by-adjusting-an-input-value) [S9] | Work backwards from a target | Exercise 5.1 |
+| [Centaurs and Cyborgs on the Jagged Frontier](https://www.oneusefulthing.org/p/centaurs-and-cyborgs-on-the-jagged) (Ethan Mollick, co-author of the BCG study) [S0] | The best evidence on where AI helps and hurts knowledge work | Week 1 |
+| [Microsoft: Get started writing prompts in Copilot](https://support.microsoft.com/en-us/microsoft-365-copilot/get-started-writing-prompts-in-microsoft-365-copilot) [S10] | A simple, practical prompt structure | Week 1 |
+| [Anthropic: Prompt engineering overview](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview) [S11] | Define what "good" looks like before you tune prompts | Week 2, optional |
+| [FTI Consulting: A quantifiable approach to price volume mix analysis](https://www.fticonsulting.com/insights/white-papers/quantifiable-approach-price-volume-mix-analysis) [S13] | One clear PVM convention to compare yours against | Week 3 |
+| [OpenStax: Price elasticity of demand](https://openstax.org/books/principles-economics-2e/pages/5-1-price-elasticity-of-demand-and-price-elasticity-of-supply) [S6] | A neutral reference for elasticity and the midpoint method | Week 5 |
+| [Microsoft: Introduction to What-If Analysis](https://support.microsoft.com/en-us/excel/introduction-to-what-if-analysis) [S7] | Scenarios, Goal Seek and Data Tables in one place | Week 5 |
+| [Microsoft: Scenario Manager](https://support.microsoft.com/en-us/excel/switch-between-various-sets-of-values-by-using-scenarios) [S8] | Step-by-step scenarios | Week 5 |
+| [Microsoft: Goal Seek](https://support.microsoft.com/en-us/excel/use-goal-seek-to-find-the-result-you-want-by-adjusting-an-input-value) [S9] | Work backwards from a target | Week 5 |
+| [NIST AI Risk Management Framework](https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-ai-rmf-10) [S1] | Shared vocabulary for AI risk when you talk to IT, legal or audit | Optional |
 
 ---
 

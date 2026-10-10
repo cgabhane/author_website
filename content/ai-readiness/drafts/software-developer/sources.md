@@ -8,6 +8,7 @@
 
 | ID | Source | HTTP | Level | Claim used in the guide |
 |---|---|---|---|---|
+| S0 | [Centaurs and Cyborgs on the Jagged Frontier](https://www.oneusefulthing.org/p/centaurs-and-cyborgs-on-the-jagged) (Ethan Mollick, co-author of the BCG/Harvard field experiment) | 200 | content_verified | 758 BCG consultants; inside the frontier 12.2% more tasks, 25.1% faster, ~40% higher quality; outside it, correct 60-70% with AI vs 84% without. Primary HBS/SSRN pages block automated access, so the co-author's write-up is cited. Working paper, not peer-reviewed at the time of the post |
 | S1 | [Karpathy: Intro to Large Language Models](https://www.youtube.com/watch?v=zjkBMFhNj_g) | 200 | title_verified | Recommended one-hour overview (no specific claim) |
 | S2 | [GitHub Copilot docs](https://docs.github.com/en/copilot) | 200 | title_verified | Example AI coding assistant |
 | S3 | [Claude Code docs](https://code.claude.com/docs/en/overview) | 200 | title_verified | Example AI coding assistant |
