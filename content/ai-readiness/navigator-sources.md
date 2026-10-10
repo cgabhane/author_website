@@ -16,6 +16,8 @@
 | Elements of AI (`elements-of-ai`) | https://www.elementsofai.com/ | 200 | Free | Site describes both courses as free; Part 1 needs no programming | none | Site says "at your own pace", no duration | General (Go deeper) |
 | Google AI Essentials (`google-ai-essentials`) | https://grow.google/ai-essentials/ | 200 | Paid (free trial available) | US/Canada: $49 USD per month after a 7-day free trial; may be lower elsewhere | Under 5 hours | Page states "<5 hours to complete" | Pricing & Finance, General (Go deeper) |
 | AI for Everyone (`ai-for-everyone`) | https://www.deeplearning.ai/courses/ai-for-everyone | 200 | Certificate is paid; check access | FAQ: "$49 for 180 days of certificate eligibility". Free viewing not stated, so the site says "check access" | About 7 hours | Page states 6 hours 54 minutes | General (Go deeper) |
+| QuantumRead ("Keep learning", optional) | https://quantumread.space/ | 200 | not labelled | Owner's own product; shown with an ownership disclosure and "entirely optional" | none | n/a | All paths (Keep learning) |
+| Chetan's Substack ("Keep learning", optional) | https://chetangabhane.substack.com/ | 200 | not labelled | Owner's own publication | none | n/a | All paths (Keep learning) |
 
 ## Not used, and why
 

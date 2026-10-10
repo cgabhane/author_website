@@ -72,7 +72,7 @@ export default function AiReadinessRole() {
       </header>
 
       <main className="max-w-3xl mx-auto px-6 py-12">
-        <JourneyView journey={journey} resources={journey.resourceIds.map((id) => resources[id])} />
+        <JourneyView journey={journey} resources={journey.resourceIds.map((id) => resources[id])} headingLevel={2} />
       </main>
 
       <Footer />

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "wouter";
 import {
+  ArrowRight,
   BookOpen,
   Check,
   ClipboardCopy,
@@ -20,18 +21,18 @@ interface JourneyViewProps {
   journey: Journey;
   resources: Resource[];
   skippedIntro?: boolean;
+  // h2 on a standalone path page (under its h1); h3 inside the assessment result (under its h2).
+  headingLevel?: 2 | 3;
 }
 
-function SectionTitle({ icon: Icon, children }: { icon: typeof Target; children: React.ReactNode }) {
-  return (
-    <h3 className="flex items-center gap-2 font-serif text-2xl font-semibold text-foreground">
+export default function JourneyView({ journey, resources, skippedIntro, headingLevel = 3 }: JourneyViewProps) {
+  const Heading = headingLevel === 2 ? "h2" : "h3";
+  const SectionTitle = ({ icon: Icon, children }: { icon: typeof Target; children: React.ReactNode }) => (
+    <Heading className="flex items-center gap-2 font-serif text-2xl font-semibold text-foreground">
       <Icon className="h-5 w-5 text-primary" aria-hidden="true" />
       {children}
-    </h3>
+    </Heading>
   );
-}
-
-export default function JourneyView({ journey, resources, skippedIntro }: JourneyViewProps) {
   const [copied, setCopied] = useState(false);
   const { firstAction } = journey;
 
@@ -155,7 +156,31 @@ export default function JourneyView({ journey, resources, skippedIntro }: Journe
       </section>
 
       <section className="space-y-4">
-        <h3 className="font-serif text-xl font-semibold text-foreground">Go deeper (optional)</h3>
+        <SectionTitle icon={ArrowRight}>Ready for more? Your next task</SectionTitle>
+        <Card>
+          <CardContent className="p-4 sm:p-6 space-y-4">
+            <p className="text-lg font-semibold text-foreground">{journey.nextTask.title}</p>
+            <ol className="list-decimal pl-5 space-y-2 text-foreground">
+              {journey.nextTask.steps.map((step) => (
+                <li key={step}>{step}</li>
+              ))}
+            </ol>
+            {journey.nextTask.answerKey && (
+              <details className="rounded-md border p-4">
+                <summary className="cursor-pointer font-medium text-foreground">Check your answer</summary>
+                <ul className="mt-3 list-disc pl-5 space-y-1 text-foreground">
+                  {journey.nextTask.answerKey.map((line) => (
+                    <li key={line}>{line}</li>
+                  ))}
+                </ul>
+              </details>
+            )}
+          </CardContent>
+        </Card>
+      </section>
+
+      <section className="space-y-4">
+        <Heading className="font-serif text-xl font-semibold text-foreground">Go deeper (optional)</Heading>
         <ul className="space-y-3">
           {journey.deeper.map((item) => {
             const external = item.href.startsWith("http");
@@ -185,6 +210,39 @@ export default function JourneyView({ journey, resources, skippedIntro }: Journe
               </li>
             );
           })}
+        </ul>
+      </section>
+
+      <section className="space-y-3">
+        <Heading className="font-serif text-xl font-semibold text-foreground">Keep learning (optional)</Heading>
+        <ul className="space-y-3">
+          <li>
+            <a
+              href="https://quantumread.space/"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => track("ai_readiness_quantumread_cta_clicked", { journey: journey.slug })}
+              className="font-medium text-primary underline underline-offset-4"
+            >
+              QuantumRead
+            </a>
+            <p className="text-sm text-muted-foreground">
+              If you want structured practice and to track your progress. Disclosure: QuantumRead is a learning app I
+              built. It is entirely optional; everything on this page works without it.
+            </p>
+          </li>
+          <li>
+            <a
+              href="https://chetangabhane.substack.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => track("ai_readiness_substack_cta_clicked", { journey: journey.slug })}
+              className="font-medium text-primary underline underline-offset-4"
+            >
+              Chetan's Substack
+            </a>
+            <p className="text-sm text-muted-foreground">Practical notes on AI at work, and new paths as they are added.</p>
+          </li>
         </ul>
       </section>
 

@@ -83,7 +83,7 @@ const PAGES: Record<string, PageMeta> = {
   "/ai-readiness": {
     title: "AI Readiness Navigator – Find Where to Start With AI in Your Job | Chetan Gabhane",
     description:
-      "Answer four quick questions and get a practical place to start with AI for your role: one task to do today, a few hand-picked free resources, and how to check the results.",
+      "Pick your role, or answer four quick questions, and get a practical place to start with AI: one task to do today, a few hand-picked free resources, and how to check the results.",
     heading: "Become AI-ready for the work you actually do",
     inSitemap: true,
   },

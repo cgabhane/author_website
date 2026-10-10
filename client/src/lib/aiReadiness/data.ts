@@ -32,6 +32,7 @@ export interface Journey {
   };
   verify: string[];
   evidence: string;
+  nextTask: { title: string; steps: string[]; answerKey?: string[] };
   resourceIds: string[];
   deeper: { label: string; href: string; note: string }[];
   lastReviewedAt: string;
@@ -191,6 +192,15 @@ export const journeys: Record<string, Journey> = {
     ],
     evidence:
       "A small set of tests you reviewed and kept, or a code path you now understand and could explain to a colleague.",
+    nextTask: {
+      title: "Use AI on one real, small change",
+      steps: [
+        "Pick a small bug fix or feature in a project you are allowed to use AI on.",
+        "Ask the assistant for a plan before any code, and correct the plan if you disagree.",
+        "Have it write a failing test first, then the change. Keep the change small.",
+        "Review the result as you would a colleague's pull request, and note where AI saved time and where it did not.",
+      ],
+    },
     resourceIds: ["ai-fluency", "copilot-best-practices", "claude-code-best-practices", "jagged-frontier"],
     deeper: [
       {
@@ -249,6 +259,20 @@ export const journeys: Record<string, Journey> = {
     ],
     evidence:
       "A checked summary of a trend, or a better list of questions to investigate, with every number reconciled to the source.",
+    nextTask: {
+      title: "Let AI design the analysis, and let your spreadsheet do the maths",
+      steps: [
+        "Using the same practice data, ask AI to design (not calculate) a price-volume-mix bridge: the layout and the Excel formulas.",
+        "Build it in Excel and compare your results with the answer key below.",
+        "Ask AI for three possible explanations of the result, then check each one against the data.",
+      ],
+      answerKey: [
+        "Price effect: -4,100 (price change x Q2 units)",
+        "Volume effect: +15,082",
+        "Mix effect: -6,682",
+        "Together: +4,300, the total revenue change",
+      ],
+    },
     resourceIds: ["ai-fluency", "copilot-prompts", "excel-what-if", "jagged-frontier"],
     deeper: [
       {
@@ -295,6 +319,14 @@ export const journeys: Record<string, Journey> = {
     ],
     evidence:
       "One piece of everyday work done faster or better, and a clear sense of where AI helped and where it did not.",
+    nextTask: {
+      title: "Turn one weekly task into a reusable prompt",
+      steps: [
+        "Pick a task you repeat every week, such as a status update or meeting summary.",
+        "Write a prompt for it that includes who it is for, what good looks like and an example.",
+        "Use it three times, and note the time it saved and what you still had to fix.",
+      ],
+    },
     resourceIds: ["ai-fluency", "copilot-prompts", "jagged-frontier"],
     deeper: [
       {

@@ -86,6 +86,7 @@ export default function AiReadinessGuide() {
       />
       <Navigation />
 
+      <main>
       <div className="max-w-3xl mx-auto px-6 pt-10 flex items-center justify-between gap-4">
         <Link href="/ai-readiness">
           <span className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer">
@@ -99,7 +100,7 @@ export default function AiReadinessGuide() {
         </Button>
       </div>
 
-      <main className="max-w-3xl mx-auto px-6 py-10">
+      <div className="max-w-3xl mx-auto px-6 py-10">
         {failed && (
           <p className="text-muted-foreground">
             This guide could not be loaded. Please refresh the page or try again later.
@@ -114,6 +115,7 @@ export default function AiReadinessGuide() {
             dangerouslySetInnerHTML={{ __html: html }}
           />
         )}
+      </div>
       </main>
 
       <Footer />
