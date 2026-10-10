@@ -81,10 +81,31 @@ const PAGES: Record<string, PageMeta> = {
     inSitemap: true,
   },
   "/ai-readiness": {
-    title: "AI Readiness by Role – Practical Plans for Professionals | Chetan Gabhane",
+    title: "AI Readiness Navigator – Find Where to Start With AI in Your Job | Chetan Gabhane",
     description:
-      "Free, practical AI-readiness plans for working professionals, organised by role. Exercises, worked examples and checked sources, with no sign-up required.",
-    heading: "AI Readiness by Role",
+      "Answer four quick questions and get a practical place to start with AI for your role: one task to do today, a few hand-picked free resources, and how to check the results.",
+    heading: "Become AI-ready for the work you actually do",
+    inSitemap: true,
+  },
+  "/ai-readiness/roles/developer": {
+    title: "AI readiness for developers – Where to Start | Chetan Gabhane",
+    description:
+      "Use AI to understand code, write tests and debug faster, in whatever language you work in. One 15-minute first task, a checklist and hand-picked free resources.",
+    heading: "AI readiness for developers",
+    inSitemap: true,
+  },
+  "/ai-readiness/roles/pricing-finance": {
+    title: "AI readiness for pricing and finance professionals – Where to Start | Chetan Gabhane",
+    description:
+      "Use AI to explore pricing questions, explain trends and draft management updates, while every number stays in your spreadsheet. Start with a 15-minute trap test.",
+    heading: "AI readiness for pricing and finance professionals",
+    inSitemap: true,
+  },
+  "/ai-readiness/roles/general": {
+    title: "AI readiness for any professional – Where to Start | Chetan Gabhane",
+    description:
+      "Start with one safe, everyday task and learn to use AI thoughtfully. No coding, no jargon: a 15-minute first task, a checklist and free resources.",
+    heading: "AI readiness for any professional",
     inSitemap: true,
   },
   "/ai-readiness/pricing-manager": {

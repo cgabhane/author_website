@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import NotFound from "@/pages/not-found";
 import { aiReadinessGuides } from "@/lib/aiReadinessGuides";
 import { track } from "@/lib/posthog";
+import { copyText } from "@/lib/clipboard";
 
 function stripFrontmatter(markdown: string): string {
   return markdown.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, "");
@@ -69,7 +70,7 @@ export default function AiReadinessGuide() {
   };
 
   const copyLink = async () => {
-    await navigator.clipboard.writeText(`https://chetangabhane.in/ai-readiness/${guide.slug}`);
+    if (!(await copyText(`https://chetangabhane.in/ai-readiness/${guide.slug}`))) return;
     setCopied(true);
     track("blueprint_link_copied", { slug: guide.slug });
     setTimeout(() => setCopied(false), 2000);

@@ -13,6 +13,7 @@ import VisualGenerator from "@/pages/VisualGenerator";
 import CareerAssessment from "@/pages/CareerAssessment";
 import AiReadiness from "@/pages/AiReadiness";
 import AiReadinessGuide from "@/pages/AiReadinessGuide";
+import AiReadinessRole from "@/pages/AiReadinessRole";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -25,6 +26,7 @@ function Router() {
       <Route path="/visual-generator" component={VisualGenerator} />
       <Route path="/career-assessment" component={CareerAssessment} />
       <Route path="/ai-readiness" component={AiReadiness} />
+      <Route path="/ai-readiness/roles/:slug" component={AiReadinessRole} />
       <Route path="/ai-readiness/:slug" component={AiReadinessGuide} />
       <Route path="/admin/subscribers" component={Subscribers} />
       <Route component={NotFound} />
