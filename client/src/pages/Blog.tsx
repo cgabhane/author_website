@@ -17,16 +17,16 @@ export default function Blog() {
     {
       id: "ai-agents",
       title: "The Rise of AI Agents in Cloud Operations",
-      date: "August 2025",
-      readTime: "6 min read",
+      date: "October 2026",
+      readTime: "5 min read",
       category: "AI Operations",
       excerpt: "AI agents are no longer experimental – they're becoming the backbone of enterprise IT operations. From anomaly detection to automated remediation, here's how agentic AI is transforming the way we think about observability and incident response..."
     },
     {
       id: "sovereign-cloud",
       title: "Sovereign Cloud: Balancing Compliance and Innovation",
-      date: "July 2025",
-      readTime: "4 min read",
+      date: "October 2026",
+      readTime: "5 min read",
       category: "Compliance",
       excerpt: "As enterprises expand across regions, sovereignty is no longer optional. The rise of data regulations in Europe and Asia is reshaping how businesses deploy and secure workloads in multi-cloud environments..."
     }

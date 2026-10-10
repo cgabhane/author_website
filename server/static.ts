@@ -52,6 +52,20 @@ const PAGES: Record<string, PageMeta> = {
     heading: "Why Most Cloud Migrations Fail – and How to Fix It",
     inSitemap: true,
   },
+  "/blog/ai-agents": {
+    title: "The Rise of AI Agents in Cloud Operations | Chetan Gabhane",
+    description:
+      "AI agents are moving from demos into cloud operations: triage, correlation, runbooks and incident write-ups. A practical autonomy ladder and the guardrails that decide whether they help or hurt.",
+    heading: "The Rise of AI Agents in Cloud Operations",
+    inSitemap: true,
+  },
+  "/blog/sovereign-cloud": {
+    title: "Sovereign Cloud: Balancing Compliance and Innovation | Chetan Gabhane",
+    description:
+      "Sovereignty is now a board-level cloud question. What data residency, data sovereignty and operational sovereignty really mean, and a practical framework for choosing the right deployment pattern without freezing innovation.",
+    heading: "Sovereign Cloud: Balancing Compliance and Innovation",
+    inSitemap: true,
+  },
   "/career-assessment": {
     title: "CloudAI PathFinder - Career Readiness Assessment",
     description:
