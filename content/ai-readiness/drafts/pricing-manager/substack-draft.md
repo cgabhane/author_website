@@ -1,101 +1,96 @@
 ---
 status: draft (manual publish in Substack after owner review)
-blueprint_link: https://chetangabhane.in/ai-readiness/pricing-manager  # placeholder until the page is live
-source_ids: [S1, S6, S10, S13]
+blueprint_link: https://chetangabhane.in/ai-readiness/pricing-manager  # live since 10 Oct 2026
+source_ids: [S0, S6, S10, S13]
 ---
 
 # Title options
 
-1. **How Pricing Managers Can Become AI-Ready: Start With Better Decisions, Not More Tools**
-2. Revenue Went Up. Profit Went Down. Would Your AI Have Noticed?
-3. The Pricing Manager's Guide to Using AI Without Trusting It Blindly
+1. **Revenue Went Up. Profit Went Down. Your AI Said "Great Quarter."**
+2. The Jagged Frontier: Where AI Helps Pricing Managers, and Where It Quietly Misleads Them
+3. AI Won't Replace Pricing Judgement. It Will Expose Who Doesn't Have It.
 
-**Subtitle:** AI readiness isn't about knowing tool names. It's about knowing which parts of your work AI can speed up, and which parts it must never touch.
+**Subtitle:** The real AI skill for experienced pricing professionals isn't prompting. It's knowing exactly where the tool stops being reliable.
 
-**Excerpt (for social and email preview):** A quarter where revenue rose about 2% but contribution fell about 5% is exactly where an AI summary can mislead you. Here's a practical way for pricing managers to get AI-ready: let AI suggest, let the spreadsheet decide, and keep the decision human.
+**Excerpt (for social and email preview):** Ask an AI "how did Q2 go?" on a quarter where revenue rose and contribution fell, and there's a fair chance it leads with the good news. Research on 758 consultants shows why: AI makes experts better inside its frontier and worse just outside it. Here's how pricing managers can find that line.
 
 ---
 
 # Article body
 
-A pricing manager recently asked me a simple question: *"How do I become AI-ready?"*
+Picture a Monday morning review. A senior executive pastes last quarter's numbers into an AI assistant and asks a perfectly reasonable question: *"How did Q2 go compared with Q1?"*
 
-They had seen the headlines. They had tried a chatbot or two. But they couldn't see how any of it connected to their actual week: margin reviews, discount approvals, scenario models and that monthly slide for leadership.
+The answer comes back fluent and upbeat. Revenue is up. Volume is up. A good quarter.
 
-My answer surprised them. **AI readiness for a pricing manager isn't mainly about tools. It's about knowing which parts of your work AI can speed up, and which parts it must never be trusted with.**
+Except the business made less money. In the made-up example I use with pricing teams, revenue rises by 4,300 (about 2%) while contribution falls by 3,870 (about 5%), because one product's discount quietly deepened from 8% to 12% while its unit cost went up. Every number the AI quoted was true. The conclusion a reader would take away was wrong.
 
-## Why pricing is a great place to start
+Nobody in that room would have made this mistake with a spreadsheet in front of them. The AI made it look like they didn't need one.
 
-Pricing work mixes four things:
+## The jagged frontier
 
-- **Data:** prices, discounts, costs, volumes
-- **Assumptions:** how customers will react to a change
-- **Judgement:** what the business can live with
-- **Communication:** convincing people who weren't in the spreadsheet with you
+The best evidence I know on this comes from a field experiment with 758 BCG consultants, run by researchers from Harvard, Wharton, MIT and elsewhere [S0].
 
-AI is genuinely useful for the last one and helpful for the second. It's risky for the first if you let it do arithmetic. And it must never own the third.
+On tasks that sat *inside* what the AI could do well, consultants using it completed 12.2% more tasks, 25.1% faster, with about 40% higher quality. Those are numbers any leadership team would sign off on.
 
-## A small example that makes the point
+Then they gave consultants a task deliberately chosen to sit just *outside* the AI's capabilities. Working without AI, consultants got it right 84% of the time. With AI, that fell to roughly 60–70%.
 
-Take a made-up company selling three products. Between two quarters:
+The researchers called the boundary the **jagged frontier**, because it doesn't follow intuition. Tasks that look hard can be easy for AI, and tasks that look easy can be exactly where it fails. Worse, you can't see the line from the output: the confident answer and the wrong answer look identical.
 
-- Revenue went **up** by 4,300.
-- Contribution, the money left after variable costs, went **down** by 3,870.
+## Why pricing sits right on that frontier
 
-Ask an AI assistant to "summarise performance" and there's a fair chance the headline is *"revenue grew."* True, and badly misleading.
+Pricing work is unusual because it mixes three very different kinds of task in a single afternoon.
 
-When you split the revenue change into price, volume and mix effects, a standard technique in pricing and FP&A [S13], the story changes. Volume added about 15,000, but deeper discounts took away about 4,100 and a shift towards lower-value products took away about 6,700. Meanwhile one product's discount went from 8% to 12% while its unit cost rose.
+**The language work is mostly inside the frontier.** Drafting a price-increase letter, writing the sales FAQ for a new price list, summarising a competitor's public announcement, turning an analysis into five sentences a CFO will read. AI is genuinely good at this, and an experienced professional can check the output in seconds.
 
-That's the conversation leadership needs to have. The AI didn't find it. The spreadsheet did, and the AI helped explain it.
+**The judgement work is firmly outside.** Which customers will accept an increase, what elasticity to assume, what the business should actually do. These depend on context no model has, and they're the decisions you're paid to own.
 
-## Where AI should not be trusted blindly
+**The dangerous part is the middle.** Explaining a margin bridge. Spotting patterns in discount data. Suggesting why margin eroded. Here the AI is useful *and* occasionally, persuasively wrong. That's where experienced people get caught, precisely because the output sounds like something they'd have written themselves.
 
-1. **Arithmetic.** Language models are not calculators. Recalculate every number in Excel or your analytics tool.
-2. **Assumptions dressed as facts.** Ask an AI for "the price elasticity" of your product and it may give you a confident number. Elasticity, the percentage change in quantity for a percentage change in price [S6], depends on your customers and your market. Treat it as an assumption you vary, not a fact you look up.
-3. **Confidential inputs.** Customer prices, contracts and unpublished strategy don't go into tools your company hasn't approved.
-4. **The decision itself.** AI can draft the recommendation. A human makes the pricing call.
+## Three habits of AI-ready pricing professionals
 
-## A four-stage way to build the skill
+**1. AI writes the formula; the spreadsheet does the maths.** Ask the assistant to design your price-volume-mix bridge or price waterfall: the layout, the formulas, the logic. Then build it in Excel and let Excel calculate. You get the speed without delegating arithmetic to a system that was never built for it. (Bridge conventions differ between companies, so agree yours with finance; FTI Consulting has a clear write-up of one common approach [S13].)
 
-**1. Understand.** Learn what AI does well (explaining, drafting, brainstorming) and badly (precise maths, knowing your context). NIST's AI Risk Management Framework is a voluntary, non-sector-specific framework for thinking about these risks [S1], and a useful vocabulary even if you never read it in full.
+**2. Make it play the sceptic.** End every draft request with: *"What in this would a sceptical CFO challenge?"* It's the cheapest review you'll ever get, and it catches the gaps you stopped seeing an hour ago.
 
-**2. Practise.** Use a structured prompt. Microsoft suggests a prompt can include a goal, context, source and expectations [S10]. I'd add one line: *how will I verify this?*
+**3. Rehearse the hard conversation.** Ask the assistant to play the head of procurement at your largest account, receiving a 5% increase, and tell it to be difficult. Ten minutes of rehearsal, then ask it to critique your answers. Few tools have ever made negotiation practice this cheap.
 
-**3. Validate.** Keep a simple log: which AI suggestions you accepted, revised or rejected, and why. After a few weeks, that log tells you exactly where AI helps *your* work.
-
-**4. Communicate.** Let AI draft the memo, then edit it hard. A good pricing brief states the recommendation, the confidence level, the limitations, and what evidence would change your mind.
+And one rule that's not a habit but a line in the sand: if an AI hands you a precise elasticity figure with no source, treat it as invented. Elasticity is the percentage change in volume for a percentage change in price [S6], and in your model it belongs as a range you test, not a number you were given.
 
 ## One thing to do this week
 
-Pick **one** low-risk, easy-to-check task: summarising a public competitor announcement, explaining a margin concept, or drafting an email you'd write anyway. Use made-up or approved data. Write down how you checked the result.
+Take the 30-minute trap test. Paste a small synthetic dataset into your approved AI assistant (I've published one you can download), ask *"How did Q2 go?"*, and score the answer against the real figures.
 
-That's it. That's the start of being AI-ready.
+If your assistant leads with "revenue grew", you've just seen the jagged frontier in your own field. If it catches the margin story, try a harder question. Either way, you'll have learned more about AI and pricing in half an hour than most courses teach in a day.
+
+## The real risk isn't replacement
+
+I don't think AI will replace experienced pricing managers. The work that matters most, deciding what the business should do and convincing people to do it, is exactly where these tools are weakest.
+
+But AI will widen the gap between two kinds of pricing professional: those who know where its frontier sits in their work, and those who don't. The first group will get faster *and* sharper. The second will produce more, faster, and occasionally walk into the CFO's office with a beautifully written conclusion that the spreadsheet would never have supported.
 
 ## Want the full plan?
 
-I've put together a free, detailed **8-week plan for pricing managers** with exercises, a synthetic dataset, worked answers, scenario templates and a capstone project:
+I've published a free, 8-week field plan for experienced pricing managers. It includes the trap test and dataset, a frontier map for pricing work, four two-week sprints built on real tasks (price leakage, scenarios, negotiation rehearsal, the leadership memo) and a teach-back session for your team:
 
-**[AI Readiness for Pricing Managers: An 8-Week Practical Plan](https://chetangabhane.in/ai-readiness/pricing-manager)**
+**[AI Readiness for Pricing Managers: An 8-Week Field Plan](https://chetangabhane.in/ai-readiness/pricing-manager?utm_source=substack&utm_campaign=jagged-frontier)**
 
-No sign-up needed to read it.
-
-*[Optional, owner to decide] If you want a structured way to keep practising, I also built a learning product called QuantumRead. Full disclosure: it's mine, it's optional, and the plan above works without it.*
+No sign-up needed. And if you work with engineers, there's a companion plan for senior C, C++ and Python developers at [chetangabhane.in/ai-readiness](https://chetangabhane.in/ai-readiness?utm_source=substack&utm_campaign=jagged-frontier).
 
 ## Further reading
 
-- [S1] NIST, [AI Risk Management Framework (AI RMF 1.0)](https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-ai-rmf-10)
-- [S6] OpenStax, [Price Elasticity of Demand and Price Elasticity of Supply](https://openstax.org/books/principles-economics-2e/pages/5-1-price-elasticity-of-demand-and-price-elasticity-of-supply)
+- [S0] Ethan Mollick (co-author of the study), [Centaurs and Cyborgs on the Jagged Frontier](https://www.oneusefulthing.org/p/centaurs-and-cyborgs-on-the-jagged)
 - [S10] Microsoft, [Get started writing prompts in Microsoft Copilot](https://support.microsoft.com/en-us/microsoft-365-copilot/get-started-writing-prompts-in-microsoft-365-copilot)
 - [S13] FTI Consulting, [A Quantifiable Approach to Price Volume Mix Analysis](https://www.fticonsulting.com/insights/white-papers/quantifiable-approach-price-volume-mix-analysis)
+- [S6] OpenStax, [Price Elasticity of Demand and Price Elasticity of Supply](https://openstax.org/books/principles-economics-2e/pages/5-1-price-elasticity-of-demand-and-price-elasticity-of-supply)
 
 ---
 
 # Pre-publish checklist (for owner)
 
-- [ ] Blueprint page is live at the linked URL (otherwise remove or hold the link)
-- [ ] Decide on the QuantumRead paragraph (keep with disclosure, or delete)
+- [x] Guide page is live at the linked URL (verified 10 Oct 2026)
 - [ ] Choose a title option
 - [ ] Paste the excerpt into Substack's post description field
 - [ ] Headings use Substack's heading styles; body paragraphs are normal text (not headings)
-- [ ] Re-check the four links still open
+- [x] Guide links carry `utm_source=substack` so Substack readers show up separately on the PostHog dashboard
+- [ ] Re-check the links still open
 - [ ] Publish manually in Substack
