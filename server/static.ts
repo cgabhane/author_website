@@ -81,6 +81,14 @@ const PAGES: Record<string, PageMeta> = {
     inSitemap: true,
     markdownFile: "ai-readiness/pricing-manager.md",
   },
+  "/ai-readiness/software-developer": {
+    title: "AI for Experienced C, C++ and Python Developers: An 8-Week Plan | Chetan Gabhane",
+    description:
+      "A practical 8-week plan for experienced C, C++ and Python developers to get AI-ready: AI pair programming, neural networks from scratch, building with LLM APIs, and local inference in C/C++.",
+    heading: "AI Readiness for Experienced Software Developers (C, C++, Python): An 8-Week Plan",
+    inSitemap: true,
+    markdownFile: "ai-readiness/software-developer.md",
+  },
   "/visual-generator": {
     title: "Visual Content Generator – Create Substack Diagrams",
     description:
