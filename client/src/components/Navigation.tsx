@@ -13,6 +13,7 @@ export default function Navigation() {
     { href: "/#books", label: "Books" },
     { href: "/#insights", label: "Insights" },
     { href: "/blog", label: "Blog" },
+    { href: "/ai-readiness", label: "AI Readiness" },
     { href: "/press-kit", label: "Press Kit" },
     { href: "/#contact", label: "Contact" },
   ];

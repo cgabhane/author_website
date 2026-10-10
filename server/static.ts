@@ -1,6 +1,7 @@
 import express, { type Express } from "express";
 import fs from "fs";
 import path from "path";
+import { marked } from "marked";
 
 export function log(message: string, source = "express") {
   const formattedTime = new Date().toLocaleTimeString("en-US", {
@@ -25,6 +26,8 @@ type PageMeta = {
   heading: string;
   inSitemap: boolean;
   noindex?: boolean;
+  // Markdown file under dist/public rendered in full into the initial HTML
+  markdownFile?: string;
 };
 
 const PAGES: Record<string, PageMeta> = {
@@ -63,6 +66,21 @@ const PAGES: Record<string, PageMeta> = {
     heading: "Press Kit – Media Resources and Speaking Topics",
     inSitemap: true,
   },
+  "/ai-readiness": {
+    title: "AI Readiness by Role – Practical Plans for Professionals | Chetan Gabhane",
+    description:
+      "Free, practical AI-readiness plans for working professionals, organised by role. Exercises, worked examples and checked sources, with no sign-up required.",
+    heading: "AI Readiness by Role",
+    inSitemap: true,
+  },
+  "/ai-readiness/pricing-manager": {
+    title: "AI Readiness for Pricing Managers: An 8-Week Practical Plan | Chetan Gabhane",
+    description:
+      "A beginner-friendly 8-week plan for pricing managers to use AI safely for margin analysis, scenario modelling and management reporting, with exercises and checked sources.",
+    heading: "AI Readiness for Pricing Managers: An 8-Week Practical Plan",
+    inSitemap: true,
+    markdownFile: "ai-readiness/pricing-manager.md",
+  },
   "/visual-generator": {
     title: "Visual Content Generator – Create Substack Diagrams",
     description:
@@ -100,7 +118,12 @@ function setMeta(html: string, attr: "name" | "property", key: string, value: st
   return html.replace(pattern, `$1${value}$2`);
 }
 
-function renderPage(template: string, meta: PageMeta, url: string): string {
+function renderMarkdown(distPath: string, file: string): string {
+  const markdown = fs.readFileSync(path.resolve(distPath, file), "utf-8");
+  return marked.parse(markdown.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, ""), { async: false });
+}
+
+function renderPage(template: string, meta: PageMeta, url: string, bodyHtml?: string): string {
   const title = escapeHtml(meta.title);
   const description = escapeHtml(meta.description);
   let html = template.replace(/<title>[^<]*<\/title>/, `<title>${title}</title>`);
@@ -115,10 +138,8 @@ function renderPage(template: string, meta: PageMeta, url: string): string {
   html = setMeta(html, "property", "twitter:description", description);
   html = html.replace(/(<link rel="canonical" href=")[^"]*(")/, `$1${url}$2`);
   // Readable fallback text for crawlers; React replaces it on mount.
-  return html.replace(
-    '<div id="root"></div>',
-    `<div id="root"><h1>${escapeHtml(meta.heading)}</h1><p>${description}</p></div>`,
-  );
+  const fallback = bodyHtml ?? `<h1>${escapeHtml(meta.heading)}</h1><p>${description}</p>`;
+  return html.replace('<div id="root"></div>', `<div id="root">${fallback}</div>`);
 }
 
 function normalizePath(p: string): string {
@@ -146,13 +167,18 @@ export function serveStatic(app: Express) {
   }
 
   const template = fs.readFileSync(path.resolve(distPath, "index.html"), "utf-8");
+  const prerendered = new Map<string, string>();
+  for (const [p, meta] of Object.entries(PAGES)) {
+    if (meta.markdownFile) prerendered.set(p, renderMarkdown(distPath, meta.markdownFile));
+  }
 
   app.get("/sitemap.xml", (_req, res) => {
     res.type("application/xml").send(buildSitemap());
   });
 
   log(`Serving static files from: ${distPath}`, "express");
-  app.use(express.static(distPath, { index: false }));
+  // redirect: false so /ai-readiness (also a folder of guide files) reaches the page handler
+  app.use(express.static(distPath, { index: false, redirect: false }));
 
   // fall through to index.html with page-specific metadata; unknown paths get a real 404
   app.use("*", (req, res) => {
@@ -162,6 +188,6 @@ export function serveStatic(app: Express) {
     res
       .status(meta ? 200 : 404)
       .type("html")
-      .send(renderPage(template, meta ?? NOT_FOUND, url));
+      .send(renderPage(template, meta ?? NOT_FOUND, url, prerendered.get(pagePath)));
   });
 }
